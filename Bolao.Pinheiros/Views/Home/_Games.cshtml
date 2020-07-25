@@ -3,22 +3,44 @@
     var games = Model.games.OrderBy(x => x.competitionId).ThenBy(x => x.startTime).ThenByDescending(x => x.id).ToList();
     var gamesByCompetition = games.GroupBy(x => x.competitionId);
     const string BASE_URL_LOGO = "https://imagecache.365scores.com/image/upload/f_auto,w_96,h_96,c_limit,q_auto:eco,d_Competitors:default1.png/Competitors/";
+    var competitions = games.Select(x => x.competitionDisplayName).Distinct().ToList();
 }
 @if (Model != null)
 {
-<div class="dados-jogos">
-    @foreach (var competition in gamesByCompetition)
-    {
-    <div class="competition">
-        <div class="competition-title">@(competition.First().competitionDisplayName)</div>
-        @foreach (var game in competition)
+    <div class="competition-filter">
+        <select class="js-example-basic-multiple select2-component" name="competition-selector" multiple="multiple">
+            @foreach (var competition in competitions)
+            {
+                <option>@(competition)</option>                
+            }
+        </select>
+    </div>
+    <div class="games-filter">
+        <select class="js-example-basic-multiple select2-component" name="games-selector" multiple="multiple">
+            @foreach (var competition in competitions)
+            {
+                <optgroup label="@(competition)">
+                    @foreach (var game in games.Where(x => x.competitionDisplayName == competition))
+                    {
+                        <option value="@(game.id)">@(game.homeCompetitor.name) - @(game.awayCompetitor.name)</option>
+                    }
+                </optgroup>
+            }
+        </select>
+    </div>
+    <div class="dados-jogos">
+        @foreach (var competition in gamesByCompetition)
         {
-        <div id="@(game.id)" class="container-jogo">
-            @(Html.Partial("_Game", game))
-            <div class="detalhar-estatisticas">Análise</div>
-        </div>
+            <div id="@(competition.Key)" class="competition">
+                <div class="competition-title">@(competition.First().competitionDisplayName)</div>
+                @foreach (var game in competition)
+                {
+                    <div id="@(game.id)" class="container-jogo">
+                        @(Html.Partial("_Game", game))
+                        <div class="detalhar-estatisticas">Análise</div>
+                    </div>
+                }
+            </div>
         }
     </div>
-    }
-</div>
 }

@@ -257,3 +257,13 @@ body {
 .previous-meetings-widget-row-component {
     white-space: nowrap;
 }
+
+.competition-filter,
+.games-filter {
+    padding: 10px;
+}
+
+.competition-filter span.select2,
+.games-filter span.select2 {
+    width: 100% !important;
+}

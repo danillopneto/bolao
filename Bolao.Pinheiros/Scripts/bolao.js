@@ -1,7 +1,8 @@
 var loading = $('.lds-container');
 var dataDesejada = $('#datepicker');
 var dadosDosJogos = $('.dados-jogos');
-var jogos = [];
+var select2Component = $('.select2-component');
+var gamesSelector = $('[name="games-selector"]');
 
 $(document).ready(function () {
     dataDesejada.datepicker({
@@ -42,6 +43,11 @@ $(document).ready(function () {
         classes: { "ui-tooltip": "tooltip-bolao" },
         position: { my: "left top+5", at: "left bottom", collision: "flipfit" },
         track: true
+    });
+
+    select2Component.select2();
+    gamesSelector.on('change', function () {
+        showGamesSelected();
     });
 });
 
@@ -91,6 +97,35 @@ var getStatistics = function (element) {
         });
     } catch (error) {
         // TODO
+    }
+};
+
+var showGamesSelected = function () {
+    var games = $('.container-jogo');
+    var competitions = $('.competition');
+
+    competitions.show();
+    games.hide();
+
+    var gamesSelected = gamesSelector.val();
+    if (gamesSelected === ''
+            || gamesSelected.length === 0) {
+        games.show();
+        competitions.show();
+    } else {
+        var selector = '';
+        for (var i = 0; i < gamesSelected.length; i++) {
+            selector += '#' + gamesSelected[i] + ',';
+        }
+
+        selector = selector.slice(0, -1);
+        $(selector).show();
+
+        for (var c = 0; c < competitions.length; c++) {
+            if ($(competitions[c]).find('.container-jogo:visible').length === 0) {
+                $(competitions[c]).hide();
+            }
+        }
     }
 };
 
