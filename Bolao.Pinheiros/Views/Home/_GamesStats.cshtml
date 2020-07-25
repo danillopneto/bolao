@@ -1,0 +1,50 @@
+﻿@model Bolao.Pinheiros.Models.Root
+@if (Model != null && Model.games != null && Model.games.Any())
+{
+    <div class="game-stats">
+        <div class="negrito">Estatísticas</div>
+        <br>
+        <div class="game-stats-info">
+            <div class="team-victory">
+                <label class="team negrito">@(Model.mainGame.homeCompetitor.name)</label>
+                <label class="team-value">@(Model.GetHomeWinnings().Count())</label>
+            </div>
+            <div class="team-victory">
+                <label class="team negrito">@(Model.mainGame.awayCompetitor.name)</label>
+                <label class="team-value">@(Model.GetAwayWinnings().Count())</label>
+            </div>
+            <div class="team-draw">
+                <label class="team negrito">Empate</label>
+                <label class="team-value">@(Model.GetDraws().Count())</label>
+            </div>
+        </div>
+        <div class="game-stats-info">
+            <div class="head-head-score">
+                <label class="team negrito">Gols</label>
+                <label class="team-value">@(Model.GetGoals())</label>
+            </div>
+            <div class="head-head-score">
+                <label class="team negrito">Média de gols</label>
+                <label class="team-value">@(Model.GetGoals() / Model.games.Count())</label>
+            </div>
+        </div>        
+        <div class="game-stats-info">
+            <div class="head-head-score">
+                <label class="team negrito">GP @(Model.mainGame.homeCompetitor.name)</label>
+                <label class="team-value">@(Model.GetGoalsHome())</label>
+            </div>
+            <div class="head-head-score">
+                <label class="team negrito">GP @(Model.mainGame.awayCompetitor.name)</label>
+                <label class="team-value">@(Model.GetGoalsAway())</label>
+            </div>
+            <div class="max-score">
+                <label class="team negrito">Maior quantidade de gols em um jogo</label>
+                <label class="team-value">@(Model.GetMaximumScores())</label>
+            </div>
+            <div class="minimum-score">
+                <label class="team negrito">Menor quantidade de gols em um jogo</label>
+                <label class="team-value">@(Model.GetMinimumScores())</label>
+            </div>
+        </div>
+    </div>
+}

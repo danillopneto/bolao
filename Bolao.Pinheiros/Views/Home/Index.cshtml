@@ -1,0 +1,15 @@
+﻿@model Bolao.Pinheiros.Models.Root
+@{
+    ViewBag.Title = "Bolão";
+}
+
+<header>
+    <nav>
+        <ul style="text-align: center;">
+            <p>Data: <input type="text" id="datepicker"></p>
+        </ul>
+    </nav>
+    @(Html.Partial("_Games"))
+</header>
+<div class="dados-jogos"></div>
+<script src="./Scripts/bolao.js"></script>

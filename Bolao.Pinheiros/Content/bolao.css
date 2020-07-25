@@ -1,0 +1,238 @@
+body {
+    font: 16px -apple-system,BlinkMacSystemFont,"Roboto","Arial","Helvetica Neue","Helvetica",sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-overflow-style: scrollbar;
+    background: #edeef0;
+    color: #48494a;
+}
+
+.dados-jogos div.scoreboard-wrapper {
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.dados-jogos div label {
+    padding: 0 5px;
+    font-size: 12px;
+}
+
+.dados-jogos div label.posicao:first-child {
+    border-right: none;
+}
+
+.dados-jogos div label.posicao:last-child {
+    border-left: none;
+}
+
+.dados-jogos .team-logo {
+    vertical-align: top;
+    max-height: 42px;
+    margin: 5px;
+}
+
+.team-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.record {
+    display: block;
+    font-size: 10px;
+    padding-top: 1px;
+    text-transform: uppercase;
+    color: #6c6d6f;
+}
+
+.away .team-info {
+    text-align: right;
+}
+
+.team-name .long-name,
+.team__banner,
+.abbrev {
+    display: none;
+}
+
+.score-container {
+    padding-right: 10px;
+    position: relative;
+    text-align: center;
+}
+
+.score {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1d1e1f;
+}
+
+.team__content {
+    display: flex;
+}
+
+.container-estatisticas,
+.apostas {
+    text-align: center;
+    display: none;
+}
+
+.detalhar-estatisticas,
+.detalhar-apostas {
+    background-color: #c4d8ff;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    padding: 5px;
+}
+
+.detalhar-apostas {
+    background-color: #66f897;
+}
+
+.dados-confronto,
+.dados-casa,
+.dados-visitante,
+.apostas-confronto,
+.apostas-ultimos-jogos,
+.apostas-misto {
+    width: 30%;
+    border-right: 1px solid #c0c0c0;
+    padding: 0 5px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.dados-visitante {
+    border-right: none;
+}
+
+.estatisticas, .apostas {
+    padding: 5px 0;
+}
+
+.negrito {
+    font-weight: bold;
+}
+
+.jogos-em-casa,
+.jogos-visitante {
+    width: 45%;
+    display: inline-block;
+}
+
+.green,
+.green + label {
+    color: green;
+}
+
+.red,
+.red + label {
+    color: red;
+}
+
+.blue,
+.blue + label {
+    color: blue;
+}
+
+.competition {
+    background: white;
+    border-radius: 20px;
+    padding-top: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.competition-title {
+    font-weight: bold;
+    padding: 5px;
+    width: auto;
+    border-bottom: 1px solid gray;
+}
+
+.previous-meetings-widget-row-component.game-container:not(:last-child),
+.game-stats-info {
+    color: #505050;
+    border-bottom: 1px solid #edeef0;
+}
+
+.game-stats-info {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.previous-meetings-widget-row-component.game-data {
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.previous-meetings-widget-row-component.game-data > div {
+    padding: 0 5px;
+    width: 25%;
+}
+
+.previous-meetings-widget-row-component.game-data > div:first-child {
+    text-align: right;
+}
+
+.previous-meetings-widget-row-component.game-data > div:last-child {
+    text-align: left;
+}
+
+.previous-meetings-widget-row-component.subtitle {
+    -webkit-box-pack: center;
+    display: flex;
+    justify-content: center;
+    color: rgb(127, 151, 171);
+    font-size: 10px;
+    height: 11px;
+    padding-bottom: 2px;
+}
+
+.team-victory,
+.team-draw,
+.head-head-score {
+    display: inline;
+}
+
+.flip-card-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjMDAwMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwIDEwMCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHJlY3QgeD0iNS45IiB5PSI4IiB3aWR0aD0iMzYuNiIgaGVpZ2h0PSIzNi42Ij48L3JlY3Q+PHBhdGggZD0iTTMyLjYsNjEuOWg3TDI4LjUsNTFsLTExLjEsMTFoN2MxLDEyLjYsMTEuNywyMi42LDI0LjYsMjIuNnYtOC4xQzQwLjYsNzYuNCwzMy42LDcwLjEsMzIuNiw2MS45eiI+PC9wYXRoPjxwYXRoIGQ9Ik02Ni43LDM4LjRoLTYuOWwxMS4xLDExLjFMODIsMzguNGgtN2MtMS0xMi42LTExLjctMjIuNi0yNC43LTIyLjZWMjRDNTguNywyNCw2NS43LDMwLjMsNjYuNywzOC40eiI+PC9wYXRoPjxwb2x5Z29uIHBvaW50cz0iODQuMyw1NC45IDU3LDgyLjIgNTcsODUuOCA4Ny45LDU0LjkgIj48L3BvbHlnb24+PHBvbHlnb24gcG9pbnRzPSI4OS4zLDU0LjkgNTcsODcuMiA1Nyw5MC44IDkyLjksNTQuOSAiPjwvcG9seWdvbj48cG9seWdvbiBwb2ludHM9IjkzLjYsNjUuOSA2OCw5MS41IDcxLjYsOTEuNSA5My42LDY5LjUgIj48L3BvbHlnb24+PHBvbHlnb24gcG9pbnRzPSI5My42LDYwLjkgNjMsOTEuNSA2Ni42LDkxLjUgOTMuNiw2NC41ICI+PC9wb2x5Z29uPjxwb2x5Z29uIHBvaW50cz0iNzQuMyw1NC45IDU3LDcyLjIgNTcsNzUuOCA3Ny45LDU0LjkgIj48L3BvbHlnb24+PHBvbHlnb24gcG9pbnRzPSI2NC4zLDU0LjkgNTcsNjIuMiA1Nyw2NS44IDY3LjksNTQuOSAiPjwvcG9seWdvbj48cG9seWdvbiBwb2ludHM9Ijc5LjMsNTQuOSA1Nyw3Ny4yIDU3LDgwLjggODIuOSw1NC45ICI+PC9wb2x5Z29uPjxwb2x5Z29uIHBvaW50cz0iNjkuMyw1NC45IDU3LDY3LjIgNTcsNzAuOCA3Mi45LDU0LjkgIj48L3BvbHlnb24+PHBvbHlnb24gcG9pbnRzPSI1Nyw1NC45IDU3LDYwLjggNjIuOSw1NC45ICI+PC9wb2x5Z29uPjxwb2x5Z29uIHBvaW50cz0iOTMuNiw1NS45IDU4LDkxLjUgNjEuNiw5MS41IDkzLjYsNTkuNSAiPjwvcG9seWdvbj48cG9seWdvbiBwb2ludHM9IjkzLjYsODUuOSA4OCw5MS41IDkzLjYsOTEuNSAiPjwvcG9seWdvbj48cG9seWdvbiBwb2ludHM9IjkzLjYsODAuOSA4Myw5MS41IDg2LjYsOTEuNSA5My42LDg0LjUgIj48L3BvbHlnb24+PHBvbHlnb24gcG9pbnRzPSI5My42LDc1LjkgNzgsOTEuNSA4MS42LDkxLjUgOTMuNiw3OS41ICI+PC9wb2x5Z29uPjxwb2x5Z29uIHBvaW50cz0iOTMuNiw3MC45IDczLDkxLjUgNzYuNiw5MS41IDkzLjYsNzQuNSAiPjwvcG9seWdvbj48L3N2Zz4=);
+    height: 30px;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}

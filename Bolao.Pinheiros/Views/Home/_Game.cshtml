@@ -1,0 +1,77 @@
+﻿@model Bolao.Pinheiros.Models.Game
+@{
+    const string BASE_URL_LOGO = "https://imagecache.365scores.com/image/upload/f_auto,w_96,h_96,c_limit,q_auto:eco,d_Competitors:default1.png/Competitors/";
+}
+@if (Model != null)
+{
+    <div class="scoreboard">
+        <div class="scoreboard-wrapper">
+            <div class="team away">
+                <div class="team__content">
+                    <div class="team-container">
+                        <div class="team-info">
+                            <div class="team-info-wrapper">
+                                <a class="team-name">
+                                    <span class="short-name">@(Model.homeCompetitor.name)</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="team-info-logo">
+                            @{
+                                var logoUrl = BASE_URL_LOGO + Model.homeCompetitor.id;
+                            }
+                            <a class="logo team-name">
+                                <picture><img class="team-logo" src="@(logoUrl)"></picture>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="score-container">
+                        <span class="score icon-font-after" data-home-away="home" data-stat="score">
+                            @if (Model.homeCompetitor.score >= 0)
+                            {
+                                <text>@(Model.homeCompetitor.score)</text>
+                            }
+                        </span>
+                    </div>
+                </div>
+            </div>
+            @if (Model.startTime > DateTime.Now)
+            {
+                <label class="game-startTime">@(Model.startTime.ToShortTimeString())</label>
+            }
+            else
+            {
+                <label> X </label>
+            }
+            <div class="team home">
+                <div class="team__content">
+                    <div class="score-container">
+                        <span class="score icon-font-before" data-home-away="away" data-stat="score">
+                            @if (Model.homeCompetitor.score >= 0)
+                            {
+                                <text>@(Model.awayCompetitor.score)</text>
+                            }
+                        </span>
+                    </div>
+                    <div class="team-container">
+                        <div class="team-info-logo">
+                            @{
+                                logoUrl = BASE_URL_LOGO + Model.awayCompetitor.id;
+                            }
+                            <a class="logo team-name">
+                                <picture><img class="team-logo" src="@(logoUrl)"></picture>
+                            </a>
+                        </div>
+                        <div class="team-info">
+                            <div class="team-info-wrapper">
+                                <a class="team-name">
+                                    <span class="short-name">@(Model.awayCompetitor.name)</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

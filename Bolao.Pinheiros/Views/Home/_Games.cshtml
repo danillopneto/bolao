@@ -1,0 +1,25 @@
+﻿@model Bolao.Pinheiros.Models.Root
+@{
+    var games = Model.games.OrderBy(x => x.competitionId).ThenBy(x => x.startTime).ThenByDescending(x => x.id).ToList();
+    var gamesByCompetition = games.GroupBy(x => x.competitionId);
+    const string BASE_URL_LOGO = "https://imagecache.365scores.com/image/upload/f_auto,w_96,h_96,c_limit,q_auto:eco,d_Competitors:default1.png/Competitors/";
+}
+@if (Model != null)
+{
+<div class="dados-jogos">
+    @foreach (var competition in gamesByCompetition)
+    {
+    <div class="competition">
+        <div class="competition-title">@(competition.First().competitionDisplayName)</div>
+        @foreach (var game in competition)
+        {
+        <div id="@(game.id)" class="container-jogo">
+            @(Html.Partial("_Game", game))
+            <div class="detalhar-estatisticas">Estatísticas</div>
+            <div class="detalhar-apostas">Apostas</div>
+        </div>
+        }
+    </div>
+    }
+</div>
+}
