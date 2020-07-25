@@ -7,7 +7,12 @@
             <div class="previous-meetings-widget-row-component">
                 <div class=" text-component">@(Model.homeCompetitor.name)</div>
             </div>
-            <div class="previous-meetings-widget-row-component">@(Model.homeCompetitor.score) - @(Model.awayCompetitor.score)</div>
+            <div class="previous-meetings-widget-row-component">
+                @if (Model.homeCompetitor.score >= 0)
+                {
+                    <text>@(Model.homeCompetitor.score)- @(Model.awayCompetitor.score)</text>
+                }
+            </div>
             <div class="previous-meetings-widget-row-component">
                 <div class=" text-component">@(Model.awayCompetitor.name)</div>
             </div>

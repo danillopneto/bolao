@@ -48,10 +48,16 @@ namespace Bolao.Pinheiros.Controllers
         {
             var game = GamesData.games.First(x => x.id == gameId);
             var gameData = GetGameData(game);
-            var previousMeetings = GetPreviousMeetings(gameData.game.previousMeetings);
-            previousMeetings.mainGame = game;
 
-            return PartialView("_Statistics", previousMeetings);
+            var recentGames = new List<int>();
+            recentGames.AddRange(gameData.game.previousMeetings.Take(MAXIMUM_GAMES));
+            recentGames.AddRange(gameData.game.homeCompetitor.recentMatches.Take(MAXIMUM_GAMES));
+            recentGames.AddRange(gameData.game.awayCompetitor.recentMatches.Take(MAXIMUM_GAMES));
+
+            var gameStatistics = GetGamesData(recentGames);
+            gameStatistics.mainGame = game;
+
+            return PartialView("_Statistics", gameStatistics);
         }
 
         public ActionResult Index()
@@ -83,12 +89,12 @@ namespace Bolao.Pinheiros.Controllers
             return GetDataFromApi<GameData>(url);
         }
 
-        private Root GetPreviousMeetings(List<int> previousMeetings)
+        private Root GetGamesData(List<int> gamesIds)
         {
-            previousMeetings = previousMeetings.OrderByDescending(x => x).ToList().Take(MAXIMUM_GAMES).ToList();
-            var url = string.Format(URL_BASE_GAMES, string.Join(",", previousMeetings), DateTime.Now.ToString(DATE_FORMAT));
-            var previousMeetingsData = GetDataFromApi<Root>(url);
-            return previousMeetingsData;
+            gamesIds = gamesIds.OrderByDescending(x => x).ToList();
+            var url = string.Format(URL_BASE_GAMES, string.Join(",", gamesIds), DateTime.Now.ToString(DATE_FORMAT));
+            var gamesData = GetDataFromApi<Root>(url);
+            return gamesData;
         }
 
         private void InsertStatistics(Root model)

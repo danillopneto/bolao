@@ -47,6 +47,11 @@ namespace Bolao.Pinheiros.Models
             return homeCompetitor.score == awayCompetitor.score;
         }
 
+        public bool IsTeamInGame(int teamId)
+        {
+            return homeCompetitor.id == teamId || awayCompetitor.id == teamId;
+        }
+
         public GameCompetitor GetLoser()
         {
             if (homeCompetitor.score < awayCompetitor.score)

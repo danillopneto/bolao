@@ -9,7 +9,7 @@
                     <div class="card__face card__face--front">
                         <div class="negrito">Confronto</div>
                         <br>
-                        @foreach (var game in Model.games.OrderByDescending(x => x.id))
+                        @foreach (var game in Model.GetGamesBetweenTeams().OrderByDescending(x => x.id))
                         {
                             @(Html.Partial("_GameResume", game))
                         }
@@ -18,64 +18,42 @@
                         @(Html.Partial("_GamesStats", Model))
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
         <div class="dados-casa">
-            <div class="negrito"></div>
-            <br>
-            <div class="jogos-em-casa">
-                <div class="negrito">Em casa</div>
-                <br>
-                <div><label class="negrito green vitoria-casa">Vitorias</label><label>0</label></div>
-                <div><label class="negrito red derrota-casa">Derrotas</label><label>2</label></div>
-                <div><label class="negrito blue empate-casa">Empate</label><label>0</label></div>
-                <hr>
-                <div><label class="negrito total-gols">Total de gols</label><label>6</label></div>
-                <div class="total-jogos" style="display:none;">5</div>
-                <div><label class="negrito media-gols">Média de gols</label><label>1.20</label></div>
-                <div><label class="negrito">GP</label><label>1</label></div>
-                <div><label class="negrito">GC</label><label>5</label></div>
-            </div>
-            <div class="jogos-visitante">
-                <div class="negrito"></div>
-                <br>
-                <div><label class="negrito green vitoria-fora">Vitorias</label><label>0</label></div>
-                <div><label class="negrito red derrota-fora">Derrotas</label><label>2</label></div>
-                <div><label class="negrito blue empate-fora">Empate</label><label>1</label></div>
-                <hr>
-                <div><label class="negrito total-gols">Total de gols</label><label>6</label></div>
-                <div><label class="negrito media-gols">Média de gols</label><label>1.20</label></div>
-                <div><label class="negrito">GP</label><label>2</label></div>
-                <div><label class="negrito">GC</label><label>4</label></div>
+            <div class="scene">
+                <div class="flip-card-icon"></div>
+                <div class="card">
+                    <div class="card__face card__face--front">
+                        <div class="negrito">@(Model.mainGame.homeCompetitor.name)</div>
+                        <br>
+                        @foreach (var game in Model.GetHomeGames().OrderByDescending(x => x.id))
+                        {
+                            @(Html.Partial("_GameResume", game))
+                        }
+                    </div>
+                    <div class="card__face card__face--back">
+
+                    </div>
+                </div>
             </div>
         </div>
         <div class="dados-visitante">
-            <div class="negrito"></div>
-            <br>
-            <div class="jogos-em-casa">
-                <div class="negrito">Em casa</div>
-                <br>
-                <div><label class="negrito green vitoria-casa">Vitorias</label><label>0</label></div>
-                <div><label class="negrito red derrota-casa">Derrotas</label><label>1</label></div>
-                <div><label class="negrito blue empate-casa">Empate</label><label>2</label></div>
-                <hr>
-                <div><label class="negrito total-gols">Total de gols</label><label>3</label></div>
-                <div class="total-jogos" style="display:none;">5</div>
-                <div><label class="negrito media-gols">Média de gols</label><label>0.60</label></div>
-                <div><label class="negrito">GP</label><label>1</label></div>
-                <div><label class="negrito">GC</label><label>2</label></div>
-            </div>
-            <div class="jogos-visitante">
-                <div class="negrito">Visitante</div>
-                <br>
-                <div><label class="negrito green vitoria-fora">Vitorias</label><label>0</label></div>
-                <div><label class="negrito red derrota-fora">Derrotas</label><label>1</label></div>
-                <div><label class="negrito blue empate-fora">Empate</label><label>1</label></div>
-                <hr>
-                <div><label class="negrito total-gols">Total de gols</label><label>3</label></div>
-                <div><label class="negrito media-gols">Média de gols</label><label>0.60</label></div>
-                <div><label class="negrito">GP</label><label>0</label></div>
-                <div><label class="negrito">GC</label><label>3</label></div>
+            <div class="scene">
+                <div class="flip-card-icon"></div>
+                <div class="card">
+                    <div class="card__face card__face--front">
+                        <div class="negrito">@(Model.mainGame.awayCompetitor.name)</div>
+                        <br>
+                        @foreach (var game in Model.GetAwayGames().OrderByDescending(x => x.id))
+                        {
+                            @(Html.Partial("_GameResume", game))
+                        }
+                    </div>
+                    <div class="card__face card__face--back">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
