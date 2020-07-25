@@ -2,47 +2,47 @@
 @if (Model != null && Model.games != null && Model.games.Any())
 {
     <div class="game-stats">
-        <div class="negrito">Estatísticas - Confronto</div>
+        <div class="negrito">Estatísticas - @(Model.mainGame.homeCompetitor.name)</div>
         <br>
         <div class="game-stats-info">
             <div class="team-victory">
-                <label class="team negrito">@(Model.mainGame.homeCompetitor.name)</label>
-                <label class="team-value">@(Model.GetHomeWinningsBetween().Count())</label>
+                <label class="team negrito">Vitórias</label>
+                <label class="team-value">@(Model.GetHomeWinnings().Count())</label>
             </div>
             <div class="team-victory">
-                <label class="team negrito">@(Model.mainGame.awayCompetitor.name)</label>
-                <label class="team-value">@(Model.GetAwayWinningsBetween().Count())</label>
+                <label class="team negrito">Derrotas</label>
+                <label class="team-value">@(Model.GetHomeDefeats().Count())</label>
             </div>
             <div class="team-draw">
                 <label class="team negrito">Empate</label>
-                <label class="team-value">@(Model.GetDraws().Count())</label>
+                <label class="team-value">@(Model.GetHomeDraws().Count())</label>
             </div>
         </div>
         <div class="game-stats-info">
             <div class="head-head-score">
                 <label class="team negrito">Gols</label>
-                <label class="team-value">@(Model.GetGoalsBetween())</label>
+                <label class="team-value">@(Model.GetHomeGamesGoals())</label>
             </div>
             <div class="head-head-score">
                 <label class="team negrito">Média de gols</label>
-                <label class="team-value">@(Model.GetAverageGoalsBetween())</label>
+                <label class="team-value">@(Model.GetAverageGoalsHome())</label>
             </div>
             <div class="head-head-score">
                 <label class="team negrito">Ambos marcaram</label>
                 <label class="team-value p-0">
                     @{
-                        var bothScored = Model.GetGamesBetweenTeams().Where(x => x.DidBothTeamScore()).Count();
+                        var bothScored = Model.GetHomeGames().Where(x => x.DidBothTeamScore()).Count();
                     }
-                    @(bothScored) jogos - @(((double)bothScored) / ((double)Model.GetGamesBetweenTeams().Count()) * 100)%
+                    @(bothScored) jogos - @(((double)bothScored) / ((double)Model.GetHomeGames().Count()) * 100) %
                 </label>
             </div>
             <div class="head-head-score">
                 <label class="team negrito">Ambos não marcaram</label>
                 <label class="team-value p-0">
                     @{
-                        var bothDidntScore = Model.GetGamesBetweenTeams().Where(x => !x.DidBothTeamScore()).Count();
+                        var bothDidntScore = Model.GetHomeGames().Where(x => !x.DidBothTeamScore()).Count();
                     }
-                    @(bothDidntScore) jogos - @(((double)bothDidntScore) / ((double)Model.GetGamesBetweenTeams().Count()) * 100)%
+                    @(bothDidntScore) jogos - @(((double)bothDidntScore) / ((double)Model.GetHomeGames().Count()) * 100) %
                 </label>
             </div>
         </div>
@@ -52,16 +52,16 @@
                 <label class="team-value">@(Model.GetGoalsHomeBetween())</label>
             </div>
             <div class="head-head-score">
-                <label class="team negrito">GP @(Model.mainGame.awayCompetitor.name)</label>
+                <label class="team negrito">GC @(Model.mainGame.homeCompetitor.name)</label>
                 <label class="team-value">@(Model.GetGoalsAwayBetween())</label>
             </div>
             <div class="max-score">
                 <label class="team negrito">Maior quantidade de gols em um jogo</label>
-                <label class="team-value">@(Model.GetMaximumGoalsBetween())</label>
+                <label class="team-value">@(Model.GetMaximumScoresHome())</label>
             </div>
             <div class="minimum-score">
                 <label class="team negrito">Menor quantidade de gols em um jogo</label>
-                <label class="team-value">@(Model.GetMinimumGoalsBetween())</label>
+                <label class="team-value">@(Model.GetMinimumScoresHome())</label>
             </div>
         </div>
     </div>

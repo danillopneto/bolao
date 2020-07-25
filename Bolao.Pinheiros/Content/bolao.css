@@ -8,6 +8,10 @@ body {
     color: #48494a;
 }
 
+.p-0 {
+    padding: 0 !important;
+}
+
 .dados-jogos div.scoreboard-wrapper {
     display: flex;
     display: -webkit-box;
@@ -34,13 +38,13 @@ body {
     font-size: 12px;
 }
 
-.dados-jogos div label.posicao:first-child {
-    border-right: none;
-}
+    .dados-jogos div label.posicao:first-child {
+        border-right: none;
+    }
 
-.dados-jogos div label.posicao:last-child {
-    border-left: none;
-}
+    .dados-jogos div label.posicao:last-child {
+        border-left: none;
+    }
 
 .dados-jogos .team-logo {
     vertical-align: top;
@@ -198,18 +202,18 @@ body {
     font-size: 14px;
 }
 
-.previous-meetings-widget-row-component.game-data > div {
-    padding: 0 5px;
-    width: 25%;
-}
+    .previous-meetings-widget-row-component.game-data > div {
+        padding: 0 5px;
+        width: 25%;
+    }
 
-.previous-meetings-widget-row-component.game-data > div:first-child {
-    text-align: right;
-}
+        .previous-meetings-widget-row-component.game-data > div:first-child {
+            text-align: right;
+        }
 
-.previous-meetings-widget-row-component.game-data > div:last-child {
-    text-align: left;
-}
+        .previous-meetings-widget-row-component.game-data > div:last-child {
+            text-align: left;
+        }
 
 .previous-meetings-widget-row-component.subtitle {
     -webkit-box-pack: center;
@@ -224,7 +228,11 @@ body {
 .team-victory,
 .team-draw,
 .head-head-score {
-    display: inline;
+    display: inline-block;
+}
+
+.head-head-score {
+    width: 49%;
 }
 
 .flip-card-icon {

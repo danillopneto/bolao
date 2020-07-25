@@ -225,6 +225,8 @@
     <Content Include="Views\Home\_Game.cshtml" />
     <Content Include="Views\Home\_GameResume.cshtml" />
     <Content Include="Views\Home\_GamesStats.cshtml" />
+    <Content Include="Views\Home\_GamesStatsHome.cshtml" />
+    <Content Include="Views\Home\_GamesStatsAway.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

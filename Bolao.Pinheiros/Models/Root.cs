@@ -5,6 +5,8 @@ namespace Bolao.Pinheiros.Models
 {
     public class Root
     {
+        private List<Game> _gamesBetweenTeams;
+
         public List<Bookmaker> bookmakers { get; set; }
         public List<Competition> competitions { get; set; }
         public List<GameCompetitor> competitors { get; set; }
@@ -17,9 +19,16 @@ namespace Bolao.Pinheiros.Models
         public List<Sport> sports { get; set; }
         public int ttl { get; set; }
 
-        public double GetAverageGoals()
+        #region " AWAY TEAM "
+
+        public IEnumerable<Game> GetAwayDefeats()
         {
-            return GetGoals() / GetGamesBetweenTeams().Count();
+            return GetAwayGames().Where(x => x.GetWinner() != null && x.GetWinner().id != mainGame.homeCompetitor.id);
+        }
+
+        public IEnumerable<Game> GetAwayDraws()
+        {
+            return GetAwayGames().Where(x => x.IsDraw());
         }
 
         public List<Game> GetAwayGames()
@@ -32,21 +41,26 @@ namespace Bolao.Pinheiros.Models
 
         public IEnumerable<Game> GetAwayWinnings()
         {
+            return GetAwayGames().Where(x => x.GetWinner() != null && x.GetWinner().id == mainGame.awayCompetitor.id);
+        }
+
+        public IEnumerable<Game> GetAwayWinningsBetween()
+        {
             return GetGamesBetweenTeams().Where(x => x.GetWinner() != null && x.GetWinner().id == mainGame.awayCompetitor.id);
         }
 
-        public IEnumerable<Game> GetDraws()
+        #endregion " AWAY TEAM "
+
+        #region " HOME TEAM "
+
+        public IEnumerable<Game> GetHomeDefeats()
         {
-            return GetGamesBetweenTeams().Where(x => x.IsDraw());
+            return GetHomeGames().Where(x => x.GetWinner() != null && x.GetWinner().id != mainGame.homeCompetitor.id);
         }
 
-        public List<Game> GetGamesBetweenTeams()
+        public IEnumerable<Game> GetHomeDraws()
         {
-            var gamesBetweenTeams = games.Where(x => x.homeCompetitor.id == mainGame.homeCompetitor.id
-                                                    && x.awayCompetitor.id == mainGame.awayCompetitor.id).ToList();
-            gamesBetweenTeams.AddRange(games.Where(x => x.homeCompetitor.id == mainGame.awayCompetitor.id
-                                                    && x.awayCompetitor.id == mainGame.homeCompetitor.id).ToList());
-            return gamesBetweenTeams;
+            return GetHomeGames().Where(x => x.IsDraw());
         }
 
         public List<Game> GetHomeGames()
@@ -57,36 +71,110 @@ namespace Bolao.Pinheiros.Models
             return homeGames;
         }
 
-        public double GetGoals()
+        public IEnumerable<Game> GetHomeWinnings()
         {
-            return GetGamesBetweenTeams().Sum(x => x.homeCompetitor.score + x.awayCompetitor.score);
+            return GetHomeGames().Where(x => x.GetWinner() != null && x.GetWinner().id == mainGame.homeCompetitor.id);
         }
 
-        public double GetGoalsAway()
+        public IEnumerable<Game> GetHomeWinningsBetween()
+        {
+            return GetGamesBetweenTeams().Where(x => x.GetWinner() != null && x.GetWinner().id == mainGame.homeCompetitor.id);
+        }
+
+        #endregion " HOME TEAM "
+
+        public IEnumerable<Game> GetDraws()
+        {
+            return GetGamesBetweenTeams().Where(x => x.IsDraw());
+        }
+
+        public List<Game> GetGamesBetweenTeams()
+        {
+            if (_gamesBetweenTeams == null)
+            {
+                _gamesBetweenTeams = games.Where(x => x.homeCompetitor.id == mainGame.homeCompetitor.id
+                                                       && x.awayCompetitor.id == mainGame.awayCompetitor.id).ToList();
+                _gamesBetweenTeams.AddRange(games.Where(x => x.homeCompetitor.id == mainGame.awayCompetitor.id
+                                                        && x.awayCompetitor.id == mainGame.homeCompetitor.id).ToList());
+            }
+
+            return _gamesBetweenTeams;
+        }
+
+        #region " SCORES "
+
+        public double GetAverageGoalsAway()
+        {
+            return GetAwayGamesGoals() / GetHomeGames().Count();
+        }
+
+        public double GetAverageGoalsBetween()
+        {
+            return GetGoalsBetween() / GetGamesBetweenTeams().Count();
+        }
+
+        public double GetAverageGoalsHome()
+        {
+            return GetHomeGamesGoals() / GetHomeGames().Count();
+        }
+
+        public double GetAwayGamesGoals()
+        {
+            return GetAwayGames().Sum(x => x.homeCompetitor.score + x.awayCompetitor.score);
+        }
+
+        public double GetGoalsAwayBetween()
         {
             return GetGamesBetweenTeams().Where(x => x.homeCompetitor.id == mainGame.awayCompetitor.id).Sum(x => x.homeCompetitor.score)
                     + GetGamesBetweenTeams().Where(x => x.awayCompetitor.id == mainGame.awayCompetitor.id).Sum(x => x.awayCompetitor.score);
         }
 
-        public double GetGoalsHome()
+        public double GetGoalsBetween()
+        {
+            return GetGamesBetweenTeams().Sum(x => x.homeCompetitor.score + x.awayCompetitor.score);
+        }
+
+        public double GetGoalsHomeBetween()
         {
             return GetGamesBetweenTeams().Where(x => x.homeCompetitor.id == mainGame.homeCompetitor.id).Sum(x => x.homeCompetitor.score)
                     + GetGamesBetweenTeams().Where(x => x.awayCompetitor.id == mainGame.homeCompetitor.id).Sum(x => x.awayCompetitor.score);
         }
 
-        public IEnumerable<Game> GetHomeWinnings()
+        public double GetHomeGamesGoals()
         {
-            return GetGamesBetweenTeams().Where(x => x.GetWinner() != null && x.GetWinner().id == mainGame.homeCompetitor.id);
+            return GetHomeGames().Sum(x => x.homeCompetitor.score + x.awayCompetitor.score);
         }
 
-        public double GetMaximumScores()
+        public double GetMaximumGoalsBetween()
         {
             return GetGamesBetweenTeams().Max(x => x.awayCompetitor.score + x.homeCompetitor.score);
         }
 
-        public double GetMinimumScores()
+        public double GetMaximumScoresAway()
+        {
+            return GetAwayGames().Max(x => x.awayCompetitor.score + x.homeCompetitor.score);
+        }
+
+        public double GetMaximumScoresHome()
+        {
+            return GetHomeGames().Max(x => x.awayCompetitor.score + x.homeCompetitor.score);
+        }
+
+        public double GetMinimumGoalsBetween()
         {
             return GetGamesBetweenTeams().Min(x => x.awayCompetitor.score + x.homeCompetitor.score);
         }
+
+        public double GetMinimumScoresAway()
+        {
+            return GetAwayGames().Min(x => x.awayCompetitor.score + x.homeCompetitor.score);
+        }
+
+        public double GetMinimumScoresHome()
+        {
+            return GetHomeGames().Min(x => x.awayCompetitor.score + x.homeCompetitor.score);
+        }
+
+        #endregion " SCORES "
     }
 }

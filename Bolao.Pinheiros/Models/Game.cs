@@ -42,6 +42,12 @@ namespace Bolao.Pinheiros.Models
         public List<Widget> widgets { get; set; }
         public List<Prediction> predictions { get; set; }
 
+        public bool DidBothTeamScore()
+        {
+            return homeCompetitor.score > 0
+                    && awayCompetitor.score > 0;
+        }
+
         public bool IsDraw()
         {
             return homeCompetitor.score == awayCompetitor.score;
