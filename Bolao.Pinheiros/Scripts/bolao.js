@@ -39,9 +39,9 @@ $(document).ready(function () {
     });
 
     $(document).tooltip({
-        classes: {
-            "ui-tooltip": "tooltip-bolao"
-        }
+        classes: { "ui-tooltip": "tooltip-bolao" },
+        position: { my: "left top+5", at: "left bottom", collision: "flipfit" },
+        track: true
     });
 });
 

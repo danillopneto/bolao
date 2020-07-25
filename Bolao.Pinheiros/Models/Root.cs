@@ -75,7 +75,7 @@ namespace Bolao.Pinheiros.Models
 
         public IEnumerable<GameCompetitor> GetHomeDefeatsTeams()
         {
-            return GetHomeDefeats().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.awayCompetitor.id)).ToList();
+            return GetHomeDefeats().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.homeCompetitor.id)).ToList();
         }
 
         public IEnumerable<Game> GetHomeDraws()
@@ -150,7 +150,7 @@ namespace Bolao.Pinheiros.Models
 
         public double GetAwayGamesGoals()
         {
-            return GetAwayGames().Sum(x => x.homeCompetitor.score + x.awayCompetitor.score);
+            return GetAwayGames().Sum(x => x.GetSumScore());
         }
 
         public double GetGoalsAwayBetween()
@@ -161,7 +161,7 @@ namespace Bolao.Pinheiros.Models
 
         public double GetGoalsBetween()
         {
-            return GetGamesBetweenTeams().Sum(x => x.homeCompetitor.score + x.awayCompetitor.score);
+            return GetGamesBetweenTeams().Sum(x => x.GetSumScore());
         }
 
         public double GetGoalsHomeBetween()
@@ -170,39 +170,69 @@ namespace Bolao.Pinheiros.Models
                     + GetGamesBetweenTeams().Where(x => x.awayCompetitor.id == mainGame.homeCompetitor.id).Sum(x => x.awayCompetitor.score);
         }
 
+        public Game GetGreaterAwayScore()
+        {
+            return GetAwayGames().First(x => x.GetSumScore() == GetMaximumGoalsAway());
+        }
+
+        public Game GetGreaterBetweenScore()
+        {
+            return GetGamesBetweenTeams().First(x => x.GetSumScore() == GetMaximumGoalsBetween());
+        }
+
+        public Game GetGreaterHomeScore()
+        {
+            return GetHomeGames().First(x => x.GetSumScore() == GetMaximumGoalsHome());
+        }
+
         public double GetHomeGamesGoals()
         {
-            return GetHomeGames().Sum(x => x.homeCompetitor.score + x.awayCompetitor.score);
+            return GetHomeGames().Sum(x => x.GetSumScore());
+        }
+
+        public Game GetLowerAwayScore()
+        {
+            return GetAwayGames().First(x => x.GetSumScore() == GetMinimumGoalsAway());
+        }
+
+        public Game GetLowerBetweenScore()
+        {
+            return GetGamesBetweenTeams().First(x => x.GetSumScore() == GetMinimumGoalsBetween());
+        }
+
+        public Game GetLowerHomeScore()
+        {
+            return GetHomeGames().First(x => x.GetSumScore() == GetMinimumGoalsHome());
+        }
+
+        public double GetMaximumGoalsAway()
+        {
+            return GetAwayGames().Max(x => x.GetSumScore());
         }
 
         public double GetMaximumGoalsBetween()
         {
-            return GetGamesBetweenTeams().Max(x => x.awayCompetitor.score + x.homeCompetitor.score);
+            return GetGamesBetweenTeams().Max(x => x.GetSumScore());
         }
 
-        public double GetMaximumScoresAway()
+        public double GetMaximumGoalsHome()
         {
-            return GetAwayGames().Max(x => x.awayCompetitor.score + x.homeCompetitor.score);
+            return GetHomeGames().Max(x => x.GetSumScore());
         }
 
-        public double GetMaximumScoresHome()
+        public double GetMinimumGoalsAway()
         {
-            return GetHomeGames().Max(x => x.awayCompetitor.score + x.homeCompetitor.score);
+            return GetAwayGames().Min(x => x.GetSumScore());
         }
 
         public double GetMinimumGoalsBetween()
         {
-            return GetGamesBetweenTeams().Min(x => x.awayCompetitor.score + x.homeCompetitor.score);
+            return GetGamesBetweenTeams().Min(x => x.GetSumScore());
         }
 
-        public double GetMinimumScoresAway()
+        public double GetMinimumGoalsHome()
         {
-            return GetAwayGames().Min(x => x.awayCompetitor.score + x.homeCompetitor.score);
-        }
-
-        public double GetMinimumScoresHome()
-        {
-            return GetHomeGames().Min(x => x.awayCompetitor.score + x.homeCompetitor.score);
+            return GetHomeGames().Min(x => x.GetSumScore());
         }
 
         #endregion " SCORES "

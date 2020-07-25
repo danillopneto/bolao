@@ -55,13 +55,13 @@
                 <label class="team negrito">GC @(Model.mainGame.awayCompetitor.name)</label>
                 <label class="team-value">@(Model.GetGoalsAwayBetween())</label>
             </div>
-            <div class="max-score">
+            <div class="max-score" title="@(Model.GetGreaterAwayScore().ToString())">
                 <label class="team negrito">Maior quantidade de gols em um jogo</label>
-                <label class="team-value">@(Model.GetMaximumScoresAway())</label>
+                <label class="team-value">@(Model.GetMaximumGoalsAway())</label>
             </div>
-            <div class="minimum-score">
+            <div class="minimum-score" title="@(Model.GetLowerAwayScore().ToString())">
                 <label class="team negrito">Menor quantidade de gols em um jogo</label>
-                <label class="team-value">@(Model.GetMinimumScoresAway())</label>
+                <label class="team-value">@(Model.GetMinimumGoalsAway())</label>
             </div>
         </div>
     </div>

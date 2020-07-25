@@ -253,3 +253,7 @@ body {
     padding: 5px;
     font-weight: bold;
 }
+
+.previous-meetings-widget-row-component {
+    white-space: nowrap;
+}

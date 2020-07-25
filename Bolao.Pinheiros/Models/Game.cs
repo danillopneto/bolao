@@ -86,6 +86,11 @@ namespace Bolao.Pinheiros.Models
             return null;
         }
 
+        public double GetSumScore()
+        {
+            return homeCompetitor.score + awayCompetitor.score;
+        }
+
         public GameCompetitor GetWinner()
         {
             if (homeCompetitor.score > awayCompetitor.score)
@@ -98,6 +103,17 @@ namespace Bolao.Pinheiros.Models
             }
 
             return null;
+        }
+
+        public override string ToString()
+        {
+            return string.Format(
+                                 "{0} {1} x {2} {3} - {4}",
+                                 homeCompetitor.name,
+                                 homeCompetitor.score >= 0 ? homeCompetitor.score.ToString() : string.Empty,
+                                 awayCompetitor.score >= 0 ? awayCompetitor.score.ToString() : string.Empty,
+                                 awayCompetitor.name,
+                                 startTime.ToShortDateString());
         }
     }
 }
