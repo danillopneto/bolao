@@ -46,7 +46,7 @@ namespace Bolao.Pinheiros.Models
             var gamesBetweenTeams = GetGamesBetweenTeams();
             var awayGames = games.Where(x => gamesBetweenTeams.All(g => g.id != x.id)
                                             && x.IsTeamInGame(mainGame.awayCompetitor.id)).ToList();
-            return awayGames;
+            return FixGamesWithoutScore(awayGames);
         }
 
         public IEnumerable<Game> GetAwayWinnings()
@@ -93,7 +93,7 @@ namespace Bolao.Pinheiros.Models
             var gamesBetweenTeams = GetGamesBetweenTeams();
             var homeGames = games.Where(x => gamesBetweenTeams.All(g => g.id != x.id)
                                             && x.IsTeamInGame(mainGame.homeCompetitor.id)).ToList();
-            return homeGames;
+            return FixGamesWithoutScore(homeGames);
         }
 
         public IEnumerable<Game> GetHomeWinnings()
@@ -128,7 +128,7 @@ namespace Bolao.Pinheiros.Models
                                                         && x.awayCompetitor.id == mainGame.homeCompetitor.id).ToList());
             }
 
-            return _gamesBetweenTeams;
+            return FixGamesWithoutScore(_gamesBetweenTeams);
         }
 
         #region " SCORES "
@@ -236,5 +236,10 @@ namespace Bolao.Pinheiros.Models
         }
 
         #endregion " SCORES "
+
+        private List<Game> FixGamesWithoutScore(List<Game> games)
+        {
+            return games.Where(x => x.GetSumScore() != -2).ToList();
+        }
     }
 }
