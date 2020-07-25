@@ -23,12 +23,22 @@ namespace Bolao.Pinheiros.Models
 
         public IEnumerable<Game> GetAwayDefeats()
         {
-            return GetAwayGames().Where(x => x.GetWinner() != null && x.GetWinner().id != mainGame.homeCompetitor.id);
+            return GetAwayGames().Where(x => x.GetWinner() != null && x.GetWinner().id != mainGame.awayCompetitor.id);
+        }
+
+        public IEnumerable<GameCompetitor> GetAwayDefeatsTeams()
+        {
+            return GetAwayDefeats().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.awayCompetitor.id)).ToList();
         }
 
         public IEnumerable<Game> GetAwayDraws()
         {
             return GetAwayGames().Where(x => x.IsDraw());
+        }
+
+        public IEnumerable<GameCompetitor> GetAwayDrawsTeams()
+        {
+            return GetAwayDraws().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.awayCompetitor.id)).ToList();
         }
 
         public List<Game> GetAwayGames()
@@ -49,6 +59,11 @@ namespace Bolao.Pinheiros.Models
             return GetGamesBetweenTeams().Where(x => x.GetWinner() != null && x.GetWinner().id == mainGame.awayCompetitor.id);
         }
 
+        public IEnumerable<GameCompetitor> GetAwayWinningsTeams()
+        {
+            return GetAwayWinnings().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.awayCompetitor.id)).ToList();
+        }
+
         #endregion " AWAY TEAM "
 
         #region " HOME TEAM "
@@ -58,9 +73,19 @@ namespace Bolao.Pinheiros.Models
             return GetHomeGames().Where(x => x.GetWinner() != null && x.GetWinner().id != mainGame.homeCompetitor.id);
         }
 
+        public IEnumerable<GameCompetitor> GetHomeDefeatsTeams()
+        {
+            return GetHomeDefeats().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.awayCompetitor.id)).ToList();
+        }
+
         public IEnumerable<Game> GetHomeDraws()
         {
             return GetHomeGames().Where(x => x.IsDraw());
+        }
+
+        public IEnumerable<GameCompetitor> GetHomeDrawsTeams()
+        {
+            return GetHomeDraws().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.homeCompetitor.id)).ToList();
         }
 
         public List<Game> GetHomeGames()
@@ -79,6 +104,11 @@ namespace Bolao.Pinheiros.Models
         public IEnumerable<Game> GetHomeWinningsBetween()
         {
             return GetGamesBetweenTeams().Where(x => x.GetWinner() != null && x.GetWinner().id == mainGame.homeCompetitor.id);
+        }
+
+        public IEnumerable<GameCompetitor> GetHomeWinningsTeams()
+        {
+            return GetHomeWinnings().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.homeCompetitor.id)).ToList();
         }
 
         #endregion " HOME TEAM "

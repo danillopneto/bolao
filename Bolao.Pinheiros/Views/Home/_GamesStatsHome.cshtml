@@ -5,15 +5,15 @@
         <div class="negrito">Estatísticas - @(Model.mainGame.homeCompetitor.name)</div>
         <br>
         <div class="game-stats-info">
-            <div class="team-victory">
+            <div class="team-victory" title="@(string.Join(", ", Model.GetHomeWinningsTeams().Select(x => x.name)))">
                 <label class="team negrito">Vitórias</label>
                 <label class="team-value">@(Model.GetHomeWinnings().Count())</label>
             </div>
-            <div class="team-victory">
+            <div class="team-victory" title="@(string.Join(", ", Model.GetHomeDefeatsTeams().Select(x => x.name)))">
                 <label class="team negrito">Derrotas</label>
                 <label class="team-value">@(Model.GetHomeDefeats().Count())</label>
             </div>
-            <div class="team-draw">
+            <div class="team-draw" title="@(string.Join(", ", Model.GetHomeDrawsTeams().Select(x => x.name)))">
                 <label class="team negrito">Empate</label>
                 <label class="team-value">@(Model.GetHomeDraws().Count())</label>
             </div>

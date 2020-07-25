@@ -5,15 +5,15 @@
         <div class="negrito">Estatísticas - @(Model.mainGame.awayCompetitor.name)</div>
         <br>
         <div class="game-stats-info">
-            <div class="team-victory">
+            <div class="team-victory" title="@(string.Join(", ", Model.GetAwayWinningsTeams().Select(x => x.name)))">
                 <label class="team negrito">Vitórias</label>
                 <label class="team-value">@(Model.GetAwayWinnings().Count())</label>
             </div>
-            <div class="team-victory">
+            <div class="team-victory" title="@(string.Join(", ", Model.GetAwayDefeatsTeams().Select(x => x.name)))">
                 <label class="team negrito">Derrotas</label>
                 <label class="team-value">@(Model.GetAwayDefeats().Count())</label>
             </div>
-            <div class="team-draw">
+            <div class="team-draw" title="@(string.Join(", ", Model.GetAwayDrawsTeams().Select(x => x.name)))">
                 <label class="team negrito">Empate</label>
                 <label class="team-value">@(Model.GetAwayDraws().Count())</label>
             </div>

@@ -37,6 +37,12 @@ $(document).ready(function () {
             loading.hide();
         }
     });
+
+    $(document).tooltip({
+        classes: {
+            "ui-tooltip": "tooltip-bolao"
+        }
+    });
 });
 
 var getGamesOnDate = function () {

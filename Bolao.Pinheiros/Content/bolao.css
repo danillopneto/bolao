@@ -105,6 +105,7 @@ body {
 .apostas {
     text-align: center;
     display: none;
+    border: 1px solid rgb(196, 216, 255);
 }
 
 .detalhar-estatisticas,
@@ -139,7 +140,7 @@ body {
 }
 
 .estatisticas, .apostas {
-    padding: 5px 0;
+    padding: 5px 0 0 0;
 }
 
 .negrito {
@@ -243,4 +244,12 @@ body {
     background-position: center;
     margin-bottom: 10px;
     cursor: pointer;
+}
+
+.ui-widget.tooltip-bolao {
+    font-size: 12px;
+    background-color: #c4d8ff;
+    border-radius: 20px;
+    padding: 5px;
+    font-weight: bold;
 }
