@@ -33,7 +33,7 @@
                     @{
                         var bothScored = Model.GetHomeGames().Where(x => x.DidBothTeamScore()).Count();
                     }
-                    @(bothScored) jogos - @(((double)bothScored) / ((double)Model.GetHomeGames().Count()) * 100) %
+                    @(bothScored) jogos - @(MathUtils.CalcPercent(bothScored, Model.GetHomeGames().Count()))%
                 </label>
             </div>
             <div class="head-head-score">
@@ -42,18 +42,18 @@
                     @{
                         var bothDidntScore = Model.GetHomeGames().Where(x => !x.DidBothTeamScore()).Count();
                     }
-                    @(bothDidntScore) jogos - @(((double)bothDidntScore) / ((double)Model.GetHomeGames().Count()) * 100) %
+                    @(bothDidntScore) jogos - @(MathUtils.CalcPercent(bothDidntScore, Model.GetHomeGames().Count()))%
                 </label>
             </div>
         </div>
         <div class="game-stats-info">
             <div class="head-head-score">
                 <label class="team negrito">GP @(Model.mainGame.homeCompetitor.name)</label>
-                <label class="team-value">@(Model.GetGoalsHomeBetween())</label>
+                <label class="team-value">@(Model.GetHomeGamesGP())</label>
             </div>
             <div class="head-head-score">
                 <label class="team negrito">GC @(Model.mainGame.homeCompetitor.name)</label>
-                <label class="team-value">@(Model.GetGoalsAwayBetween())</label>
+                <label class="team-value">@(Model.GetHomeGamesGC())</label>
             </div>
             <div class="max-score" title="@(Model.GetGreaterHomeScore().ToString())">
                 <label class="team negrito">Maior quantidade de gols em um jogo</label>
@@ -62,6 +62,35 @@
             <div class="minimum-score" title="@(Model.GetLowerHomeScore().ToString())">
                 <label class="team negrito">Menor quantidade de gols em um jogo</label>
                 <label class="team-value">@(Model.GetMinimumGoalsHome())</label>
+            </div>
+        </div>
+        <div class="game-goals-info">
+            <div class="game-goals-first-minutes">
+                <label class="team negrito">Gols nos primeiros 10 minutos</label>
+                <label class="team-value">
+                    @{
+                        var firstTenMinutes = Model.GetGoalsFirstTenMinutesHome();
+                    }
+                    @(firstTenMinutes) - @(MathUtils.CalcPercent(firstTenMinutes, Model.GetHomeGamesGoals()))%
+                </label>
+            </div>
+            <div class="head-head-score">
+                <label class="team negrito">Gols no 1º tempo</label>
+                <label class="team-value">
+                    @{
+                        var firstHalf = Model.GetGoalsFirstHalfHome();
+                    }
+                    @(firstHalf) - @(MathUtils.CalcPercent(firstHalf, Model.GetHomeGamesGoals()))%
+                </label>
+            </div>
+            <div class="max-score">
+                <label class="team negrito">Gols no 2º tempo</label>
+                <label class="team-value">
+                    @{
+                        var secondHalf = Model.GetGoalsSecondHalfHome();
+                    }
+                    @(secondHalf) - @(MathUtils.CalcPercent(secondHalf, Model.GetHomeGamesGoals()))%
+                </label>
             </div>
         </div>
     </div>

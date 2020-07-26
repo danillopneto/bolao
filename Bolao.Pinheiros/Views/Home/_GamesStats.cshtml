@@ -33,7 +33,7 @@
                     @{
                         var bothScored = Model.GetGamesBetweenTeams().Where(x => x.DidBothTeamScore()).Count();
                     }
-                    @(bothScored) jogos - @(((double)bothScored) / ((double)Model.GetGamesBetweenTeams().Count()) * 100)%
+                    @(bothScored) jogos - @(MathUtils.CalcPercent(bothScored, Model.GetGamesBetweenTeams().Count()))%
                 </label>
             </div>
             <div class="head-head-score">
@@ -42,7 +42,7 @@
                     @{
                         var bothDidntScore = Model.GetGamesBetweenTeams().Where(x => !x.DidBothTeamScore()).Count();
                     }
-                    @(bothDidntScore) jogos - @(((double)bothDidntScore) / ((double)Model.GetGamesBetweenTeams().Count()) * 100)%
+                    @(bothDidntScore) jogos - @(MathUtils.CalcPercent(bothDidntScore, Model.GetGamesBetweenTeams().Count()))%
                 </label>
             </div>
         </div>
@@ -62,6 +62,35 @@
             <div class="minimum-score" title="@(Model.GetLowerBetweenScore().ToString())">
                 <label class="team negrito">Menor quantidade de gols em um jogo</label>
                 <label class="team-value">@(Model.GetMinimumGoalsBetween())</label>
+            </div>
+        </div>
+        <div class="game-goals-info">
+            <div class="game-goals-first-minutes">
+                <label class="team negrito">Gols nos primeiros 10 minutos</label>
+                <label class="team-value">
+                    @{
+                        var firstTenMinutes = Model.GetGoalsFirstTenMinutesBetween();
+                    }
+                    @(firstTenMinutes) - @(MathUtils.CalcPercent(firstTenMinutes, Model.GetGoalsBetween()))%
+                </label>
+            </div>
+            <div class="head-head-score">
+                <label class="team negrito">Gols no 1º tempo</label>
+                <label class="team-value">
+                    @{
+                        var firstHalf = Model.GetGoalsFirstHalfBetween();
+                    }
+                    @(firstHalf) - @(MathUtils.CalcPercent(firstHalf, Model.GetGoalsBetween()))%
+                </label>
+            </div>
+            <div class="max-score">
+                <label class="team negrito">Gols no 2º tempo</label>
+                <label class="team-value">
+                    @{
+                        var secondHalf = Model.GetGoalsSecondHalfBetween();
+                    }
+                    @(secondHalf) - @(MathUtils.CalcPercent(secondHalf, Model.GetGoalsBetween()))%
+                </label>
             </div>
         </div>
     </div>
