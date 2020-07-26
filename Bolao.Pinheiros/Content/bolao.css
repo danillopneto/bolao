@@ -228,11 +228,13 @@ body {
 
 .team-victory,
 .team-draw,
-.head-head-score {
+.head-head-score,
+.game-goals-info div {
     display: inline-block;
 }
 
-.head-head-score {
+.head-head-score,
+.game-goals-info div {
     width: 49%;
 }
 
@@ -263,7 +265,7 @@ body {
     padding: 10px;
 }
 
-.competition-filter span.select2,
-.games-filter span.select2 {
-    width: 100% !important;
-}
+    .competition-filter span.select2,
+    .games-filter span.select2 {
+        width: 100% !important;
+    }

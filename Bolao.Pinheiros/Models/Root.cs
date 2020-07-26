@@ -133,6 +133,21 @@ namespace Bolao.Pinheiros.Models
 
         #region " GOALS BY TIME "
 
+        public int GetGoalsFirstExtraTimeAway()
+        {
+            return GetAwayGames().Sum(x => x.GetGoalsFirstExtraTime());
+        }
+
+        public int GetGoalsFirstExtraTimeBetween()
+        {
+            return GetGamesBetweenTeams().Sum(x => x.GetGoalsFirstExtraTime());
+        }
+
+        public int GetGoalsFirstExtraTimeHome()
+        {
+            return GetHomeGames().Sum(x => x.GetGoalsFirstExtraTime());
+        }
+
         public int GetGoalsFirstHalfAway()
         {
             return GetAwayGames().Sum(x => x.GetGoalsFirstHalf());
@@ -163,6 +178,21 @@ namespace Bolao.Pinheiros.Models
             return GetHomeGames().Sum(x => x.GetGoalsFirstTenMinutes());
         }
 
+        public int GetGoalsSecondExtraTimeAway()
+        {
+            return GetAwayGames().Sum(x => x.GetGoalsSecondExtraTime());
+        }
+
+        public int GetGoalsSecondExtraTimeBetween()
+        {
+            return GetGamesBetweenTeams().Sum(x => x.GetGoalsSecondExtraTime());
+        }
+
+        public int GetGoalsSecondExtraTimeHome()
+        {
+            return GetHomeGames().Sum(x => x.GetGoalsSecondExtraTime());
+        }
+        
         public int GetGoalsSecondHalfAway()
         {
             return GetAwayGames().Sum(x => x.GetGoalsSecondHalf());

@@ -65,8 +65,9 @@
             </div>
         </div>
         <div class="game-goals-info">
+            <div class="negrito">Gols</div>
             <div class="game-goals-first-minutes">
-                <label class="team negrito">Gols nos primeiros 10 minutos</label>
+                <label class="team negrito">Primeiros 10 minutos</label>
                 <label class="team-value">
                     @{
                         var firstTenMinutes = Model.GetGoalsFirstTenMinutesAway();
@@ -75,7 +76,7 @@
                 </label>
             </div>
             <div class="head-head-score">
-                <label class="team negrito">Gols no 1º tempo</label>
+                <label class="team negrito">1º tempo</label>
                 <label class="team-value">
                     @{
                         var firstHalf = Model.GetGoalsFirstHalfAway();
@@ -84,12 +85,30 @@
                 </label>
             </div>
             <div class="max-score">
-                <label class="team negrito">Gols no 2º tempo</label>
+                <label class="team negrito">Acréscimos do 1º tempo</label>
+                <label class="team-value">
+                    @{
+                        var extraFirstTime = Model.GetGoalsFirstExtraTimeAway();
+                    }
+                    @(extraFirstTime) - @(MathUtils.CalcPercent(extraFirstTime, Model.GetAwayGamesGoals()))%
+                </label>
+            </div>
+            <div class="max-score">
+                <label class="team negrito">2º tempo</label>
                 <label class="team-value">
                     @{
                         var secondHalf = Model.GetGoalsSecondHalfAway();
                     }
                     @(secondHalf) - @(MathUtils.CalcPercent(secondHalf, Model.GetAwayGamesGoals()))%
+                </label>
+            </div>
+            <div class="max-score">
+                <label class="team negrito">Acréscimos do 2º tempo</label>
+                <label class="team-value">
+                    @{
+                        var extraSecondTime = Model.GetGoalsSecondExtraTimeAway();
+                    }
+                    @(extraSecondTime) - @(MathUtils.CalcPercent(extraSecondTime, Model.GetAwayGamesGoals()))%
                 </label>
             </div>
         </div>

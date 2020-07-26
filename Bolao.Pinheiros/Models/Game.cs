@@ -54,19 +54,39 @@ namespace Bolao.Pinheiros.Models
                     && awayCompetitor.score > 0;
         }
 
+        public int GetGoalsFirstExtraTime()
+        {
+            return events != null
+                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_FIRST_HALF && x.addedTime > 0).Count()
+                        : 0;
+        }
+
+        public int GetGoalsSecondExtraTime()
+        {
+            return events != null
+                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_FIRST_HALF && x.addedTime > 0).Count()
+                        : 0;
+        }
+
         public int GetGoalsFirstHalf()
         {
-            return events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_FIRST_HALF).Count();
+            return events != null
+                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_FIRST_HALF).Count()
+                        : 0;
         }
 
         public int GetGoalsFirstTenMinutes()
         {
-            return events.Where(x => x.eventType.name == GOAL_NAME && x.gameTime <= FIRST_TEN_MINUTES).Count();
+            return events != null
+                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.gameTime <= FIRST_TEN_MINUTES).Count()
+                        : 0;
         }
 
         public int GetGoalsSecondHalf()
         {
-            return events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_SECOND_HALF).Count();
+            return events != null
+                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_SECOND_HALF).Count()
+                        : 0;
         }
 
         public GameCompetitor GetLoser()
