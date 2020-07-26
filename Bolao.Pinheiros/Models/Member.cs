@@ -10,5 +10,11 @@
         public YardFormation yardFormation { get; set; }
         public Substitution substitution { get; set; }
         public Injury injury { get; set; }
+        public int competitorId { get; set; }
+        public int athleteId { get; set; }
+        public string name { get; set; }
+        public string shortName { get; set; }
+        public int jerseyNumber { get; set; }
+        public string nameForURL { get; set; }
     }
 }

@@ -1,6 +1,8 @@
-﻿@model Bolao.Pinheiros.Models.Root
+﻿@using Bolao.Pinheiros.Models
+@model Root
 
 <div class="container-estatisticas">
+    @(Html.Partial("_Events", Model.mainGame))
     <div class="estatisticas">
         <div class="dados-confronto">
             <div class="scene">

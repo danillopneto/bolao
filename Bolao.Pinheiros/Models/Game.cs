@@ -6,11 +6,11 @@ namespace Bolao.Pinheiros.Models
 {
     public class Game
     {
-        private const int FIRST_TEN_MINUTES = 10;
-        private const string GOAL_NAME = "Gol";
-        private const int HALF_TIME = 45;
-        private const int STAGE_ID_FIRST_HALF = 7;
-        private const int STAGE_ID_SECOND_HALF = 9;
+        public const int FIRST_TEN_MINUTES = 10;
+        public const string GOAL_NAME = "Gol";
+        public const int HALF_TIME = 45;
+        public const int STAGE_ID_FIRST_HALF = 7;
+        public const int STAGE_ID_SECOND_HALF = 9;
 
         public string aggregateText { get; set; }
         public GameCompetitor awayCompetitor { get; set; }
@@ -107,6 +107,16 @@ namespace Bolao.Pinheiros.Models
                 return awayCompetitor;
             }
 
+            return null;
+        }
+
+        public Member GetPlayer(int playerId)
+        {
+            if (members.Any(x => x.id == playerId))
+            {
+                return members.First(x => x.id == playerId);
+            }
+            
             return null;
         }
 

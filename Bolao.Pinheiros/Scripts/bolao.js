@@ -58,7 +58,7 @@ $(document).ready(function () {
         getGamesDataUpdate();
     }, 10000);
 
-    setSelect2();
+    setEvents();
 });
 
 var getGamesOnDate = function () {
@@ -67,7 +67,6 @@ var getGamesOnDate = function () {
     }
 
     try {
-        gettingUpdates = false;
         $.ajax({
             url: 'Home/GetGamesData',
             type: 'POST',
@@ -75,10 +74,13 @@ var getGamesOnDate = function () {
             cache: false,
             data: {
                 date: dataDesejada.val()
+            },
+            beforeSend: function () {
+                loading.show();
             }
         }).done(function (result) {
             dadosDosJogos.html(result);
-            setSelect2();
+            setEvents();
         }).fail(function (ex) {
             // TODO
         });
@@ -120,6 +122,9 @@ var getStatistics = function (element) {
             cache: false,
             data: {
                 gameId: gameId
+            },
+            beforeSend: function () {
+                loading.show();
             }
         }).done(function (result) {
             var statistics = $(element).parent().find('.detalhar-estatisticas');
@@ -134,7 +139,11 @@ var getStatistics = function (element) {
     }
 };
 
-var setSelect2 = function () {
+var setGamesVisible = function () {
+    $('.games-count').html('(' + $('.container-jogo').filter(':visible').length + ')');
+};
+
+var setEvents = function () {
     $('.select2-component').select2();
     $('.select2-component').show();
     $('[name="competition-selector"]').on('change', function () {
@@ -167,6 +176,8 @@ var showCompetitionsSelected = function () {
         selector = selector.slice(0, -1);
         $(selector).show();
     }
+
+    setGamesVisible();
 };
 
 var showGamesSelected = function () {
@@ -192,6 +203,8 @@ var showGamesSelected = function () {
 
         showOrHideCompetitions();
     }
+
+    setGamesVisible();
 };
 
 var showLiveGames = function () {
@@ -208,11 +221,13 @@ var showLiveGames = function () {
                 $(containerJogos[i]).hide();
             }
         }
-
-        showOrHideCompetitions();
     } else {
         containerJogos.show();
     }
+
+    setGamesVisible();
+    showCompetitionsSelected();
+    showOrHideCompetitions();
 };
 
 var showOrHideCompetitions = function () {

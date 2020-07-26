@@ -72,7 +72,7 @@ namespace Bolao.Pinheiros.Controllers
             recentGames = recentGames.Where(x => x != gameId).ToList();
 
             var gameStatistics = GetGamesData(recentGames);
-            gameStatistics.mainGame = game;
+            gameStatistics.mainGame = gameData.game;
 
             return PartialView("_Statistics", gameStatistics);
         }
