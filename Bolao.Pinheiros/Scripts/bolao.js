@@ -144,6 +144,10 @@ var setSelect2 = function () {
     $('[name="games-selector"]').on('change', function () {
         showGamesSelected();
     });
+
+    $('.component-live').on('click', function () {
+        showLiveGames();
+    });
 };
 
 var showCompetitionsSelected = function () {
@@ -168,6 +172,7 @@ var showCompetitionsSelected = function () {
 var showGamesSelected = function () {
     var games = $('.container-jogo');
 
+    var competitions = $('.competition');
     competitions.show();
     games.hide();
 
@@ -185,10 +190,36 @@ var showGamesSelected = function () {
         selector = selector.slice(0, -1);
         $(selector).show();
 
-        for (var c = 0; c < competitions.length; c++) {
-            if ($(competitions[c]).find('.container-jogo:visible').length === 0) {
-                $(competitions[c]).hide();
+        showOrHideCompetitions();
+    }
+};
+
+var showLiveGames = function () {
+    var liveClass = 'live-active';
+    var liveButton = $('.live-button').toggleClass(liveClass);
+    var containerJogos = $('.container-jogo');
+    containerJogos.show();
+    if (liveButton.hasClass(liveClass)) {
+        for (var i = 0; i < containerJogos.length; i++) {
+            var isLive = $(containerJogos[i]).find('.game-playing').length;
+            if (isLive) {
+                $(containerJogos[i]).show();
+            } else {
+                $(containerJogos[i]).hide();
             }
+        }
+
+        showOrHideCompetitions();
+    } else {
+        containerJogos.show();
+    }
+};
+
+var showOrHideCompetitions = function () {
+    var competitions = $('.competition');
+    for (var c = 0; c < competitions.length; c++) {
+        if ($(competitions[c]).find('.container-jogo:visible').length === 0) {
+            $(competitions[c]).hide();
         }
     }
 };

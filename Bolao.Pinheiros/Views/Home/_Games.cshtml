@@ -20,30 +20,36 @@
             }
         </select>
     </div>*@
-    <div class="dados-jogos">
-        <div class="competition-filter">
-            <select class="js-example-basic-multiple select2-component" name="competition-selector" multiple="multiple" style="display: none;">
-                @foreach (var competition in competitions)
-                {
-                    <option value="@(competition.competitionId)">@(competition.competitionDisplayName)</option>                
-                }
-            </select>
-        </div>
-        @foreach (var competition in gamesByCompetition)
-        {
-            <div id="@(competition.Key)" class="competition">
-                <div class="competition-title">
-                    <img alt="" title="" data-src="@(string.Concat(BASE_URL_LOGO, competition.Key))" style="max-width: 24px;" src="@(string.Concat(BASE_URL_LOGO, competition.Key))" />
-                    <label>@(competition.First().competitionDisplayName) (@(competition.Count()))</label>
-                </div>
-                @foreach (var game in competition)
-                {
-                    <div id="@(game.id)" class="container-jogo scores365">
-                        @(Html.Partial("_Game", game))
-                        <div class="detalhar-estatisticas">Análise</div>
-                    </div>
-                }
-            </div>
-        }
+<div class="dados-jogos">
+    <div class="competition-filter">
+        <select class="js-example-basic-multiple select2-component" name="competition-selector" multiple="multiple" style="display: none;">
+            @foreach (var competition in competitions)
+            {
+                <option value="@(competition.competitionId)">@(competition.competitionDisplayName)</option>
+            }
+        </select>
     </div>
+    <div class="component _13ml5gv component-live">
+        <div class="component _l6mpiv">
+            <div class="component _ymmvtl live-button">Live</div>
+        </div>
+        <div class="switch-badge-desktop-component _pk2pzx">(35)</div>
+    </div>
+    @foreach (var competition in gamesByCompetition)
+    {
+        <div id="@(competition.Key)" class="competition">
+            <div class="competition-title">
+                <img alt="" title="" data-src="@(string.Concat(BASE_URL_LOGO, competition.Key))" style="max-width: 24px;" src="@(string.Concat(BASE_URL_LOGO, competition.Key))" />
+                <label>@(competition.First().competitionDisplayName) (@(competition.Count()))</label>
+            </div>
+            @foreach (var game in competition)
+            {
+                <div id="@(game.id)" class="container-jogo scores365">
+                    @(Html.Partial("_Game", game))
+                    <div class="detalhar-estatisticas">Análise</div>
+                </div>
+            }
+        </div>
+    }
+</div>
 }
