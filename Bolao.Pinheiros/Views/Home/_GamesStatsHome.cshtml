@@ -66,8 +66,9 @@
         </div>
         <div class="game-goals-info">
             <div class="negrito">Gols</div>
+            <br />
             <div class="game-goals-first-minutes">
-                <label class="team negrito">Primeiros 10 minutos</label>
+                <label class="team negrito">10 min</label>
                 <label class="team-value">
                     @{
                         var firstTenMinutes = Model.GetGoalsFirstTenMinutesHome();
@@ -75,40 +76,24 @@
                     @(firstTenMinutes) - @(MathUtils.CalcPercent(firstTenMinutes, Model.GetHomeGamesGoals()))%
                 </label>
             </div>
-            <div class="head-head-score">
+            @{
+                var firstHalf = Model.GetGoalsFirstHalfHome();
+                var extraFirstTime = Model.GetGoalsFirstExtraTimeHome();
+            }
+            <div class="head-head-score" title="Acréscimos: @(extraFirstTime) gols - @(MathUtils.CalcPercent(extraFirstTime, Model.GetHomeGamesGoals()))%">
                 <label class="team negrito">1º tempo</label>
                 <label class="team-value">
-                    @{
-                        var firstHalf = Model.GetGoalsFirstHalfHome();
-                    }
                     @(firstHalf) - @(MathUtils.CalcPercent(firstHalf, Model.GetHomeGamesGoals()))%
                 </label>
             </div>
-            <div class="max-score">
-                <label class="team negrito">Acréscimos do 1º tempo</label>
-                <label class="team-value">
-                    @{
-                        var extraFirstTime = Model.GetGoalsFirstExtraTimeHome();
-                    }
-                    @(extraFirstTime) - @(MathUtils.CalcPercent(extraFirstTime, Model.GetHomeGamesGoals()))%
-                </label>
-            </div>
-            <div class="max-score">
+            @{
+                var secondHalf = Model.GetGoalsSecondHalfHome();
+                var extraSecondTime = Model.GetGoalsSecondExtraTimeHome();
+            }
+            <div class="max-score" title="Acréscimos: @(extraSecondTime) gols - @(MathUtils.CalcPercent(extraSecondTime, Model.GetHomeGamesGoals()))%">
                 <label class="team negrito">2º tempo</label>
                 <label class="team-value">
-                    @{
-                        var secondHalf = Model.GetGoalsSecondHalfHome();
-                    }
                     @(secondHalf) - @(MathUtils.CalcPercent(secondHalf, Model.GetHomeGamesGoals()))%
-                </label>
-            </div>
-            <div class="max-score">
-                <label class="team negrito">Acréscimos do 2º tempo</label>
-                <label class="team-value">
-                    @{
-                        var extraSecondTime = Model.GetGoalsSecondExtraTimeHome();
-                    }
-                    @(extraSecondTime) - @(MathUtils.CalcPercent(extraSecondTime, Model.GetHomeGamesGoals()))%
                 </label>
             </div>
         </div>

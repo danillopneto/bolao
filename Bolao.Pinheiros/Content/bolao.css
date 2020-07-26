@@ -233,9 +233,12 @@ body {
     display: inline-block;
 }
 
-.head-head-score,
-.game-goals-info div {
+.head-head-score {
     width: 49%;
+}
+
+.game-goals-info div:not(:first-child) {
+    width: 30%;
 }
 
 .flip-card-icon {
@@ -269,3 +272,155 @@ body {
     .games-filter span.select2 {
         width: 100% !important;
     }
+
+.competition-title label {
+    vertical-align: super;
+}
+
+/* 365 scores */
+
+.scores365 .game-card {
+    padding: 0 2px;
+    text-align: center;
+    background-color: #fff;
+    position: relative;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    box-shadow: 0 1px 2px 0 hsla(0,0%,52.9%,.1);
+    margin-bottom: 1px;
+}
+
+.scores365 .link {
+    text-decoration: none;
+    color: #505050;
+    padding: 5px 0;
+}
+
+.status-text {
+    color: rgb(127, 151, 171);
+    font-size: 11px;
+}
+
+.status-text.game-playing {
+    color: rgb(255, 82, 0);
+}
+
+.scores365 .badge-visible:after {
+    content: "'";
+    position: absolute;
+}
+
+.scores365 .game-card-content {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.scores365 .game-card-competitor-qualified-name {
+    font-size: 14px;
+    color: #505050;
+    margin: 0 8px;
+    max-width: 80%;
+    font-weight: 400;
+}
+
+.scores365 .ellipsis {
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.scores365 .game-card-content-score {
+    margin-bottom: 0;
+    margin-top: 0;
+    max-width: 80px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: center;
+    min-height: 32px;
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 16px;
+    color: #505050;
+    padding: 0 20px;
+    -webkit-flex: 1 1;
+    -moz-box-flex: 1;
+    flex: 1 1;
+}
+
+.scores365 .game-card-content,
+.scores365 .game-card-content-score {
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    justify-content: center;
+}
+
+.scores365 .game-card-competitor-container {
+    max-width: -moz-calc(50% - 40px);
+    max-width: calc(50% - 40px);
+    -webkit-flex: 10 1;
+    -moz-box-flex: 10;
+    flex: 10 1;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    align-items: center;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    min-height: 32px;
+    text-align: right;
+    -webkit-flex-direction: row-reverse;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: reverse;
+    flex-direction: row-reverse;
+}
+
+.scores365 .game-card-competitor-container-away {
+    text-align: left;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    flex-direction: row;
+}
+
+.scores365 .game-card-competitor-logo-wrap {
+    width: 32px;
+    height: 32px;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    align-items: center;
+    position: relative;
+}
+
+.scores365 .game-card-competitor-logo {
+    position: absolute;
+    top: 0;
+    max-width: 32px;
+    max-height: 32px;
+}
+
+.scores365 .game-card-competitor-qualified-name {
+    font-size: 14px;
+    color: #505050;
+    margin: 0 8px;
+    max-width: 80%;
+    font-weight: 400;
+}

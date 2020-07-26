@@ -54,14 +54,14 @@ namespace Bolao.Pinheiros.Models
                     && awayCompetitor.score > 0;
         }
 
-        public int GetGoalsFirstExtraTime()
+        public string GetCurrentScoreText()
         {
-            return events != null
-                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_FIRST_HALF && x.addedTime > 0).Count()
-                        : 0;
+            return startTime > DateTime.Now
+                        ? startTime.ToShortTimeString()
+                        : homeCompetitor.score >= 0 ? string.Format("{0} - {1}", homeCompetitor.score, awayCompetitor.score) : string.Empty;
         }
 
-        public int GetGoalsSecondExtraTime()
+        public int GetGoalsFirstExtraTime()
         {
             return events != null
                         ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_FIRST_HALF && x.addedTime > 0).Count()
@@ -79,6 +79,13 @@ namespace Bolao.Pinheiros.Models
         {
             return events != null
                         ? events.Where(x => x.eventType.name == GOAL_NAME && x.gameTime <= FIRST_TEN_MINUTES).Count()
+                        : 0;
+        }
+
+        public int GetGoalsSecondExtraTime()
+        {
+            return events != null
+                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_SECOND_HALF && x.addedTime > 0).Count()
                         : 0;
         }
 

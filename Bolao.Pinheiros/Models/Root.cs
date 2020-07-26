@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Bolao.Pinheiros.Utils;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Bolao.Pinheiros.Models
@@ -7,6 +9,7 @@ namespace Bolao.Pinheiros.Models
     {
         private List<Game> _gamesBetweenTeams;
 
+        public DateTime Date { get; set; }
         public List<Bookmaker> bookmakers { get; set; }
         public List<Competition> competitions { get; set; }
         public List<GameCompetitor> competitors { get; set; }
@@ -192,7 +195,7 @@ namespace Bolao.Pinheiros.Models
         {
             return GetHomeGames().Sum(x => x.GetGoalsSecondExtraTime());
         }
-        
+
         public int GetGoalsSecondHalfAway()
         {
             return GetAwayGames().Sum(x => x.GetGoalsSecondHalf());
@@ -253,7 +256,7 @@ namespace Bolao.Pinheiros.Models
 
         public double GetAverageGoalsBetween()
         {
-            return GetGoalsBetween() / GetGamesBetweenTeams().Count();
+            return (GetGoalsBetween() / GetGamesBetweenTeams().Count()).ToDecimalFormat();
         }
 
         public double GetAverageGoalsHome()

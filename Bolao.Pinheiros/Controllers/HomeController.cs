@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace Bolao.Pinheiros.Controllers
@@ -26,6 +27,7 @@ namespace Bolao.Pinheiros.Controllers
                     TempData[GAMES_DATA] = new Root();
                 }
 
+                TempData.Keep(GAMES_DATA);
                 return TempData.Peek(GAMES_DATA) as Root;
             }
 
@@ -35,12 +37,24 @@ namespace Bolao.Pinheiros.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult GetGamesData(DateTime date)
         {
             var model = GetDataFromGames(date);
+            model.Date = date;
+
             GamesData = model;
             return PartialView("_Games", model);
+        }
 
+        [HttpPost]
+        public ActionResult GetGamesDataUpdate()
+        {
+            var model = GetDataFromGames(GamesData.Date);
+            model.Date = GamesData.Date;
+
+            GamesData = model;
+            return Json(model);
         }
 
         [HttpPost]
@@ -54,6 +68,9 @@ namespace Bolao.Pinheiros.Controllers
             recentGames.AddRange(gameData.game.homeCompetitor.recentMatches.Take(MAXIMUM_GAMES));
             recentGames.AddRange(gameData.game.awayCompetitor.recentMatches.Take(MAXIMUM_GAMES));
 
+            recentGames = recentGames.Distinct().ToList();
+            recentGames = recentGames.Where(x => x != gameId).ToList();
+
             var gameStatistics = GetGamesData(recentGames);
             gameStatistics.mainGame = game;
 
@@ -64,8 +81,30 @@ namespace Bolao.Pinheiros.Controllers
         {
             var date = DateTime.Now;
             var model = GetDataFromGames(date);
+            model.Date = date;
+
             GamesData = model;
             return View(model);
+        }
+
+        private T GetDataFromApi<T>(string url)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = client.GetAsync(url).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = response.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<T>(json);
+                    if (data != null)
+                    {
+                        return data;
+                    }
+                }
+            }
+
+            return default(T);
         }
 
         private Root GetDataFromGames(DateTime date)
@@ -93,44 +132,28 @@ namespace Bolao.Pinheiros.Controllers
         {
             gamesIds = gamesIds.OrderByDescending(x => x).ToList();
             var gamesData = new Root { games = new List<Game>() };
+            var tarefas = new List<Thread>();
+
             foreach (var gameId in gamesIds)
             {
-                var url = string.Format(URL_BASE_GAME, gameId);
-                var gameData = GetDataFromApi<GameData>(url);
-                gamesData.games.Add(gameData.game);
+                var thread = new Thread(() => InsertGameData(gamesData, gameId));
+                thread.Start();
+                tarefas.Add(thread);
             }
 
-            //var url = string.Format(URL_BASE_GAMES, string.Join(",", gamesIds), DateTime.Now.AddDays(-2).ToString(DATE_FORMAT));
-            //var gamesData = GetDataFromApi<Root>(url);
+            while (tarefas.Any(x => x.IsAlive))
+            {
+                Thread.Sleep(500);
+            }
+
             return gamesData;
         }
 
-        private void InsertStatistics(Root model)
+        private void InsertGameData(Root data, double gameId)
         {
-            foreach (var game in model.games)
-            {
-                GetGameData(game);
-            }
-        }
-
-        private T GetDataFromApi<T>(string url)
-        {
-            using (var client = new HttpClient())
-            {
-                var response = client.GetAsync(url).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = response.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<T>(json);
-                    if (data != null)
-                    {
-                        return data;
-                    }
-                }
-            }
-
-            return default(T);
+            var url = string.Format(URL_BASE_GAME, gameId);
+            var gameData = GetDataFromApi<GameData>(url);
+            data.games.Add(gameData.game);
         }
     }
 }

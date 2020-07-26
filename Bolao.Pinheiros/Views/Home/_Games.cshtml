@@ -2,7 +2,7 @@
 @{
     var games = Model.games.OrderBy(x => x.competitionId).ThenBy(x => x.startTime).ThenByDescending(x => x.id).ToList();
     var gamesByCompetition = games.GroupBy(x => x.competitionId);
-    const string BASE_URL_LOGO = "https://imagecache.365scores.com/image/upload/f_auto,w_96,h_96,c_limit,q_auto:eco,d_Competitors:default1.png/Competitors/";
+    const string BASE_URL_LOGO = "https://imagecache.365scores.com/image/upload/f_auto,w_72,h_72,c_limit,q_auto:eco,d_Countries:Round:21.png/Competitions/Light/";
     var competitions = games.Select(x => new { x.competitionId, x.competitionDisplayName }).GroupBy(x => x.competitionId).Select(x => x.First()).ToList();
 }
 @if (Model != null)
@@ -22,7 +22,7 @@
     </div>*@
     <div class="dados-jogos">
         <div class="competition-filter">
-            <select class="js-example-basic-multiple select2-component" name="competition-selector" multiple="multiple">
+            <select class="js-example-basic-multiple select2-component" name="competition-selector" multiple="multiple" style="display: none;">
                 @foreach (var competition in competitions)
                 {
                     <option value="@(competition.competitionId)">@(competition.competitionDisplayName)</option>                
@@ -32,10 +32,13 @@
         @foreach (var competition in gamesByCompetition)
         {
             <div id="@(competition.Key)" class="competition">
-                <div class="competition-title">@(competition.First().competitionDisplayName)</div>
+                <div class="competition-title">
+                    <img alt="" title="" data-src="@(string.Concat(BASE_URL_LOGO, competition.Key))" style="max-width: 24px;" src="@(string.Concat(BASE_URL_LOGO, competition.Key))" />
+                    <label>@(competition.First().competitionDisplayName) (@(competition.Count()))</label>
+                </div>
                 @foreach (var game in competition)
                 {
-                    <div id="@(game.id)" class="container-jogo">
+                    <div id="@(game.id)" class="container-jogo scores365">
                         @(Html.Partial("_Game", game))
                         <div class="detalhar-estatisticas">Análise</div>
                     </div>
