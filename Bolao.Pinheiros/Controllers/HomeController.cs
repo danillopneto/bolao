@@ -92,7 +92,7 @@ namespace Bolao.Pinheiros.Controllers
         private Root GetGamesData(List<int> gamesIds)
         {
             gamesIds = gamesIds.OrderByDescending(x => x).ToList();
-            var url = string.Format(URL_BASE_GAMES, string.Join(",", gamesIds), DateTime.Now.ToString(DATE_FORMAT));
+            var url = string.Format(URL_BASE_GAMES, string.Join(",", gamesIds), DateTime.Now.AddDays(-2).ToString(DATE_FORMAT));
             var gamesData = GetDataFromApi<Root>(url);
             return gamesData;
         }

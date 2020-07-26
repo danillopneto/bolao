@@ -1,8 +1,6 @@
 var loading = $('.lds-container');
 var dataDesejada = $('#datepicker');
 var dadosDosJogos = $('.dados-jogos');
-var select2Component = $('.select2-component');
-var gamesSelector = $('[name="games-selector"]');
 
 $(document).ready(function () {
     dataDesejada.datepicker({
@@ -41,14 +39,11 @@ $(document).ready(function () {
 
     $(document).tooltip({
         classes: { "ui-tooltip": "tooltip-bolao" },
-        position: { my: "left top+5", at: "left bottom", collision: "flipfit" },
+        position: { my: "left+10 top+5", at: "left bottom", collision: "flipfit" },
         track: true
     });
 
-    select2Component.select2();
-    gamesSelector.on('change', function () {
-        showGamesSelected();
-    });
+    setSelect2();
 });
 
 var getGamesOnDate = function () {
@@ -67,6 +62,7 @@ var getGamesOnDate = function () {
             }
         }).done(function (result) {
             dadosDosJogos.html(result);
+            setSelect2();
         }).fail(function (ex) {
             // TODO
         });
@@ -100,9 +96,38 @@ var getStatistics = function (element) {
     }
 };
 
+var setSelect2 = function () {
+    $('.select2-component').select2();
+    $('[name="competition-selector"]').on('change', function () {
+        showCompetitionsSelected();
+    });
+
+    $('[name="games-selector"]').on('change', function () {
+        showGamesSelected();
+    });
+};
+
+var showCompetitionsSelected = function () {
+    var competitions = $('.competition');
+    competitions.hide();
+
+    var competitionsSelected = $('[name="competition-selector"]').val();
+    if (competitionsSelected === ''
+        || competitionsSelected.length === 0) {
+        competitions.show();
+    } else {
+        var selector = '';
+        for (var i = 0; i < competitionsSelected.length; i++) {
+            selector += '#' + competitionsSelected[i] + ',';
+        }
+
+        selector = selector.slice(0, -1);
+        $(selector).show();
+    }
+};
+
 var showGamesSelected = function () {
     var games = $('.container-jogo');
-    var competitions = $('.competition');
 
     competitions.show();
     games.hide();

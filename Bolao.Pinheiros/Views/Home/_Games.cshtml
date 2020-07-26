@@ -3,32 +3,32 @@
     var games = Model.games.OrderBy(x => x.competitionId).ThenBy(x => x.startTime).ThenByDescending(x => x.id).ToList();
     var gamesByCompetition = games.GroupBy(x => x.competitionId);
     const string BASE_URL_LOGO = "https://imagecache.365scores.com/image/upload/f_auto,w_96,h_96,c_limit,q_auto:eco,d_Competitors:default1.png/Competitors/";
-    var competitions = games.Select(x => x.competitionDisplayName).Distinct().ToList();
+    var competitions = games.Select(x => new { x.competitionId, x.competitionDisplayName }).GroupBy(x => x.competitionId).Select(x => x.First()).ToList();
 }
 @if (Model != null)
 {
-    <div class="competition-filter">
-        <select class="js-example-basic-multiple select2-component" name="competition-selector" multiple="multiple">
-            @foreach (var competition in competitions)
-            {
-                <option>@(competition)</option>                
-            }
-        </select>
-    </div>
-    <div class="games-filter">
+    @*<div class="games-filter">
         <select class="js-example-basic-multiple select2-component" name="games-selector" multiple="multiple">
             @foreach (var competition in competitions)
             {
                 <optgroup label="@(competition)">
-                    @foreach (var game in games.Where(x => x.competitionDisplayName == competition))
+                    @foreach (var game in games.Where(x => x.competitionId == competition.competitionId))
                     {
                         <option value="@(game.id)">@(game.homeCompetitor.name) - @(game.awayCompetitor.name)</option>
                     }
                 </optgroup>
             }
         </select>
-    </div>
+    </div>*@
     <div class="dados-jogos">
+        <div class="competition-filter">
+            <select class="js-example-basic-multiple select2-component" name="competition-selector" multiple="multiple">
+                @foreach (var competition in competitions)
+                {
+                    <option value="@(competition.competitionId)">@(competition.competitionDisplayName)</option>                
+                }
+            </select>
+        </div>
         @foreach (var competition in gamesByCompetition)
         {
             <div id="@(competition.Key)" class="competition">
