@@ -4,6 +4,8 @@ var dadosDosJogos = $('.dados-jogos');
 var gettingUpdates = false;
 
 $(document).ready(function () {
+    Notify.requestPermission(onPermissionGranted, onPermissionDenied);    
+
     dataDesejada.datepicker({
         dateFormat: "dd/mm/yy"
     });
@@ -243,6 +245,10 @@ var showLiveGames = function () {
     showOrHideCompetitions();
 };
 
+var showNotification = function (title, content) {
+
+};
+
 var showOrHideCompetitions = function () {
     var competitions = $('.competition');
     for (var c = 0; c < competitions.length; c++) {
@@ -278,18 +284,73 @@ var updateGamesPlaying = function (result) {
             var gamePlaying = result.games[i].gameTimeAndStatusDisplayType !== 1;
             var gameStatus = gameContainer.find('.game-card-status-badge');
             if (gamePlaying) {
+                if (!gameStatus.parent().hasClass('game-playing')) {
+                    gameStatus.parent().addClass('game-playing');
+                }
+
                 gameStatus.html(result.games[i].gameTimeDisplay.replace('\'', ''));
                 var score = gameContainer.find('.game-card-content-score');
 
-                var homeScore = result.games[i].homeCompetitor.score;
-                var awayScore = result.games[i].awayCompetitor.score;
-                if (homeScore >= 0) {
-                    score.html(homeScore + ' - ' + awayScore);
+                var home = result.games[i].homeCompetitor;
+                var away = result.games[i].awayCompetitor;
+                if (home.score >= 0) {
+                    var scoreText = home.score + ' - ' + away.score;
+                    if (!Notify.needsPermission && score.html().trim() !== scoreText) {
+                        var gameText = home.name + ' - ' + away.name;
+                        doNotification(gameText, scoreText);
+                    }
+
+                    score.html(scoreText);
                 }
                 score.html();
             } else {
-                gameStatus.html(result.games[i].shortStatusText);
+                gameStatus.removeClass('game-playing');
+
+                if (result.games[i].winDescription !== null
+                        && result.games[i].winDescription !== '') {
+                    gameStatus.html(result.games[i].winDescription);
+                } else {
+                    gameStatus.html(result.games[i].statusText);
+                }                
             }
         }
     }
 };
+
+/* Notification */
+function onShowNotification() {
+    console.log('notification is shown!');
+}
+
+function onCloseNotification() {
+    console.log('notification is closed!');
+}
+
+function onClickNotification() {
+    console.log('notification was clicked!');
+}
+
+function onErrorNotification() {
+    console.error('Error showing notification. You may need to request permission.');
+}
+
+function onPermissionGranted() {
+    console.log('Permission has been granted by the user');
+}
+
+function onPermissionDenied() {
+    console.warn('Permission has been denied by the user');
+}
+
+function doNotification(title, content) {
+    var myNotification = new Notify(title, {
+        body: content,
+        notifyShow: onShowNotification,
+        notifyClose: onCloseNotification,
+        notifyClick: onClickNotification,
+        notifyError: onErrorNotification,
+        timeout: 4
+    });
+
+    myNotification.show();
+}

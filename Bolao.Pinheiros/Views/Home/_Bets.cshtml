@@ -1,6 +1,17 @@
 ﻿@using Bolao.Pinheiros.Models
 @model Root
-
+@{ 
+    const double VALUE_EASY = 1;
+    const double PERCENT_EASY = 80;
+    const double PERCENT_MED = 60;
+    const double VALUE_MED = 2;
+    const double PERCENT_MAX = 40;
+    const double VALUE_MAX = 3;
+    var percentBothTeamScored = Model.GetPercentBothScored();
+    var percentBothTeamDidntScore = Model.GetPercentBothDidntScore();
+    var averageGoalsFirst = Model.GetAverageGoalsFirstHalf();
+    var averageGoalsSecond = Model.GetAverageGoalsSecondHalf();
+}
 <div class="bets-info">
     <div class="detalhar-apostas">Apostas</div>
     <div class="goals-bets">
@@ -14,7 +25,24 @@
         {
             <div class="goals-bet">
                 <label class="negrito">Acima de</label>
-                <label class="team-value">@(Model.GetMinimumGoals() - 0.5) gol(s)</label>
+                <label class="team-value">@(Model.GetMinimumGoals() - 0.5) gols</label>
+            </div>
+        }
+        @if (percentBothTeamScored >= PERCENT_EASY
+                || percentBothTeamDidntScore >= PERCENT_EASY)
+        {
+            <div class="goals-bet">
+                <label class="negrito">Ambos marcam</label>
+                <label class="team-value">
+                    @(percentBothTeamScored > percentBothTeamDidntScore ? "Sim" : "Não")
+                </label>
+            </div>
+        }
+        @if (averageGoalsFirst >= VALUE_EASY)
+        {
+            <div class="goals-bet">
+                <label class="negrito">1º</label>
+                <label class="team-value">Acima de 0,5</label>
             </div>
         }
     </div>
@@ -23,15 +51,49 @@
         <br>
         <div class="goals-bet">
             <label class="negrito">Acima de</label>
-            <label class="team-value">@(Math.Round(Model.GetAverageGoals()) - 1.5) gol(s)</label>
+            <label class="team-value">@(Math.Round(Model.GetAverageGoals()) - 1.5) gols</label>
         </div>
+        @if (percentBothTeamScored >= PERCENT_MED
+                || percentBothTeamDidntScore >= PERCENT_MED)
+        {
+            <div class="goals-bet">
+                <label class="negrito">Ambos marcam</label>
+                <label class="team-value">
+                    @(percentBothTeamScored > percentBothTeamDidntScore ? "Sim" : "Não")
+                </label>
+            </div>
+        }
+        @if (averageGoalsFirst >= VALUE_MED)
+        {
+            <div class="goals-bet">
+                <label class="negrito">1º</label>
+                <label class="team-value">Acima de 1,5</label>
+            </div>
+        }
     </div>
     <div class="goals-bets">
         <div class="negrito">Arriscado</div>
         <br>
         <div class="goals-bet">
             <label class="negrito">Acima de</label>
-            <label class="team-value">@(Math.Round(Model.GetAverageGoals()) - 0.5) gol(s)</label>
+            <label class="team-value">@(Math.Round(Model.GetAverageGoals()) - 0.5) gols</label>
         </div>
+        @if (percentBothTeamScored >= PERCENT_MAX
+                || percentBothTeamDidntScore >= PERCENT_MAX)
+        {
+            <div class="goals-bet">
+                <label class="negrito">Ambos marcam</label>
+                <label class="team-value">
+                    @(percentBothTeamScored > percentBothTeamDidntScore ? "Não" : "Sim")
+                </label>
+            </div>
+        }
+        @if (averageGoalsFirst >= VALUE_MAX)
+        {
+            <div class="goals-bet">
+                <label class="negrito">1º</label>
+                <label class="team-value">Acima de 2,5</label>
+            </div>
+        }
     </div>
 </div>

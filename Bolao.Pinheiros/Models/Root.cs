@@ -9,11 +9,11 @@ namespace Bolao.Pinheiros.Models
     {
         private List<Game> _gamesBetweenTeams;
 
-        public DateTime Date { get; set; }
         public List<Bookmaker> bookmakers { get; set; }
         public List<Competition> competitions { get; set; }
         public List<GameCompetitor> competitors { get; set; }
         public List<Country> countries { get; set; }
+        public DateTime Date { get; set; }
         public List<Game> games { get; set; }
         public long lastUpdateId { get; set; }
         public int liveGamesCount { get; set; }
@@ -383,6 +383,30 @@ namespace Bolao.Pinheiros.Models
         }
 
         #endregion " SCORES "
+
+        #region " BETS "
+
+        public double GetAverageGoalsFirstHalf()
+        {
+            return games.Average(x => x.GetGoalsFirstHalf()).ToDecimalFormat();
+        }
+
+        public double GetAverageGoalsSecondHalf()
+        {
+            return games.Average(x => x.GetGoalsSecondHalf()).ToDecimalFormat();
+        }
+
+        public double GetPercentBothDidntScore()
+        {
+            return MathUtils.CalcPercent(games.Where(x => !x.DidBothTeamScore()).Count(), games.Count);
+        }
+
+        public double GetPercentBothScored()
+        {
+            return MathUtils.CalcPercent(games.Where(x => x.DidBothTeamScore()).Count(), games.Count);
+        }
+
+        #endregion " BETS "
 
         private List<Game> FixGamesWithoutScore(List<Game> games)
         {

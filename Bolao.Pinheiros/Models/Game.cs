@@ -64,35 +64,35 @@ namespace Bolao.Pinheiros.Models
         public int GetGoalsFirstExtraTime()
         {
             return events != null
-                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_FIRST_HALF && x.addedTime > 0).Count()
+                        ? events.Where(x => x.IsGoal() && x.stageId == STAGE_ID_FIRST_HALF && x.addedTime > 0).Count()
                         : 0;
         }
 
         public int GetGoalsFirstHalf()
         {
             return events != null
-                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_FIRST_HALF).Count()
+                        ? events.Where(x => x.IsGoal() && x.stageId == STAGE_ID_FIRST_HALF).Count()
                         : 0;
         }
 
         public int GetGoalsFirstTenMinutes()
         {
             return events != null
-                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.gameTime <= FIRST_TEN_MINUTES).Count()
+                        ? events.Where(x => x.IsGoal() && x.gameTime <= FIRST_TEN_MINUTES).Count()
                         : 0;
         }
 
         public int GetGoalsSecondExtraTime()
         {
             return events != null
-                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_SECOND_HALF && x.addedTime > 0).Count()
+                        ? events.Where(x => x.IsGoal() && x.stageId == STAGE_ID_SECOND_HALF && x.addedTime > 0).Count()
                         : 0;
         }
 
         public int GetGoalsSecondHalf()
         {
             return events != null
-                        ? events.Where(x => x.eventType.name == GOAL_NAME && x.stageId == STAGE_ID_SECOND_HALF).Count()
+                        ? events.Where(x => x.IsGoal() && x.stageId == STAGE_ID_SECOND_HALF).Count()
                         : 0;
         }
 

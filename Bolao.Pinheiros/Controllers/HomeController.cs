@@ -12,6 +12,7 @@ namespace Bolao.Pinheiros.Controllers
     public class HomeController : Controller
     {
         private static readonly string DATE_FORMAT = "dd/MM/yyyy";
+        private static readonly List<int> EXCLUDE_COMPETITIONS = new List<int> { 7499, 7522, 7529, 7556, 7568, 7569 };
         private static readonly string GAMES_DATA = "GamesData";
         private static readonly int MAXIMUM_GAMES = 5;
         private static readonly string URL_BASE = "https://webws.365scores.com/web/games/?langId=31&timezoneName=America/Sao_Paulo&userCountryId=21&appTypeId=5&sports=1&startDate={0}&endDate={1}&showOdds=true";
@@ -113,6 +114,7 @@ namespace Bolao.Pinheiros.Controllers
             var url = string.Format(URL_BASE, startDate, endDate);
 
             var model = GetDataFromApi<Root>(url);
+            model.games = model.games.Where(x => !EXCLUDE_COMPETITIONS.Contains(x.competitionId)).ToList();
             return model;
         }
 
