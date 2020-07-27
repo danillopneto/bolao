@@ -125,13 +125,13 @@ namespace Bolao.Pinheiros.Models
         {
             if (_gamesBetweenTeams == null)
             {
-                _gamesBetweenTeams = games.Where(x => x.homeCompetitor.id == mainGame.homeCompetitor.id
-                                                       && x.awayCompetitor.id == mainGame.awayCompetitor.id).ToList();
-                _gamesBetweenTeams.AddRange(games.Where(x => x.homeCompetitor.id == mainGame.awayCompetitor.id
-                                                        && x.awayCompetitor.id == mainGame.homeCompetitor.id).ToList());
+                _gamesBetweenTeams = FixGamesWithoutScore(games).Where(x => x.homeCompetitor.id == mainGame.homeCompetitor.id
+                                                                         && x.awayCompetitor.id == mainGame.awayCompetitor.id).ToList();
+                _gamesBetweenTeams.AddRange(FixGamesWithoutScore(games).Where(x => x.homeCompetitor.id == mainGame.awayCompetitor.id
+                                                                                && x.awayCompetitor.id == mainGame.homeCompetitor.id).ToList());
             }
 
-            return FixGamesWithoutScore(_gamesBetweenTeams);
+            return _gamesBetweenTeams ?? new List<Game>();
         }
 
         #region " GOALS BY TIME "
@@ -222,7 +222,13 @@ namespace Bolao.Pinheiros.Models
 
         public Game GetGreaterBetweenScore()
         {
-            return GetGamesBetweenTeams().First(x => x.GetSumScore() == GetMaximumGoalsBetween());
+            var game = GetGamesBetweenTeams().FirstOrDefault(x => x.GetSumScore() == GetMaximumGoalsBetween());
+            if (games == null || !games.Any())
+            {
+                return game;
+            }
+
+            return new Game();
         }
 
         public Game GetGreaterHomeScore()
@@ -237,7 +243,13 @@ namespace Bolao.Pinheiros.Models
 
         public Game GetLowerBetweenScore()
         {
-            return GetGamesBetweenTeams().First(x => x.GetSumScore() == GetMinimumGoalsBetween());
+            var games = GetGamesBetweenTeams();
+            if (games == null || !games.Any())
+            {
+                return new Game();
+            }
+
+            return games.First(x => x.GetSumScore() == GetMinimumGoalsBetween());
         }
 
         public Game GetLowerHomeScore()
@@ -286,8 +298,14 @@ namespace Bolao.Pinheiros.Models
 
         public double GetGoalsAwayBetween()
         {
-            return GetGamesBetweenTeams().Where(x => x.homeCompetitor.id == mainGame.awayCompetitor.id).Sum(x => x.homeCompetitor.score)
-                    + GetGamesBetweenTeams().Where(x => x.awayCompetitor.id == mainGame.awayCompetitor.id).Sum(x => x.awayCompetitor.score);
+            var games = GetGamesBetweenTeams();
+            if (games == null || !games.Any())
+            {
+                return 0;
+            }
+
+            return games.Where(x => x.homeCompetitor.id == mainGame.awayCompetitor.id).Sum(x => x.homeCompetitor.score)
+                    + games.Where(x => x.awayCompetitor.id == mainGame.awayCompetitor.id).Sum(x => x.awayCompetitor.score);
         }
 
         public double GetGoalsBetween()
@@ -297,8 +315,14 @@ namespace Bolao.Pinheiros.Models
 
         public double GetGoalsHomeBetween()
         {
-            return GetGamesBetweenTeams().Where(x => x.homeCompetitor.id == mainGame.homeCompetitor.id).Sum(x => x.homeCompetitor.score)
-                    + GetGamesBetweenTeams().Where(x => x.awayCompetitor.id == mainGame.homeCompetitor.id).Sum(x => x.awayCompetitor.score);
+            var games = GetGamesBetweenTeams();
+            if (games == null || !games.Any())
+            {
+                return 0;
+            }
+
+            return games.Where(x => x.homeCompetitor.id == mainGame.homeCompetitor.id).Sum(x => x.homeCompetitor.score)
+                    + games.Where(x => x.awayCompetitor.id == mainGame.homeCompetitor.id).Sum(x => x.awayCompetitor.score);
         }
 
         public double GetHomeGamesGC()
@@ -328,7 +352,8 @@ namespace Bolao.Pinheiros.Models
 
         public double GetMaximumGoalsBetween()
         {
-            return GetGamesBetweenTeams().Max(x => x.GetSumScore());
+            var games = GetGamesBetweenTeams();
+            return games.Any() ? games.Max(x => x.GetSumScore()) : 0;
         }
 
         public double GetMaximumGoalsHome()
@@ -348,7 +373,8 @@ namespace Bolao.Pinheiros.Models
 
         public double GetMinimumGoalsBetween()
         {
-            return GetGamesBetweenTeams().Min(x => x.GetSumScore());
+            var games = GetGamesBetweenTeams();
+            return games.Any() ? games.Min(x => x.GetSumScore()) : 0;
         }
 
         public double GetMinimumGoalsHome()
@@ -360,6 +386,11 @@ namespace Bolao.Pinheiros.Models
 
         private List<Game> FixGamesWithoutScore(List<Game> games)
         {
+            if (games == null)
+            {
+                return new List<Game>();
+            }
+
             return games.Where(x => x.GetSumScore() != -2).ToList();
         }
     }

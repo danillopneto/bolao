@@ -189,6 +189,12 @@ namespace Bolao.Pinheiros.Models
 
         public override string ToString()
         {
+            if (homeCompetitor == null
+                    || awayCompetitor == null)
+            {
+                return string.Empty;
+            }
+
             return string.Format(
                                  "{0} {1} x {2} {3} - {4}",
                                  homeCompetitor.name,

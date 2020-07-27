@@ -64,12 +64,11 @@ namespace Bolao.Pinheiros.Controllers
             var gameData = GetGameData(game);
 
             var recentGames = new List<int>();
-            recentGames.AddRange(gameData.game.previousMeetings.Take(MAXIMUM_GAMES));
-            recentGames.AddRange(gameData.game.homeCompetitor.recentMatches.Take(MAXIMUM_GAMES));
-            recentGames.AddRange(gameData.game.awayCompetitor.recentMatches.Take(MAXIMUM_GAMES));
+            recentGames.AddRange(gameData.game.previousMeetings.Where(x => x != gameId).Take(MAXIMUM_GAMES));
+            recentGames.AddRange(gameData.game.homeCompetitor.recentMatches.Where(x => x != gameId).Take(MAXIMUM_GAMES));
+            recentGames.AddRange(gameData.game.awayCompetitor.recentMatches.Where(x => x != gameId).Take(MAXIMUM_GAMES));
 
             recentGames = recentGames.Distinct().ToList();
-            recentGames = recentGames.Where(x => x != gameId).ToList();
 
             var gameStatistics = GetGamesData(recentGames);
             gameStatistics.mainGame = gameData.game;

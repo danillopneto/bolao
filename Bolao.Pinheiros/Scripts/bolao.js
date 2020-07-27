@@ -99,6 +99,10 @@ var getGamesOnDate = function () {
 };
 
 var getGamesDataUpdate = function () {
+    if ($.active) {
+        return;
+    }
+
     try {
         gettingUpdates = true;
         $.ajax({

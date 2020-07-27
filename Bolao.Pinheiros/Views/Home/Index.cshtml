@@ -11,4 +11,4 @@
     </nav>
 </header>
 @(Html.Partial("_Games"))
-<script src="./Scripts/bolao.js"></script>
+<script src="./Scripts/bolao.js?@(DateTime.Now.TimeOfDay.Ticks)"></script>
