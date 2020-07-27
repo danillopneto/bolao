@@ -17,5 +17,15 @@ namespace Bolao.Pinheiros.Models
         public bool isMajor { get; set; }
         public EventType eventType { get; set; }
         public List<int> extraPlayers { get; set; }
+
+        public bool IsGoal()
+        {
+            return eventType.name == Game.GOAL_NAME;
+        }
+        
+        public bool IsTeamGoal(int competitorId)
+        {
+            return IsGoal() && this.competitorId == competitorId;
+        }
     }
 }

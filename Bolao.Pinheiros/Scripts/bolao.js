@@ -29,6 +29,15 @@ $(document).ready(function () {
         //}
     });
 
+
+    $(document).on('click', '.component-live', function () {
+        showLiveGames();
+    });
+
+    $(document).on('click', '.update-icon', function () {
+        getStatistics(this, false);
+    });
+
     var loadTimeout = {};
     $(document).ajaxStart(function () {
         loadTimeout = setTimeout(function () {
@@ -111,7 +120,7 @@ var getGamesDataUpdate = function () {
     }
 };
 
-var getStatistics = function (element) {
+var getStatistics = function (element, show) {
     try {
         var gameId = $(element).parents('.container-jogo').attr('id');
 
@@ -127,10 +136,14 @@ var getStatistics = function (element) {
                 loading.show();
             }
         }).done(function (result) {
-            var statistics = $(element).parent().find('.detalhar-estatisticas');
-            statistics.after(result);
-
-            showStatistics(element);
+            var parent = $(element).parents('.container-jogo');
+            if (show) {
+                var statistics = parent.find('.detalhar-estatisticas');
+                statistics.after(result);
+                showStatistics(element);
+            } else {
+                parent.find('.container-estatisticas').html($(result).html());
+            }
         }).fail(function (ex) {
             // TODO
         });
@@ -152,10 +165,6 @@ var setEvents = function () {
 
     $('[name="games-selector"]').on('change', function () {
         showGamesSelected();
-    });
-
-    $('.component-live').on('click', function () {
-        showLiveGames();
     });
 };
 
@@ -240,7 +249,7 @@ var showOrHideCompetitions = function () {
 };
 
 var showStatistics = function (element) {
-    var statistics = $(element).parent().find('.container-estatisticas');
+    var statistics = $(element).parents('.container-jogo').find('.container-estatisticas');
     if (statistics.length) {
         if (statistics.is(':visible')) {
             statistics.slideUp();
@@ -248,7 +257,7 @@ var showStatistics = function (element) {
             statistics.slideDown();
         }
     } else {
-        getStatistics(element);
+        getStatistics(element, true);
     }
 };
 

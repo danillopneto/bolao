@@ -2,27 +2,46 @@
 @model Game
 
 <div class="imso_mh__score-sum imso-ani">
-    <div class="update-icon"></div>
-    @if (Model.events.Any(x => x.eventType.name == Game.GOAL_NAME))
+    @if (Model.IsGamePlaying())
+    {
+        <div class="update-icon"></div>
+    }
+    @if (Model.events.Any(x => x.IsGoal()))
     {
         <div class="imso_gs__gs-cont imso-medium-font imso_gs__gs-cont-ed">
             <div class="imso_gs__tgs imso_gs__left-team">
-                @foreach (var homeEvent in Model.events.Where(x => x.competitorId == Model.homeCompetitor.id && x.eventType.name == Game.GOAL_NAME))
+                @{
+                    var homeEvents = Model.events.Where(x => x.IsTeamGoal(Model.homeCompetitor.id)).ToList();
+                }
+                @if (homeEvents.Any())
                 {
-                    var homePlayer = Model.GetPlayer(homeEvent.playerId);
-                    <div class="imso_gs__gs-r">
-                        @(homePlayer != null ? homePlayer.name : Game.GOAL_NAME) - @(homeEvent.gameTimeDisplay)
-                    </div>
+                    var homeEventsGrouped = homeEvents.GroupBy(x => x.playerId).ToList();
+                    foreach (var homeEvent in homeEventsGrouped)
+                    {
+                        var homePlayer = Model.GetPlayer(homeEvent.Key);
+                        <div class="imso_gs__gs-r">
+                            @(homePlayer != null ? homePlayer.name : Game.GOAL_NAME) - @(string.Join(" | ", homeEvent.Select(x => x.gameTimeDisplay)))
+                        </div>
+                    }
                 }
             </div>
             <div class="imso_gs__sb-cont">
                 <img class="imso_gs__icon" src="//ssl.gstatic.com/onebox/sports/soccer_timeline/soccer-ball-retina.png" alt="Gols" data-atf="1">
             </div>
             <div class="imso_gs__tgs imso_gs__right-team">
-                @foreach (var awayEvent in Model.events.Where(x => x.competitorId == Model.awayCompetitor.id && x.eventType.name == Game.GOAL_NAME))
+                @{
+                    var awayEvents = Model.events.Where(x => x.IsTeamGoal(Model.awayCompetitor.id)).ToList();
+                }
+                @if (awayEvents.Any())
                 {
-                    var awayPlayer = Model.GetPlayer(awayEvent.playerId);
-                    <div class="imso_gs__gs-r">@(awayPlayer != null ? awayPlayer.name : Game.GOAL_NAME) - @(awayEvent.gameTimeDisplay)</div>
+                    var awayEventsGrouped = awayEvents.GroupBy(x => x.playerId).ToList();
+                    foreach (var awayEvent in awayEventsGrouped)
+                    {
+                        var homePlayer = Model.GetPlayer(awayEvent.Key);
+                        <div class="imso_gs__gs-r">
+                            @(homePlayer != null ? homePlayer.name : Game.GOAL_NAME) - @(string.Join(" | ", awayEvent.Select(x => x.gameTimeDisplay)))
+                        </div>
+                    }
                 }
             </div>
         </div>

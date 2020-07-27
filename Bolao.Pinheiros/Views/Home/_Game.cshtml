@@ -6,7 +6,7 @@
 {
     var logoUrlHome = BASE_URL_LOGO + Model.homeCompetitor.id;
     var logoUrlAway = BASE_URL_LOGO + Model.awayCompetitor.id;
-    var gamePlaying = Model.gameTimeAndStatusDisplayType != 1;
+    var gamePlaying = Model.IsGamePlaying();
     <div class="component">
         <a class="link game-card">
             <div class="component status-text @(gamePlaying ? "game-playing" : string.Empty)">

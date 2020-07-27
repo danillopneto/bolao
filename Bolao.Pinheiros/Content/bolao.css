@@ -260,6 +260,7 @@ body {
     background-position: center;
     cursor: pointer;
     display: inline-block;
+    margin-top: 5px;
 }
 
 .ui-widget.tooltip-bolao {
