@@ -249,9 +249,14 @@ namespace Bolao.Pinheiros.Models
 
         #region " SCORES "
 
+        public double GetAverageGoals()
+        {
+            return games.Average(x => x.GetSumScore()).ToDecimalFormat();
+        }
+
         public double GetAverageGoalsAway()
         {
-            return GetAwayGamesGoals() / GetHomeGames().Count();
+            return (GetAwayGamesGoals() / GetHomeGames().Count()).ToDecimalFormat();
         }
 
         public double GetAverageGoalsBetween()
@@ -261,7 +266,7 @@ namespace Bolao.Pinheiros.Models
 
         public double GetAverageGoalsHome()
         {
-            return GetHomeGamesGoals() / GetHomeGames().Count();
+            return (GetHomeGamesGoals() / GetHomeGames().Count()).ToDecimalFormat();
         }
 
         public double GetAwayGamesGC()
@@ -311,6 +316,11 @@ namespace Bolao.Pinheiros.Models
             return GetHomeGames().Sum(x => x.GetTeam(mainGame.homeCompetitor.id).score);
         }
 
+        public double GetMaximumGoals()
+        {
+            return FixGamesWithoutScore(games).Max(x => x.GetSumScore());
+        }
+
         public double GetMaximumGoalsAway()
         {
             return GetAwayGames().Max(x => x.GetSumScore());
@@ -324,6 +334,11 @@ namespace Bolao.Pinheiros.Models
         public double GetMaximumGoalsHome()
         {
             return GetHomeGames().Max(x => x.GetSumScore());
+        }
+
+        public double GetMinimumGoals()
+        {
+            return FixGamesWithoutScore(games).Min(x => x.GetSumScore());
         }
 
         public double GetMinimumGoalsAway()

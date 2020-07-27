@@ -136,6 +136,11 @@ namespace Bolao.Pinheiros.Models
 
         public double GetSumScore()
         {
+            if (homeCompetitor.score < 0)
+            {
+                return 0;
+            }
+
             return homeCompetitor.score + awayCompetitor.score;
         }
 

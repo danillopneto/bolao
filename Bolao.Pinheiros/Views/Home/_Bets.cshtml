@@ -1,0 +1,37 @@
+﻿@using Bolao.Pinheiros.Models
+@model Root
+
+<div class="bets-info">
+    <div class="detalhar-apostas">Apostas</div>
+    <div class="goals-bets">
+        <div class="negrito">Conservador</div>
+        <br>
+        <div class="goals-bet">
+            <label class="negrito">Abaixo de</label>
+            <label class="team-value">@(Model.GetMaximumGoals() + 0.5) gols</label>
+        </div>
+        @if (Model.GetMinimumGoals() > 0)
+        {
+            <div class="goals-bet">
+                <label class="negrito">Acima de</label>
+                <label class="team-value">@(Model.GetMinimumGoals() - 0.5) gol(s)</label>
+            </div>
+        }
+    </div>
+    <div class="goals-bets">
+        <div class="negrito">Moderado</div>
+        <br>
+        <div class="goals-bet">
+            <label class="negrito">Acima de</label>
+            <label class="team-value">@(Math.Round(Model.GetAverageGoals()) - 1.5) gol(s)</label>
+        </div>
+    </div>
+    <div class="goals-bets">
+        <div class="negrito">Arriscado</div>
+        <br>
+        <div class="goals-bet">
+            <label class="negrito">Acima de</label>
+            <label class="team-value">@(Math.Round(Model.GetAverageGoals()) - 0.5) gol(s)</label>
+        </div>
+    </div>
+</div>

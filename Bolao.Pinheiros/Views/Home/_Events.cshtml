@@ -6,7 +6,7 @@
     {
         <div class="update-icon"></div>
     }
-    @if (Model.events.Any(x => x.IsGoal()))
+    @if (Model.events != null && Model.events.Any(x => x.IsGoal()))
     {
         <div class="imso_gs__gs-cont imso-medium-font imso_gs__gs-cont-ed">
             <div class="imso_gs__tgs imso_gs__left-team">
