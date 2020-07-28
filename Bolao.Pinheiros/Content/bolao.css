@@ -536,3 +536,7 @@ body {
 .container-estatisticas .bets-info .goals-bets {
     padding: 5px;
 }
+
+.game-card-content label.team-position {
+    vertical-align: super;
+}

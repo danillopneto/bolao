@@ -45,6 +45,10 @@
             @foreach (var game in competition)
             {
                 <div id="@(game.id)" class="container-jogo scores365">
+                    @{ 
+                        ViewData["HomeStanding"] = Model.GetTeamStanding(game.competitionId, game.homeCompetitor.id);
+                        ViewData["AwayStanding"] = Model.GetTeamStanding(game.competitionId, game.awayCompetitor.id);
+                    }
                     @(Html.Partial("_Game", game))
                     <div class="detalhar-estatisticas">Análise</div>
                 </div>

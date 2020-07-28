@@ -11,7 +11,7 @@ namespace Bolao.Pinheiros.Models
 
         public List<Bookmaker> bookmakers { get; set; }
         public List<Competition> competitions { get; set; }
-        public List<GameCompetitor> competitors { get; set; }
+        public List<Competitor> competitors { get; set; }
         public List<Country> countries { get; set; }
         public DateTime Date { get; set; }
         public List<Game> games { get; set; }
@@ -20,6 +20,7 @@ namespace Bolao.Pinheiros.Models
         public Game mainGame { get; set; }
         public int requestedUpdateId { get; set; }
         public List<Sport> sports { get; set; }
+        public List<Standing> standings { get; set; }
         public int ttl { get; set; }
 
         #region " AWAY TEAM "
@@ -29,7 +30,7 @@ namespace Bolao.Pinheiros.Models
             return GetAwayGames().Where(x => x.GetWinner() != null && x.GetWinner().id != mainGame.awayCompetitor.id);
         }
 
-        public IEnumerable<GameCompetitor> GetAwayDefeatsTeams()
+        public IEnumerable<Competitor> GetAwayDefeatsTeams()
         {
             return GetAwayDefeats().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.awayCompetitor.id)).ToList();
         }
@@ -39,7 +40,7 @@ namespace Bolao.Pinheiros.Models
             return GetAwayGames().Where(x => x.IsDraw());
         }
 
-        public IEnumerable<GameCompetitor> GetAwayDrawsTeams()
+        public IEnumerable<Competitor> GetAwayDrawsTeams()
         {
             return GetAwayDraws().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.awayCompetitor.id)).ToList();
         }
@@ -62,7 +63,7 @@ namespace Bolao.Pinheiros.Models
             return GetGamesBetweenTeams().Where(x => x.GetWinner() != null && x.GetWinner().id == mainGame.awayCompetitor.id);
         }
 
-        public IEnumerable<GameCompetitor> GetAwayWinningsTeams()
+        public IEnumerable<Competitor> GetAwayWinningsTeams()
         {
             return GetAwayWinnings().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.awayCompetitor.id)).ToList();
         }
@@ -76,7 +77,7 @@ namespace Bolao.Pinheiros.Models
             return GetHomeGames().Where(x => x.GetWinner() != null && x.GetWinner().id != mainGame.homeCompetitor.id);
         }
 
-        public IEnumerable<GameCompetitor> GetHomeDefeatsTeams()
+        public IEnumerable<Competitor> GetHomeDefeatsTeams()
         {
             return GetHomeDefeats().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.homeCompetitor.id)).ToList();
         }
@@ -86,7 +87,7 @@ namespace Bolao.Pinheiros.Models
             return GetHomeGames().Where(x => x.IsDraw());
         }
 
-        public IEnumerable<GameCompetitor> GetHomeDrawsTeams()
+        public IEnumerable<Competitor> GetHomeDrawsTeams()
         {
             return GetHomeDraws().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.homeCompetitor.id)).ToList();
         }
@@ -109,7 +110,7 @@ namespace Bolao.Pinheiros.Models
             return GetGamesBetweenTeams().Where(x => x.GetWinner() != null && x.GetWinner().id == mainGame.homeCompetitor.id);
         }
 
-        public IEnumerable<GameCompetitor> GetHomeWinningsTeams()
+        public IEnumerable<Competitor> GetHomeWinningsTeams()
         {
             return GetHomeWinnings().OrderByDescending(x => x.id).Select(x => x.GetOtherTeam(mainGame.homeCompetitor.id)).ToList();
         }
@@ -132,6 +133,24 @@ namespace Bolao.Pinheiros.Models
             }
 
             return _gamesBetweenTeams ?? new List<Game>();
+        }
+
+        public Row GetTeamStanding(int competitionId, int teamId)
+        {
+            if (standings != null && standings.Any())
+            {
+                var competition = standings.FirstOrDefault(x => x.competitionId == competitionId);
+                if (competition != null)
+                {
+                    var teamData = competition.rows.FirstOrDefault(t => t.competitor.id == teamId);
+                    if (teamData != null)
+                    {
+                        return teamData;
+                    }
+                }
+            }
+
+            return null;
         }
 
         #region " GOALS BY TIME "

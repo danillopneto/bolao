@@ -306,7 +306,11 @@ var updateGamesPlaying = function (result) {
                 score.html();
             } else {
                 gameStatus.removeClass('game-live');
-                if (!gameLive) {
+                if (gameLive) {
+                    if (!gameStatus.hasClass('game-playing')) {
+                        gameStatus.addClass('game-playing');
+                    }
+                } else {
                     gameStatus.removeClass('game-playing');
                 }
 

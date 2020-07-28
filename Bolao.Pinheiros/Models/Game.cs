@@ -13,7 +13,7 @@ namespace Bolao.Pinheiros.Models
         public const int STAGE_ID_SECOND_HALF = 9;
 
         public string aggregateText { get; set; }
-        public GameCompetitor awayCompetitor { get; set; }
+        public Competitor awayCompetitor { get; set; }
         public string competitionDisplayName { get; set; }
         public int competitionId { get; set; }
         public List<Event> events { get; set; }
@@ -26,7 +26,7 @@ namespace Bolao.Pinheiros.Models
         public bool? hasLineups { get; set; }
         public bool? hasMissingPlayers { get; set; }
         public bool hasTVNetworks { get; set; }
-        public GameCompetitor homeCompetitor { get; set; }
+        public Competitor homeCompetitor { get; set; }
         public int id { get; set; }
         public List<Member> members { get; set; }
         public Odds odds { get; set; }
@@ -96,7 +96,7 @@ namespace Bolao.Pinheiros.Models
                         : 0;
         }
 
-        public GameCompetitor GetLoser()
+        public Competitor GetLoser()
         {
             if (homeCompetitor.score < awayCompetitor.score)
             {
@@ -120,7 +120,7 @@ namespace Bolao.Pinheiros.Models
             return null;
         }
 
-        public GameCompetitor GetOtherTeam(int teamId)
+        public Competitor GetOtherTeam(int teamId)
         {
             if (homeCompetitor.id != teamId)
             {
@@ -144,7 +144,7 @@ namespace Bolao.Pinheiros.Models
             return homeCompetitor.score + awayCompetitor.score;
         }
 
-        public GameCompetitor GetTeam(int teamId)
+        public Competitor GetTeam(int teamId)
         {
             if (homeCompetitor.id == teamId)
             {
@@ -158,7 +158,7 @@ namespace Bolao.Pinheiros.Models
             return null;
         }
 
-        public GameCompetitor GetWinner()
+        public Competitor GetWinner()
         {
             if (homeCompetitor.score > awayCompetitor.score)
             {

@@ -151,10 +151,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Destination.cs" />
+    <Compile Include="Models\DetailedRecentForm.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventType.cs" />
     <Compile Include="Models\Formation.cs" />
     <Compile Include="Models\GameData.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\Header.cs" />
     <Compile Include="Models\Injury.cs" />
     <Compile Include="Models\Lineups.cs" />
     <Compile Include="Models\Member.cs" />
@@ -168,12 +172,13 @@
     <Compile Include="Models\Competitor.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Game.cs" />
-    <Compile Include="Models\HomeCompetitor.cs" />
     <Compile Include="Models\Odds.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Rate.cs" />
+    <Compile Include="Models\Row.cs" />
     <Compile Include="Models\Sport.cs" />
     <Compile Include="Models\Stage.cs" />
+    <Compile Include="Models\Standing.cs" />
     <Compile Include="Models\Statistic.cs" />
     <Compile Include="Models\Substitution.cs" />
     <Compile Include="Models\Suspension.cs" />

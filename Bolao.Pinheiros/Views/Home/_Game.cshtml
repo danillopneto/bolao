@@ -1,4 +1,5 @@
-﻿@model Bolao.Pinheiros.Models.Game
+﻿@using Bolao.Pinheiros.Models
+@model Game
 @{
     const string BASE_URL_LOGO = "https://imagecache.365scores.com/image/upload/f_auto,w_96,h_96,c_limit,q_auto:eco,d_Competitors:default1.png/Competitors/";
 }
@@ -6,6 +7,8 @@
 {
     var logoUrlHome = BASE_URL_LOGO + Model.homeCompetitor.id;
     var logoUrlAway = BASE_URL_LOGO + Model.awayCompetitor.id;
+    var homeStanding = ViewData["HomeStanding"] as Row;
+    var awayStanding = ViewData["AwayStanding"] as Row;
     <div class="component">
         <a class="link game-card">
             <div class="component status-text @(Model.IsGamePlaying() ? "game-playing" : string.Empty) @(Model.IsGameLive() ? "game-live" : string.Empty)">
@@ -19,6 +22,10 @@
                         <img class="game-card-competitor-logo" src="@(string.Concat(BASE_URL_LOGO, Model.homeCompetitor.id))" />
                     </div>
                     <div class="ellipsis game-card-competitor-qualified-name text-component" style="-webkit-line-clamp: 2;">
+                        @if (homeStanding != null)
+                        {
+                            <label class="team-position">@(homeStanding.position)º</label>
+                        }
                         @(Model.homeCompetitor.name)
                     </div>
                 </div>
@@ -31,6 +38,10 @@
                     </div>
                     <div class="ellipsis game-card-competitor-qualified-name text-component" style="-webkit-line-clamp: 2;">
                         @(Model.awayCompetitor.name)
+                        @if (awayStanding != null)
+                        {
+                            <label class="team-position">@(awayStanding.position)º</label>
+                        }
                     </div>
                 </div>
             </div>
