@@ -35,7 +35,7 @@
                             {
                                 var classGame = recentHome.IsDraw() ? "draw" : recentHome.GetWinner().id == Model.homeCompetitor.id ? "win" : "lose";
                                 var resultGame = recentHome.IsDraw() ? "E" : recentHome.GetWinner().id == Model.homeCompetitor.id ? "V" : "D";
-                                <div class="game-badge game-badge-@(classGame)">@(resultGame)</div>
+                                <div class="game-badge game-badge-@(classGame)" title="@(recentHome.ToString())">@(resultGame)</div>
                             }
                         </div>
                     }
@@ -61,7 +61,7 @@
                             {
                                 var classGame = recentAway.IsDraw() ? "draw" : recentAway.GetWinner().id == Model.awayCompetitor.id ? "win" : "lose";
                                 var resultGame = recentAway.IsDraw() ? "E" : recentAway.GetWinner().id == Model.awayCompetitor.id ? "V" : "D";                                
-                                <div class="game-badge game-badge-@(classGame)">@(resultGame)</div>
+                                <div class="game-badge game-badge-@(classGame)" title="@(recentAway.ToString())">@(resultGame)</div>
                             }
                         </div>
                     }
