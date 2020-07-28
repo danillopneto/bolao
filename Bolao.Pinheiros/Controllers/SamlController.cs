@@ -87,7 +87,7 @@ namespace Bolao.Pinheiros.Controllers
                 var url = string.Concat(
                                         LOGIN_URL,
                                         "?SAMLRequest=",
-                                        HttpUtility.UrlEncode(request.GetSAMLRequest(REPLY_URL, ENTITY_ID)));
+                                        HttpUtility.UrlEncode(request.GetSAMLRequest(Request.Url.ToString(), ENTITY_ID)));
                 Response.Redirect(url);
             }
         }
