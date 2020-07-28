@@ -62,7 +62,7 @@ $(document).ready(function () {
     });
 
     setInterval(function () {
-        $('.game-playing .game-card-status-badge').toggleClass('badge-visible');
+        $('.game-live .game-card-status-badge').toggleClass('badge-visible');
     }, 800);
 
     setInterval(function () {
@@ -281,11 +281,12 @@ var updateGamesPlaying = function (result) {
         var gameId = result.games[i].id;
         var gameContainer = $('#' + gameId);
         if (gameContainer.length && gameContainer.is(':visible')) {
-            var gamePlaying = result.games[i].gameTimeAndStatusDisplayType !== 1;
+            var gameLive = result.games[i].gameTimeAndStatusDisplayType !== 1;
+            var gamePlaying = result.games[i].gameTimeAndStatusDisplayType === 2;
             var gameStatus = gameContainer.find('.game-card-status-badge');
             if (gamePlaying) {
-                if (!gameStatus.parent().hasClass('game-playing')) {
-                    gameStatus.parent().addClass('game-playing');
+                if (!gameStatus.parent().hasClass('game-live')) {
+                    gameStatus.parent().addClass('game-live');
                 }
 
                 gameStatus.html(result.games[i].gameTimeDisplay.replace('\'', ''));
@@ -304,7 +305,10 @@ var updateGamesPlaying = function (result) {
                 }
                 score.html();
             } else {
-                gameStatus.removeClass('game-playing');
+                gameStatus.removeClass('game-live');
+                if (!gameLive) {
+                    gameStatus.removeClass('game-playing');
+                }
 
                 if (result.games[i].winDescription !== null
                         && result.games[i].winDescription !== '') {

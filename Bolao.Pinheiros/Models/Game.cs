@@ -177,9 +177,14 @@ namespace Bolao.Pinheiros.Models
             return homeCompetitor.score == awayCompetitor.score;
         }
 
+        public bool IsGameLive()
+        {
+            return gameTimeAndStatusDisplayType == 2;
+        }
+
         public bool IsGamePlaying()
         {
-            return gameTimeAndStatusDisplayType != 1;
+            return statusGroup == 3;
         }
 
         public bool IsTeamInGame(int teamId)

@@ -6,12 +6,11 @@
 {
     var logoUrlHome = BASE_URL_LOGO + Model.homeCompetitor.id;
     var logoUrlAway = BASE_URL_LOGO + Model.awayCompetitor.id;
-    var gamePlaying = Model.IsGamePlaying();
     <div class="component">
         <a class="link game-card">
-            <div class="component status-text @(gamePlaying ? "game-playing" : string.Empty)">
+            <div class="component status-text @(Model.IsGamePlaying() ? "game-playing" : string.Empty) @(Model.IsGameLive() ? "game-live" : string.Empty)">
                 <div class="game-card-status-badge">
-                    @(gamePlaying ? Model.gameTimeDisplay.Replace("'", string.Empty) : Model.statusText)
+                    @(Model.IsGameLive() ? Model.gameTimeDisplay.Replace("'", string.Empty) : Model.statusText)
                 </div>
             </div>
             <div class="game-card-content">

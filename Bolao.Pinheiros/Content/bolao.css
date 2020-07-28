@@ -38,14 +38,14 @@ body {
     font-size: 12px;
 }
 
-.dados-jogos div label.posicao:first-child,
-.container-estatisticas .bets-info .goals-bets:last-child {
-    border-right: none;
-}
+    .dados-jogos div label.posicao:first-child,
+    .container-estatisticas .bets-info .goals-bets:last-child {
+        border-right: none;
+    }
 
-.dados-jogos div label.posicao:last-child {
-    border-left: none;
-}
+    .dados-jogos div label.posicao:last-child {
+        border-left: none;
+    }
 
 .dados-jogos .team-logo {
     vertical-align: top;
@@ -205,18 +205,18 @@ body {
     font-size: 14px;
 }
 
-.previous-meetings-widget-row-component.game-data > div {
-    padding: 0 5px;
-    width: 25%;
-}
+    .previous-meetings-widget-row-component.game-data > div {
+        padding: 0 5px;
+        width: 25%;
+    }
 
-.previous-meetings-widget-row-component.game-data > div:first-child {
-    text-align: right;
-}
+        .previous-meetings-widget-row-component.game-data > div:first-child {
+            text-align: right;
+        }
 
-.previous-meetings-widget-row-component.game-data > div:last-child {
-    text-align: left;
-}
+        .previous-meetings-widget-row-component.game-data > div:last-child {
+            text-align: left;
+        }
 
 .previous-meetings-widget-row-component.subtitle {
     -webkit-box-pack: center;
@@ -317,7 +317,7 @@ body {
     font-size: 11px;
 }
 
-    .status-text.game-playing {
+    .status-text.game-live {
         color: rgb(255, 82, 0);
     }
 

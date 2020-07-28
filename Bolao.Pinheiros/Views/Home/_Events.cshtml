@@ -2,7 +2,7 @@
 @model Game
 
 <div class="imso_mh__score-sum imso-ani">
-    @if (Model.IsGamePlaying())
+    @if (Model.startTime >= DateTime.Now.AddHours(-2))
     {
         <div class="update-icon"></div>
     }
@@ -19,8 +19,9 @@
                     foreach (var homeEvent in homeEventsGrouped)
                     {
                         var homePlayer = Model.GetPlayer(homeEvent.Key);
+                        var homeEventTimes = homeEvent.Select(x => x.addedTime > 0 ? string.Concat(x.gameTimeDisplay, "+", x.addedTime) : x.gameTimeDisplay );
                         <div class="imso_gs__gs-r">
-                            @(homePlayer != null ? homePlayer.name : Game.GOAL_NAME) - @(string.Join(" | ", homeEvent.Select(x => x.gameTimeDisplay)))
+                            @(homePlayer != null ? homePlayer.name : Game.GOAL_NAME) - @(string.Join(" | ", homeEventTimes))
                         </div>
                     }
                 }
@@ -37,9 +38,10 @@
                     var awayEventsGrouped = awayEvents.GroupBy(x => x.playerId).ToList();
                     foreach (var awayEvent in awayEventsGrouped)
                     {
-                        var homePlayer = Model.GetPlayer(awayEvent.Key);
+                        var awayPlayer = Model.GetPlayer(awayEvent.Key);
+                        var awayEventTimes = awayEvent.Select(x => x.addedTime > 0 ? string.Concat(x.gameTimeDisplay, "+", x.addedTime) : x.gameTimeDisplay);
                         <div class="imso_gs__gs-r">
-                            @(homePlayer != null ? homePlayer.name : Game.GOAL_NAME) - @(string.Join(" | ", awayEvent.Select(x => x.gameTimeDisplay)))
+                            @(awayPlayer != null ? awayPlayer.name : Game.GOAL_NAME) - @(string.Join(" | ", awayEventTimes))
                         </div>
                     }
                 }
