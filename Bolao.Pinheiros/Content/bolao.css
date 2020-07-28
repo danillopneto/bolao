@@ -573,3 +573,24 @@ body {
 .game-badge-lose {
     background-color: #ff5200;
 }
+
+@media only screen and (max-width: 600px) {
+    .scores365 .standings-widget-table-form-cell {
+        display: inline-block;
+        width: auto;
+    }
+
+    .scores365 .standings-widget-table-form-cell div {
+        margin: 5px;
+    }
+
+    .dados-confronto,
+    .dados-casa,
+    .dados-visitante,
+    .apostas-confronto,
+    .apostas-ultimos-jogos,
+    .apostas-misto,
+    .bets-info > div:not(:first-child) {
+        width: 100%;
+    }
+}

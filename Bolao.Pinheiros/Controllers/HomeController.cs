@@ -9,16 +9,20 @@ using System.Web.Mvc;
 
 namespace Bolao.Pinheiros.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : SamlController
     {
+        #region " CONSTANTS "
+
         private static readonly string DATE_FORMAT = "dd/MM/yyyy";
-        private static readonly List<int> EXCLUDE_COMPETITIONS = new List<int> { 7499, 7522, 7529, 7556, 7568, 7569 };
+        private static readonly List<int> EXCLUDE_COMPETITIONS = new List<int> { 104, 7499, 7522, 7529, 7530, 7556, 7568, 7569 };
         private static readonly string GAMES_DATA = "GamesData";
         private static readonly int MAXIMUM_GAMES = 5;
         private static readonly string URL_BASE = "https://webws.365scores.com/web/games/?langId=31&timezoneName=America/Sao_Paulo&userCountryId=21&appTypeId=5&sports=1&startDate={0}&endDate={1}&showOdds=true";
         private static readonly string URL_BASE_COMPETITIONS = "https://webws.365scores.com/web/standings/?langId=31&timezoneName=America/Sao_Paulo&userCountryId=21&appTypeId=5&competitions=";
         private static readonly string URL_BASE_GAME = "https://webws.365scores.com/web/game/?langId=31&timezoneName=America/Sao_Paulo&userCountryId=21&appTypeId=5&gameId={0}";
         private static readonly string URL_BASE_GAMES = "https://webws.365scores.com/web/games/?langId=31&timezoneName=America/Sao_Paulo&userCountryId=21&appTypeId=5&games={0}&startDate=01/01/2000&endDate={1}";
+
+        #endregion " CONSTANTS "
 
         private Root GamesData
         {
@@ -38,6 +42,25 @@ namespace Bolao.Pinheiros.Controllers
                 TempData[GAMES_DATA] = value;
             }
         }
+
+        #region " VIEWS "
+
+        public ActionResult Index()
+        {
+            CheckOrDoLogin();
+
+            var date = DateTime.Now;
+            var model = GetDataFromGames(date);
+            model.Date = date;
+            model.standings = GetCompetitionsData(model.games);
+
+            GamesData = model;
+            return View(model);
+        }
+
+        #endregion " VIEWS "
+
+        #region " ACTION RESULTS "
 
         [HttpPost]
         public ActionResult GetGamesData(DateTime date)
@@ -79,16 +102,9 @@ namespace Bolao.Pinheiros.Controllers
             return PartialView("_Statistics", gameStatistics);
         }
 
-        public ActionResult Index()
-        {
-            var date = DateTime.Now;
-            var model = GetDataFromGames(date);
-            model.Date = date;
-            model.standings = GetCompetitionsData(model.games);
+        #endregion " ACTION RESULTS "
 
-            GamesData = model;
-            return View(model);
-        }
+        #region " PRIVATE METHODS "
 
         private List<Standing> GetCompetitionsData(List<Game> games)
         {
@@ -167,5 +183,7 @@ namespace Bolao.Pinheiros.Controllers
             var gameData = GetDataFromApi<GameData>(url);
             data.games.Add(gameData.game);
         }
+
+        #endregion " PRIVATE METHODS "
     }
 }

@@ -175,7 +175,6 @@ C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\bin\Microsoft.AI.DependencyCol
 C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\bin\Microsoft.AI.Web.xml
 C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\obj\Debug\Bolao.Pinheiros.csprojAssemblyReference.cache
 C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\obj\Debug\Bolao.Pinheiros.csproj.CoreCompileInputs.cache
 C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\obj\Debug\Bolao.Pinheiros.csproj.CopyComplete
 C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\obj\Debug\Bolao.Pinheiros.dll
