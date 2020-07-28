@@ -356,11 +356,13 @@ var updateGamesPlaying = function (result) {
                     && game.odds.options !== null
                     && game.odds.options.length > 0) {
                 var homeOdd = game.odds.options[0];
-                gameContainer.find('.home-odd').html(homeOdd.rate.Decimal);
-                var drawOdd = game.odds.options[1];
-                gameContainer.find('.draw-odd').html(drawOdd.rate.Decimal);
-                var awayOdd = game.odds.options[2];
-                gameContainer.find('.away-odd').html(awayOdd.rate.Decimal);
+                if (homeOdd.rate.Decimal > 0) {
+                    gameContainer.find('.home-odd').html(homeOdd.rate.Decimal);
+                    var drawOdd = game.odds.options[1];
+                    gameContainer.find('.draw-odd').html(drawOdd.rate.Decimal);
+                    var awayOdd = game.odds.options[2];
+                    gameContainer.find('.away-odd').html(awayOdd.rate.Decimal);
+                }
             }
         }
     }
