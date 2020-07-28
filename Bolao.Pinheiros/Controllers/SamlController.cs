@@ -19,7 +19,7 @@ namespace Bolao.Pinheiros.Controllers
 
         private const string LOGIN_URL = "https://login.microsoftonline.com/ae9c23da-241e-43a1-ba46-4b56889877b9/saml2";
 
-        private const string REPLY_URL = "https://bolao.azurewebsites.net/Home.aspx";
+        private const string REPLY_URL = "https://bolao.azurewebsites.net/";
 
         private const string URL_CERTIFICATE = "https://login.microsoftonline.com/ae9c23da-241e-43a1-ba46-4b56889877b9/federationmetadata/2007-06/federationmetadata.xml?appid=a69be944-19a1-461e-afdf-62e314e21e50";
 
