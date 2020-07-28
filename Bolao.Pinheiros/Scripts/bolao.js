@@ -4,7 +4,11 @@ var dadosDosJogos = $('.dados-jogos');
 var gettingUpdates = false;
 
 $(document).ready(function () {
-    Notify.requestPermission(onPermissionGranted, onPermissionDenied);    
+    try {
+        Notify.requestPermission(onPermissionGranted, onPermissionDenied);
+    } catch {
+        console.log('Notify not supported.');
+    }
 
     dataDesejada.datepicker({
         dateFormat: "dd/mm/yy"
@@ -31,9 +35,12 @@ $(document).ready(function () {
         //}
     });
 
-
     $(document).on('click', '.component-live', function () {
         showLiveGames();
+    });
+
+    $(document).on('click', '.component-ended', function () {
+        showEndedGames();
     });
 
     $(document).on('click', '.update-icon', function () {
@@ -90,7 +97,7 @@ var getGamesOnDate = function () {
                 loading.show();
             }
         }).done(function (result) {
-            dadosDosJogos.html(result);
+            dadosDosJogos.html($(result).html());
             setEvents();
         }).fail(function (ex) {
             // TODO
@@ -204,7 +211,7 @@ var showGamesSelected = function () {
 
     var gamesSelected = gamesSelector.val();
     if (gamesSelected === ''
-            || gamesSelected.length === 0) {
+        || gamesSelected.length === 0) {
         games.show();
         competitions.show();
     } else {
@@ -220,6 +227,27 @@ var showGamesSelected = function () {
     }
 
     setGamesVisible();
+};
+
+var showEndedGames = function () {
+    var endedClass = 'ended-active';
+    var endedButton = $('.ended-button').toggleClass(endedClass);
+    var containerJogos = $('.container-jogo');
+    containerJogos.show();
+    if (!endedButton.hasClass(endedClass)) {
+        for (var i = 0; i < containerJogos.length; i++) {
+            var isEnded = $(containerJogos[i]).data('ended').toLowerCase() === 'true';
+            if (isEnded) {
+                $(containerJogos[i]).hide();
+            }
+        }
+    } else {
+        containerJogos.show();
+    }
+
+    setGamesVisible();
+    showCompetitionsSelected();
+    showOrHideCompetitions();
 };
 
 var showLiveGames = function () {
@@ -278,22 +306,23 @@ var updateGamesPlaying = function (result) {
     }
 
     for (var i = 0; i < result.games.length; i++) {
-        var gameId = result.games[i].id;
+        var game = result.games[i];
+        var gameId = game.id;
         var gameContainer = $('#' + gameId);
         if (gameContainer.length && gameContainer.is(':visible')) {
-            var gameLive = result.games[i].gameTimeAndStatusDisplayType !== 1;
-            var gamePlaying = result.games[i].gameTimeAndStatusDisplayType === 2;
+            var gameLive = game.gameTimeAndStatusDisplayType !== 1;
+            var gamePlaying = game.gameTimeAndStatusDisplayType === 2;
             var gameStatus = gameContainer.find('.game-card-status-badge');
             if (gamePlaying) {
                 if (!gameStatus.parent().hasClass('game-live')) {
                     gameStatus.parent().addClass('game-live');
                 }
 
-                gameStatus.html(result.games[i].gameTimeDisplay.replace('\'', ''));
+                gameStatus.html(game.gameTimeDisplay.replace('\'', ''));
                 var score = gameContainer.find('.game-card-content-score');
 
-                var home = result.games[i].homeCompetitor;
-                var away = result.games[i].awayCompetitor;
+                var home = game.homeCompetitor;
+                var away = game.awayCompetitor;
                 if (home.score >= 0) {
                     var scoreText = home.score + ' - ' + away.score;
                     if (!Notify.needsPermission && score.html().trim() !== scoreText) {
@@ -314,12 +343,24 @@ var updateGamesPlaying = function (result) {
                     gameStatus.removeClass('game-playing');
                 }
 
-                if (result.games[i].winDescription !== null
-                        && result.games[i].winDescription !== '') {
+                if (game.winDescription !== null
+                    && game.winDescription !== '') {
                     gameStatus.html(result.games[i].winDescription);
                 } else {
                     gameStatus.html(result.games[i].statusText);
-                }                
+                }
+            }
+
+            /* Odds */
+            if (game.odds !== null
+                    && game.odds.options !== null
+                    && game.odds.options.length > 0) {
+                var homeOdd = game.odds.options[0];
+                gameContainer.find('.home-odd').html(homeOdd.rate.Decimal);
+                var drawOdd = game.odds.options[1];
+                gameContainer.find('.draw-odd').html(drawOdd.rate.Decimal);
+                var awayOdd = game.odds.options[2];
+                gameContainer.find('.away-odd').html(awayOdd.rate.Decimal);
             }
         }
     }
@@ -356,8 +397,7 @@ function doNotification(title, content) {
         notifyShow: onShowNotification,
         notifyClose: onCloseNotification,
         notifyClick: onClickNotification,
-        notifyError: onErrorNotification,
-        timeout: 4
+        notifyError: onErrorNotification
     });
 
     myNotification.show();

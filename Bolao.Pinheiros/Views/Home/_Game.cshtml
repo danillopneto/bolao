@@ -60,13 +60,29 @@
                             @foreach (var recentAway in awayStanding.detailedRecentForm.OrderBy(x => x.id).Where(x => x.id != Model.id))
                             {
                                 var classGame = recentAway.IsDraw() ? "draw" : recentAway.GetWinner().id == Model.awayCompetitor.id ? "win" : "lose";
-                                var resultGame = recentAway.IsDraw() ? "E" : recentAway.GetWinner().id == Model.awayCompetitor.id ? "V" : "D";                                
+                                var resultGame = recentAway.IsDraw() ? "E" : recentAway.GetWinner().id == Model.awayCompetitor.id ? "V" : "D";
                                 <div class="game-badge game-badge-@(classGame)" title="@(recentAway.ToString())">@(resultGame)</div>
                             }
                         </div>
                     }
                 </div>
             </div>
+            @if (Model.odds != null && Model.odds.options != null && Model.odds.options.Count > 0)
+            {
+                <div class="game-card-odds-container">
+                    <div class=" game-card-odds">
+                        <div class="game-card-odds-cell game-card-odds-cell-even">
+                            <div class="game-card-odds-cell-rate home-odd">@(Model.odds.options.First(x => x.num == 1).rate.Decimal)</div>
+                        </div>
+                        <div class="game-card-odds-cell">
+                            <div class="game-card-odds-cell-rate draw-odd">@(Model.odds.options.First(x => x.num == 2).rate.Decimal)</div>
+                        </div>
+                        <div class="game-card-odds-cell game-card-odds-cell-even">
+                            <div class="game-card-odds-cell-rate away-odd">@(Model.odds.options.First(x => x.num == 3).rate.Decimal)</div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 }

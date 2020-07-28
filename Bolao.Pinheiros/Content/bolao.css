@@ -443,16 +443,20 @@ body {
     -webkit-box-align: center;
     -webkit-box-pack: center;
     position: relative;
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     height: inherit;
     background: white;
     padding: 5px;
     width: 100px;
-    margin: 5px auto;
+    margin: 5px;
     font-size: 14px;
     border-radius: 20px;
+}
+
+.action-buttons-container {
+    text-align: center;
 }
 
 ._l6mpiv {
@@ -488,7 +492,20 @@ body {
     background-color: rgb(127, 151, 171);
 }
 
-.live-active {
+.component._13ml5gv.component-ended {
+    width: 70px;
+}
+
+.component-ended div.component {
+    width: 56px;
+}
+
+.component-ended div.ended-button {
+    width: 40px;
+}
+
+.live-active,
+.ended-active {
     transform: translateX(16px) !important;
     background-color: rgb(255, 82, 0) !important;
 }
@@ -572,6 +589,34 @@ body {
 
 .game-badge-lose {
     background-color: #ff5200;
+}
+
+/* Game-card Odds */
+.game-card-odds-container {
+    height: 24px;
+    width: 100%;
+}
+
+.game-card-small-view .game-card-odds-container {
+    height: 20px;
+    width: 100%;
+}
+
+.game-card-odds {
+    margin: 5px auto 0;
+    max-width: 320px;
+    /* border: 1px solid #ecf0f3; */
+    display: flex;
+}
+
+.game-card-odds-cell {
+    width: 100%;
+    font-size: 12px;
+    border: 1px solid #ecf0f3;
+}
+
+.game-card-odds-cell-even {
+    background-color: #ecf0f3;
 }
 
 @media only screen and (max-width: 600px) {

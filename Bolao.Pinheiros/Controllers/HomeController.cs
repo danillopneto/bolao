@@ -47,8 +47,9 @@ namespace Bolao.Pinheiros.Controllers
 
         public ActionResult Index()
         {
+#if !DEBUG
             CheckOrDoLogin();
-
+#endif
             var date = DateTime.Now;
             var model = GetDataFromGames(date);
             model.Date = date;
