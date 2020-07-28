@@ -10,7 +10,7 @@
     var homeStanding = ViewData["HomeStanding"] as Row;
     var awayStanding = ViewData["AwayStanding"] as Row;
     <div class="component">
-        <a class="link game-card">
+        <div class="link game-card">
             <div class="component status-text @(Model.IsGamePlaying() ? "game-playing" : string.Empty) @(Model.IsGameLive() ? "game-live" : string.Empty)">
                 <div class="game-card-status-badge">
                     @(Model.IsGameLive() ? Model.gameTimeDisplay.Replace("'", string.Empty) : Model.statusText)
@@ -28,6 +28,17 @@
                         }
                         @(Model.homeCompetitor.name)
                     </div>
+                    @if (homeStanding != null && homeStanding.detailedRecentForm != null)
+                    {
+                        <div class="standings-widget-table-form-cell">
+                            @foreach (var recentHome in homeStanding.detailedRecentForm.OrderBy(x => x.id).Where(x => x.id != Model.id))
+                            {
+                                var classGame = recentHome.IsDraw() ? "draw" : recentHome.GetWinner().id == Model.homeCompetitor.id ? "win" : "lose";
+                                var resultGame = recentHome.IsDraw() ? "E" : recentHome.GetWinner().id == Model.homeCompetitor.id ? "V" : "D";
+                                <div class="game-badge game-badge-@(classGame)">@(resultGame)</div>
+                            }
+                        </div>
+                    }
                 </div>
                 <div class="game-card-content-score">
                     @(Model.GetCurrentScoreText())
@@ -43,8 +54,19 @@
                             <label class="team-position">@(awayStanding.position)º</label>
                         }
                     </div>
+                    @if (awayStanding != null && awayStanding.detailedRecentForm != null)
+                    {
+                        <div class="standings-widget-table-form-cell">
+                            @foreach (var recentAway in awayStanding.detailedRecentForm.OrderBy(x => x.id).Where(x => x.id != Model.id))
+                            {
+                                var classGame = recentAway.IsDraw() ? "draw" : recentAway.GetWinner().id == Model.awayCompetitor.id ? "win" : "lose";
+                                var resultGame = recentAway.IsDraw() ? "E" : recentAway.GetWinner().id == Model.awayCompetitor.id ? "V" : "D";                                
+                                <div class="game-badge game-badge-@(classGame)">@(resultGame)</div>
+                            }
+                        </div>
+                    }
                 </div>
             </div>
-        </a>
+        </div>
     </div>
 }

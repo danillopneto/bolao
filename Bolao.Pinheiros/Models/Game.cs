@@ -47,6 +47,7 @@ namespace Bolao.Pinheiros.Models
         public Venue venue { get; set; }
         public List<Widget> widgets { get; set; }
         public string winDescription { get; set; }
+        public string competitionGroupByName { get; set; }
 
         public bool DidBothTeamScore()
         {

@@ -9,13 +9,13 @@
                 <label class="team negrito">@(Model.mainGame.homeCompetitor.name)</label>
                 <label class="team-value">@(Model.GetHomeWinningsBetween().Count())</label>
             </div>
-            <div class="team-victory">
-                <label class="team negrito">@(Model.mainGame.awayCompetitor.name)</label>
-                <label class="team-value">@(Model.GetAwayWinningsBetween().Count())</label>
-            </div>
             <div class="team-draw">
                 <label class="team negrito">Empate</label>
                 <label class="team-value">@(Model.GetDraws().Count())</label>
+            </div>
+            <div class="team-victory">
+                <label class="team negrito">@(Model.mainGame.awayCompetitor.name)</label>
+                <label class="team-value">@(Model.GetAwayWinningsBetween().Count())</label>
             </div>
         </div>
         <div class="game-stats-info">

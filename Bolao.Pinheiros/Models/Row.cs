@@ -22,7 +22,7 @@ namespace Bolao.Pinheiros.Models
         public string pct { get; set; }
         public int position { get; set; }
         public int trend { get; set; }
-        public List<DetailedRecentForm> detailedRecentForm { get; set; }
+        public List<Game> detailedRecentForm { get; set; }
         public List<int> recentForm { get; set; }
         public int destinationNum { get; set; }
         public int? groupNum { get; set; }

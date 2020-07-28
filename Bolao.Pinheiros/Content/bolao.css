@@ -540,3 +540,36 @@ body {
 .game-card-content label.team-position {
     vertical-align: super;
 }
+
+/* GAME BADGE */
+.scores365 .standings-widget-table-form-cell {
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+}
+
+.game-badge {
+    height: 24px;
+    width: 24px;
+    max-width: 24px;
+    border-radius: 50%;
+    color: $white;
+    line-height: 24px;
+    font-size: 12px;
+    text-align: center;
+    margin-right: 3px;
+    box-sizing: border-box;
+    color: white;
+}
+
+.game-badge-win {
+    background-color: #76b300;
+}
+
+.game-badge-draw {
+    background-color: #ffc107;
+}
+
+.game-badge-lose {
+    background-color: #ff5200;
+}
