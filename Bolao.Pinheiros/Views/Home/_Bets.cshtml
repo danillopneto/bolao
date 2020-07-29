@@ -10,6 +10,9 @@
     var averageGoalsFirst = Model.GetAverageGoalsFirstHalf();
     var averageGoalsSecond = Model.GetAverageGoalsSecondHalf();
     var cornersAverage = Model.GetCornersAverage();
+    var winners = Model.GetPossibleWinners();
+    var homeWinning = winners[Model.mainGame.homeCompetitor.id];
+    var awayWinning = winners[Model.mainGame.awayCompetitor.id];
 }
 <div class="bets-info">
     <div class="detalhar-apostas">Apostas</div>
@@ -55,6 +58,30 @@
     <div class="goals-bets">
         <div class="negrito">Arriscado</div>
         <br>
+        <div class="goals-bet">
+            <label class="negrito">Possível vencedor</label>
+            <label class="team-value">
+                @if (homeWinning)
+                {
+                    <text>@(Model.mainGame.homeCompetitor.name)</text>
+                }
+                else if (awayWinning)
+                {
+                    <text>@(Model.mainGame.awayCompetitor.name)</text>
+                }
+                @if (winners[0])
+                {
+                    if (homeWinning || awayWinning)
+                    {
+                        <text>ou Empate</text>
+                    }
+                    else
+                    {
+                        <text>Empate</text>
+                    }
+                }
+            </label>
+        </div>
         <div class="goals-bet">
             <label class="negrito">Acima de</label>
             <label class="team-value">@(Math.Round(Model.GetAverageGoals()) - 0.5) gols</label>

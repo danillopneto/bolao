@@ -8,7 +8,7 @@ namespace Bolao.Pinheiros.Models
     public class Root
     {
         private int CORNER_ID = 8;
-        
+
         private List<Game> _gamesBetweenTeams;
 
         public List<Bookmaker> bookmakers { get; set; }
@@ -444,6 +444,41 @@ namespace Bolao.Pinheiros.Models
         public double GetPercentBothScored()
         {
             return MathUtils.CalcPercent(games.Where(x => x.DidBothTeamScore()).Count(), games.Count);
+        }
+
+        public IDictionary<int, bool> GetPossibleWinners()
+        {
+            var homePoints = 0;
+            var drawPoints = 0;
+            var awayPoints = 0;
+            var gamesBetween = GetGamesBetweenTeams();
+            if (gamesBetween != null && gamesBetween.Any())
+            {
+                homePoints = gamesBetween.Count(x => x.GetWinner() != null && x.GetWinner().id == mainGame.homeCompetitor.id);
+                drawPoints = gamesBetween.Count(x => x.GetWinner() == null);
+                awayPoints = gamesBetween.Count(x => x.GetWinner() != null && x.GetWinner().id == mainGame.awayCompetitor.id);
+            }
+
+            var homeWinnings = GetHomeWinnings();
+            if (homeWinnings != null && homeWinnings.Any())
+            {
+                homePoints += homeWinnings.Count(x => x.GetOtherTeam(mainGame.homeCompetitor.id).popularityRank >= mainGame.awayCompetitor.popularityRank);
+            }
+
+            var awayWinnings = GetAwayWinnings();
+            if (awayWinnings != null && awayWinnings.Any())
+            {
+                awayPoints += awayWinnings.Count(x => x.GetOtherTeam(mainGame.awayCompetitor.id).popularityRank >= mainGame.homeCompetitor.popularityRank);
+            }
+
+            var result = new Dictionary<int, bool>
+            {
+                { mainGame.homeCompetitor.id, homePoints > awayPoints },
+                { 0, drawPoints >= homePoints || drawPoints >= awayPoints },
+                { mainGame.awayCompetitor.id, awayPoints > homePoints }
+            };
+
+            return result;
         }
 
         #endregion " BETS "
