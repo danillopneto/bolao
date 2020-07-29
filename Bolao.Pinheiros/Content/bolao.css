@@ -505,7 +505,8 @@ body {
 }
 
 .live-active,
-.ended-active {
+.ended-active,
+.alert-active {
     transform: translateX(16px) !important;
     background-color: rgb(255, 82, 0) !important;
 }

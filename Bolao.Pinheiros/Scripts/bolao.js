@@ -43,6 +43,10 @@ $(document).ready(function () {
         showEndedGames();
     });
 
+    $(document).on('click', '.component-alert', function () {
+        $(this).find('.alert-button').toggleClass('alert-active');
+    });
+
     $(document).on('click', '.update-icon', function () {
         getStatistics(this, false);
     });
@@ -325,7 +329,9 @@ var updateGamesPlaying = function (result) {
                 var away = game.awayCompetitor;
                 if (home.score >= 0) {
                     var scoreText = home.score + ' - ' + away.score;
-                    if (!Notify.needsPermission && score.html().trim() !== scoreText) {
+                    if (!Notify.needsPermission
+                        && score.html().trim() !== scoreText
+                        && gameContainer.parents('.competition').find('.alert-active').length) {
                         var gameText = home.name + ' - ' + away.name;
                         doNotification(gameText, scoreText);
                     }

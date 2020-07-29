@@ -12,7 +12,9 @@
     var cornersAverage = Model.GetCornersAverage();
     var winners = Model.GetPossibleWinners();
     var homeWinning = winners[Model.mainGame.homeCompetitor.id];
+    var drawWinning = winners[0];
     var awayWinning = winners[Model.mainGame.awayCompetitor.id];
+    var resultFinded = homeWinning || drawWinning || awayWinning;
 }
 <div class="bets-info">
     <div class="detalhar-apostas">Apostas</div>
@@ -59,28 +61,31 @@
         <div class="negrito">Arriscado</div>
         <br>
         <div class="goals-bet">
-            <label class="negrito">Possível vencedor</label>
-            <label class="team-value">
-                @if (homeWinning)
-                {
-                    <text>@(Model.mainGame.homeCompetitor.name)</text>
-                }
-                else if (awayWinning)
-                {
-                    <text>@(Model.mainGame.awayCompetitor.name)</text>
-                }
-                @if (winners[0])
-                {
-                    if (homeWinning || awayWinning)
+            @if (resultFinded)
+            {
+                <label class="negrito">Possível vencedor</label>
+                <label class="team-value">
+                    @if (homeWinning)
                     {
-                        <text>ou Empate</text>
+                        <text>@(Model.mainGame.homeCompetitor.name)</text>
                     }
-                    else
+                    else if (awayWinning)
                     {
-                        <text>Empate</text>
+                        <text>@(Model.mainGame.awayCompetitor.name)</text>
                     }
-                }
-            </label>
+                    @if (winners[0])
+                    {
+                        if (homeWinning || awayWinning)
+                        {
+                            <text>ou Empate</text>
+                        }
+                        else
+                        {
+                            <text>Empate</text>
+                        }
+                    }
+                </label>
+            }
         </div>
         <div class="goals-bet">
             <label class="negrito">Acima de</label>

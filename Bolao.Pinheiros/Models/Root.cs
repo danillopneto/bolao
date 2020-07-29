@@ -448,15 +448,16 @@ namespace Bolao.Pinheiros.Models
 
         public IDictionary<int, bool> GetPossibleWinners()
         {
-            var homePoints = 0;
-            var drawPoints = 0;
-            var awayPoints = 0;
+            var homePoints = 0D;
+            var drawPoints = 0D;
+            var awayPoints = 0D;
             var gamesBetween = GetGamesBetweenTeams();
             if (gamesBetween != null && gamesBetween.Any())
             {
-                homePoints = gamesBetween.Count(x => x.GetWinner() != null && x.GetWinner().id == mainGame.homeCompetitor.id);
-                drawPoints = gamesBetween.Count(x => x.GetWinner() == null);
-                awayPoints = gamesBetween.Count(x => x.GetWinner() != null && x.GetWinner().id == mainGame.awayCompetitor.id);
+                var gamesWithWinner = gamesBetween.Where(x => x.GetWinner() != null);
+                homePoints = gamesWithWinner.Count(x => x.GetWinner().id == mainGame.homeCompetitor.id) * 1.5;
+                drawPoints = gamesBetween.Count(x => x.IsDraw());
+                awayPoints = gamesWithWinner.Count(x => x.GetWinner().id == mainGame.awayCompetitor.id) * 1.5;
             }
 
             var homeWinnings = GetHomeWinnings();
@@ -465,10 +466,24 @@ namespace Bolao.Pinheiros.Models
                 homePoints += homeWinnings.Count(x => x.GetOtherTeam(mainGame.homeCompetitor.id).popularityRank >= mainGame.awayCompetitor.popularityRank);
             }
 
+            var homeDefeats = GetHomeDefeats();
+            if (homeDefeats != null && homeDefeats.Any())
+            {
+                homeDefeats = homeDefeats.Where(x => x.GetWinner().popularityRank <= mainGame.awayCompetitor.popularityRank).ToList();
+                homePoints -= homeDefeats.Count();
+            }
+
             var awayWinnings = GetAwayWinnings();
             if (awayWinnings != null && awayWinnings.Any())
             {
                 awayPoints += awayWinnings.Count(x => x.GetOtherTeam(mainGame.awayCompetitor.id).popularityRank >= mainGame.homeCompetitor.popularityRank);
+            }
+
+            var awayDefeats = GetAwayDefeats();
+            if (awayDefeats != null && awayDefeats.Any())
+            {
+                awayDefeats = awayDefeats.Where(x => x.GetWinner().popularityRank <= mainGame.homeCompetitor.popularityRank).ToList();
+                awayPoints -= awayDefeats.Count();
             }
 
             var result = new Dictionary<int, bool>

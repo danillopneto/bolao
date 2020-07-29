@@ -47,11 +47,16 @@
         <div id="@(competition.Key)" class="competition">
             <div class="competition-title">
                 <img alt="" title="" data-src="@(string.Concat(BASE_URL_LOGO, competition.Key))" style="max-width: 24px;" src="@(string.Concat(BASE_URL_LOGO, competition.Key))" />
-                @{ 
+                @{
                     var countryId = Model.competitions.First(x => x.id == competition.Key).countryId;
                     var countryName = Model.countries.First(x => x.id == countryId);
                 }
                 <label>@(competition.First().competitionDisplayName) (@(competition.Count())) - @(countryName.name)</label>
+                <div class="component _13ml5gv component-alert">
+                    <div class="component _l6mpiv">
+                        <div class="component _ymmvtl alert-button">Alerta</div>
+                    </div>
+                </div>
             </div>
             @foreach (var game in competition)
             {
