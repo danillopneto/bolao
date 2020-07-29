@@ -420,7 +420,8 @@ namespace Bolao.Pinheiros.Models
         public int GetCornersAverage()
         {
             var gamesBetweenTeams = GetGamesBetweenTeams();
-            if (gamesBetweenTeams != null)
+            if (gamesBetweenTeams != null
+                    && gamesBetweenTeams.Count > 0)
             {
                 var gamesWithStatistics = gamesBetweenTeams.Where(x => x.awayCompetitor.statistics != null);
                 if (gamesWithStatistics != null)

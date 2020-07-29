@@ -28,23 +28,20 @@
                 <option value="@(competition.competitionId)">@(competition.competitionDisplayName)</option>
             }
         </select>
-    </div>
-    @if (Model.Date.Date == DateTime.Now.Date)
-    {
-        <div class="action-buttons-container">
-            <div class="component _13ml5gv component-live">
-                <div class="component _l6mpiv">
-                    <div class="component _ymmvtl live-button">Live</div>
-                </div>
-                <div class="switch-badge-desktop-component _pk2pzx games-count">(@(Model.games.Count))</div>
+    </div>    
+    <div class="action-buttons-container">
+        <div class="component _13ml5gv component-live">
+            <div class="component _l6mpiv">
+                <div class="component _ymmvtl live-button">Live</div>
             </div>
-            <div class="component _13ml5gv component-ended">
-                <div class="component _l6mpiv">
-                    <div class="component _ymmvtl ended-button ended-active">Encer.</div>
-                </div>
+            <div class="switch-badge-desktop-component _pk2pzx games-count">(@(Model.games.Count))</div>
+        </div>
+        <div class="component _13ml5gv component-ended">
+            <div class="component _l6mpiv">
+                <div class="component _ymmvtl ended-button ended-active">Encer.</div>
             </div>
         </div>
-    }
+    </div>    
     @foreach (var competition in gamesByCompetition)
     {
         <div id="@(competition.Key)" class="competition">
