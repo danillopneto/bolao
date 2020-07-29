@@ -179,3 +179,4 @@ C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\obj\Debug\Bolao.Pinheiros.cspr
 C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\obj\Debug\Bolao.Pinheiros.csproj.CopyComplete
 C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\obj\Debug\Bolao.Pinheiros.dll
 C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\obj\Debug\Bolao.Pinheiros.pdb
+C:\Users\danil\source\repos\bolao\Bolao.Pinheiros\obj\Debug\Bolao.Pinheiros.csprojAssemblyReference.cache

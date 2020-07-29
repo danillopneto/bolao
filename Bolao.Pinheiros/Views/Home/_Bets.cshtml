@@ -1,14 +1,15 @@
 ﻿@using Bolao.Pinheiros.Models
 @model Root
 @{
+    const double CORNER_MED = 4;
+    const double CORNER_MAX = 3;
     const double PERCENT_MED = 60;
-    const double VALUE_MED = 2;
     const double PERCENT_MAX = 40;
-    const double VALUE_MAX = 3;
     var percentBothTeamScored = Model.GetPercentBothScored();
     var percentBothTeamDidntScore = Model.GetPercentBothDidntScore();
     var averageGoalsFirst = Model.GetAverageGoalsFirstHalf();
     var averageGoalsSecond = Model.GetAverageGoalsSecondHalf();
+    var cornersAverage = Model.GetCornersAverage();
 }
 <div class="bets-info">
     <div class="detalhar-apostas">Apostas</div>
@@ -39,6 +40,17 @@
             <label class="negrito">Abaixo de</label>
             <label class="team-value">@(Math.Round(Model.GetAverageGoals()) + 1.5) gols</label>
         </div>
+        @if (cornersAverage - CORNER_MED > 0)
+        {
+            <div class="goals-bet">
+                <label class="negrito">Cantos igual ou acima de</label>
+                <label class="team-value">@(cornersAverage - CORNER_MED)</label>
+            </div>
+        }
+        <div class="goals-bet">
+            <label class="negrito">Gols no 1º tempo</label>
+            <label class="team-value">@(averageGoalsFirst) gol(s)</label>
+        </div>
     </div>
     <div class="goals-bets">
         <div class="negrito">Arriscado</div>
@@ -60,6 +72,17 @@
         <div class="goals-bet">
             <label class="negrito">Abaixo de</label>
             <label class="team-value">@(Math.Round(Model.GetAverageGoals()) + .5) gols</label>
+        </div>
+        @if (cornersAverage - CORNER_MAX > 0)
+        {
+            <div class="goals-bet">
+                <label class="negrito">Cantos igual ou acima de</label>
+                <label class="team-value">@(cornersAverage - CORNER_MAX)</label>
+            </div>
+        }
+        <div class="goals-bet">
+            <label class="negrito">Gols no 2º tempo</label>
+            <label class="team-value">@(averageGoalsSecond) gol(s)</label>
         </div>
     </div>
 </div>

@@ -7,6 +7,8 @@ namespace Bolao.Pinheiros.Models
 {
     public class Root
     {
+        private int CORNER_ID = 8;
+        
         private List<Game> _gamesBetweenTeams;
 
         public List<Bookmaker> bookmakers { get; set; }
@@ -413,6 +415,24 @@ namespace Bolao.Pinheiros.Models
         public double GetAverageGoalsSecondHalf()
         {
             return games.Average(x => x.GetGoalsSecondHalf()).ToDecimalFormat();
+        }
+
+        public int GetCornersAverage()
+        {
+            var gamesBetweenTeams = GetGamesBetweenTeams();
+            if (gamesBetweenTeams != null)
+            {
+                var gamesWithStatistics = gamesBetweenTeams.Where(x => x.awayCompetitor.statistics != null);
+                if (gamesWithStatistics != null)
+                {
+                    var statistics = gamesWithStatistics.SelectMany(x => x.awayCompetitor.statistics).ToList();
+                    statistics.AddRange(gamesWithStatistics.SelectMany(x => x.homeCompetitor.statistics).ToList());
+                    var cornersTotal = statistics.Where(x => x.id == CORNER_ID).Sum(x => Convert.ToInt32(x.value));
+                    return cornersTotal / gamesBetweenTeams.Count;
+                }
+            }
+
+            return 0;
         }
 
         public double GetPercentBothDidntScore()
