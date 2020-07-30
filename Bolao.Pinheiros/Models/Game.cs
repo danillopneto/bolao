@@ -180,7 +180,7 @@ namespace Bolao.Pinheiros.Models
 
         public bool IsEnded()
         {
-            return gameTimeAndStatusDisplayType == 1;
+            return statusGroup == 4;
         }
 
         public bool IsGameLive()
