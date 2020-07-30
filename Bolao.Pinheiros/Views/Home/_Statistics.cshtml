@@ -11,7 +11,7 @@
                     <div class="card__face card__face--front">
                         <div class="negrito">Confronto</div>
                         <br>
-                        @foreach (var game in Model.GetGamesBetweenTeams().OrderByDescending(x => x.id))
+                        @foreach (var game in Model.GetGamesBetweenTeams().OrderByDescending(x => x.startTime))
                         {
                             @(Html.Partial("_GameResume", game))
                         }
@@ -29,7 +29,7 @@
                     <div class="card__face card__face--front">
                         <div class="negrito">@(Model.mainGame.homeCompetitor.name)</div>
                         <br>
-                        @foreach (var game in Model.GetHomeGames().OrderByDescending(x => x.id))
+                        @foreach (var game in Model.GetHomeGames().OrderByDescending(x => x.startTime))
                         {
                             @(Html.Partial("_GameResume", game))
                         }
@@ -47,7 +47,7 @@
                     <div class="card__face card__face--front">
                         <div class="negrito">@(Model.mainGame.awayCompetitor.name)</div>
                         <br>
-                        @foreach (var game in Model.GetAwayGames().OrderByDescending(x => x.id))
+                        @foreach (var game in Model.GetAwayGames().OrderByDescending(x => x.startTime))
                         {
                             @(Html.Partial("_GameResume", game))
                         }
