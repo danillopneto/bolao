@@ -31,7 +31,7 @@
                     @if (homeStanding != null && homeStanding.detailedRecentForm != null)
                     {
                         <div class="standings-widget-table-form-cell">
-                            @foreach (var recentHome in homeStanding.detailedRecentForm.OrderBy(x => x.id).Where(x => x.id != Model.id))
+                            @foreach (var recentHome in homeStanding.detailedRecentForm.OrderBy(x => x.startTime).Where(x => x.id != Model.id))
                             {
                                 var classGame = recentHome.IsDraw() ? "draw" : recentHome.GetWinner().id == Model.homeCompetitor.id ? "win" : "lose";
                                 var resultGame = recentHome.IsDraw() ? "E" : recentHome.GetWinner().id == Model.homeCompetitor.id ? "V" : "D";
@@ -57,7 +57,7 @@
                     @if (awayStanding != null && awayStanding.detailedRecentForm != null)
                     {
                         <div class="standings-widget-table-form-cell">
-                            @foreach (var recentAway in awayStanding.detailedRecentForm.OrderBy(x => x.id).Where(x => x.id != Model.id))
+                            @foreach (var recentAway in awayStanding.detailedRecentForm.OrderBy(x => x.startTime).Where(x => x.id != Model.id))
                             {
                                 var classGame = recentAway.IsDraw() ? "draw" : recentAway.GetWinner().id == Model.awayCompetitor.id ? "win" : "lose";
                                 var resultGame = recentAway.IsDraw() ? "E" : recentAway.GetWinner().id == Model.awayCompetitor.id ? "V" : "D";
