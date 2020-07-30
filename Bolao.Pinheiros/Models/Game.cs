@@ -178,6 +178,11 @@ namespace Bolao.Pinheiros.Models
             return homeCompetitor.score == awayCompetitor.score;
         }
 
+        public bool IsEnded()
+        {
+            return gameTimeAndStatusDisplayType == 1;
+        }
+
         public bool IsGameLive()
         {
             return gameTimeAndStatusDisplayType == 2;

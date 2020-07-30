@@ -110,7 +110,7 @@ var getGamesOnDate = function () {
 };
 
 var getGamesDataUpdate = function () {
-    if ($.active) {
+    if ($.active || $('#GetUpdates').val() === 'False') {
         return;
     }
 

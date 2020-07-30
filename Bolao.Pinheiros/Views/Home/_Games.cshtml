@@ -8,6 +8,7 @@
 @if (Model != null)
 {
     <div class="dados-jogos">
+        @(Html.Hidden("GetUpdates", Model.Date.Date == DateTime.Now.Date))
         <div class="action-buttons-container">
             <div class="component _13ml5gv component-live">
                 <div class="component _l6mpiv">

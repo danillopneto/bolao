@@ -1,9 +1,7 @@
 ﻿@using Bolao.Pinheiros.Models
 @model Root
 @{
-    const double CORNER_MAX = 3;
     const double PERCENT_MED = 60;
-    const double PERCENT_MAX = 40;
     var percentBothTeamScored = Model.GetPercentBothScored();
     var percentBothTeamDidntScore = Model.GetPercentBothDidntScore();
     var averageGoalsFirst = Model.GetAverageGoalsFirstHalf();
@@ -15,7 +13,7 @@
     var awayWinning = winners[Model.mainGame.awayCompetitor.id];
     var resultFinded = homeWinning || drawWinning || awayWinning;
 }
-<div class="bets-info">
+<div class="bets-info" data-ended="@(Model.mainGame.IsEnded())">
     <div class="detalhar-apostas">Apostas</div>
     <div class="goals-bets">
         <div class="negrito">Moderado</div>
@@ -25,7 +23,7 @@
         }
         @if (overGoals > 0)
         {
-            <div class="goals-bet">
+            <div class="goals-bet" data-bet-winner=@(Model.mainGame.GetSumScore() > overGoals)>
                 <label class="negrito">Jogo acima de</label>
                 <label class="team-value">@(overGoals) gols</label>
             </div>
@@ -33,28 +31,34 @@
         @if (percentBothTeamScored >= PERCENT_MED
                 || percentBothTeamDidntScore >= PERCENT_MED)
         {
-            <div class="goals-bet">
+            var bothWinnerMed = percentBothTeamScored > percentBothTeamDidntScore
+                                ? Model.mainGame.DidBothTeamScore()
+                                : !Model.mainGame.DidBothTeamScore();
+            <div class="goals-bet" data-bet-winner="@(bothWinnerMed)">
                 <label class="negrito">Ambos marcam</label>
                 <label class="team-value">
                     @(percentBothTeamScored > percentBothTeamDidntScore ? "Sim" : "Não")
                 </label>
             </div>
         }
-        <div class="goals-bet">
+        @{
+            var aboveGoals = Math.Round(Model.GetAverageGoals()) + 1.5;
+        }
+        <div class="goals-bet" data-bet-winner=@(Model.mainGame.GetSumScore() < aboveGoals)>
             <label class="negrito">Jogo abaixo de</label>
-            <label class="team-value">@(Math.Round(Model.GetAverageGoals()) + 1.5) gols</label>
-        </div>
-        <div class="goals-bet">
-            <label class="negrito">Gols no 1º tempo</label>
-            <label class="team-value">@(averageGoalsFirst) gol(s)</label>
+            <label class="team-value">@(aboveGoals) gols</label>
         </div>
     </div>
     <div class="goals-bets">
         <div class="negrito">Arriscado</div>
         <br>
-        <div class="goals-bet">
-            @if (resultFinded)
-            {
+        @if (resultFinded)
+        {
+            var winner = Model.mainGame.GetWinner() == null
+                            ? Model.mainGame.IsDraw()
+                            : homeWinning && Model.mainGame.GetWinner().id == Model.mainGame.homeCompetitor.id
+                                || awayWinning && Model.mainGame.GetWinner().id == Model.mainGame.awayCompetitor.id;
+            <div class="goals-bet" data-bet-winner="@(winner)">
                 <label class="negrito">Possível vencedor</label>
                 <label class="team-value">
                     @if (homeWinning)
@@ -77,11 +81,11 @@
                         }
                     }
                 </label>
-            }
-        </div>
+            </div>
+        }
         <div class="goals-bet">
             <label class="negrito">Jogo acima de</label>
-            <label class="team-value">@(Math.Round(Model.GetAverageGoals()) - .5) gols</label>
+            <label class="team-value">@(overGoals) gols</label>
         </div>
         <div class="goals-bet">
             <label class="negrito">Ambos marcam</label>
@@ -100,6 +104,10 @@
                 <label class="team-value">@(cornersAverage)</label>
             </div>
         }
+        <div class="goals-bet">
+            <label class="negrito">Gols no 1º tempo</label>
+            <label class="team-value">@(averageGoalsFirst) gol(s)</label>
+        </div>
         <div class="goals-bet">
             <label class="negrito">Gols no 2º tempo</label>
             <label class="team-value">@(averageGoalsSecond) gol(s)</label>

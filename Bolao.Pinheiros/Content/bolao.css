@@ -500,6 +500,14 @@ body {
     background-color: #ecf0f3;
 }
 
+[data-ended="True"] [data-bet-winner="True"] {
+    background-color: #72ff72;
+}
+
+[data-ended="True"] [data-bet-winner="False"] {
+    background-color: #ffafaf;
+}
+
 @media only screen and (max-width: 600px) {
     .scores365 .standings-widget-table-form-cell {
         display: inline-block;
