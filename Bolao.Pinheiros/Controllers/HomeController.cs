@@ -78,9 +78,6 @@ namespace Bolao.Pinheiros.Controllers
         public ActionResult GetGamesDataUpdate()
         {
             var model = GetDataFromGames(GamesData.Date, true);
-            model.Date = GamesData.Date;
-
-            GamesData = model;
             return Json(model);
         }
 

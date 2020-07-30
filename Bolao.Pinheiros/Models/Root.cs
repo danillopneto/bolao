@@ -287,8 +287,14 @@ namespace Bolao.Pinheiros.Models
             return games.Average(x => x.GetSumScore()).ToDecimalFormat();
         }
 
-        public double GetAverageGoalsAway()
+        public double GetAverageGoalsAway(bool onlyAwayTeam)
         {
+            if (onlyAwayTeam)
+            {
+                return games.Where(x => x.GetTeam(mainGame.awayCompetitor.id) != null)
+                            .Average(x => x.GetTeam(mainGame.awayCompetitor.id).score).ToDecimalFormat();
+            }
+
             return (GetAwayGamesGoals() / GetHomeGames().Count()).ToDecimalFormat();
         }
 
@@ -297,8 +303,14 @@ namespace Bolao.Pinheiros.Models
             return (GetGoalsBetween() / GetGamesBetweenTeams().Count()).ToDecimalFormat();
         }
 
-        public double GetAverageGoalsHome()
+        public double GetAverageGoalsHome(bool onlyHomeTeam)
         {
+            if (onlyHomeTeam)
+            {
+                return games.Where(x => x.GetTeam(mainGame.homeCompetitor.id) != null)
+                            .Average(x => x.GetTeam(mainGame.homeCompetitor.id).score).ToDecimalFormat();
+            }
+
             return (GetHomeGamesGoals() / GetHomeGames().Count()).ToDecimalFormat();
         }
 

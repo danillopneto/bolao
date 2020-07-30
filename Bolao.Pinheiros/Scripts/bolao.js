@@ -265,7 +265,7 @@ var updateGamesPlaying = function (result) {
         var gameId = game.id;
         var gameContainer = $('#' + gameId);
         gameContainer.data('game', JSON.stringify(result.games[i]));
-        if (gameContainer.length && gameContainer.is(':visible')) {
+        if (gameContainer.length) {
             var gameLive = game.gameTimeAndStatusDisplayType !== 1;
             var gamePlaying = game.gameTimeAndStatusDisplayType === 2;
             var gameStatus = gameContainer.find('.game-card-status-badge');
@@ -290,7 +290,6 @@ var updateGamesPlaying = function (result) {
 
                     score.html(scoreText);
                 }
-                score.html();
             } else {
                 gameStatus.removeClass('game-live');
                 if (gameLive) {

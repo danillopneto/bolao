@@ -26,7 +26,7 @@
         @if (overGoals > 0)
         {
             <div class="goals-bet">
-                <label class="negrito">Acima de</label>
+                <label class="negrito">Jogo acima de</label>
                 <label class="team-value">@(overGoals) gols</label>
             </div>
         }
@@ -41,7 +41,7 @@
             </div>
         }
         <div class="goals-bet">
-            <label class="negrito">Abaixo de</label>
+            <label class="negrito">Jogo abaixo de</label>
             <label class="team-value">@(Math.Round(Model.GetAverageGoals()) + 1.5) gols</label>
         </div>
         <div class="goals-bet">
@@ -80,21 +80,17 @@
             }
         </div>
         <div class="goals-bet">
-            <label class="negrito">Acima de</label>
-            <label class="team-value">@(Math.Round(Model.GetAverageGoals()) - 0.5) gols</label>
+            <label class="negrito">Jogo acima de</label>
+            <label class="team-value">@(Math.Round(Model.GetAverageGoals()) - .5) gols</label>
         </div>
-        @if (percentBothTeamScored >= PERCENT_MAX
-                || percentBothTeamDidntScore >= PERCENT_MAX)
-        {
-            <div class="goals-bet">
-                <label class="negrito">Ambos marcam</label>
-                <label class="team-value">
-                    @(percentBothTeamScored > percentBothTeamDidntScore ? "Não" : "Sim")
-                </label>
-            </div>
-        }
         <div class="goals-bet">
-            <label class="negrito">Abaixo de</label>
+            <label class="negrito">Ambos marcam</label>
+            <label class="team-value">
+                @(percentBothTeamScored > percentBothTeamDidntScore ? "Não" : "Sim")
+            </label>
+        </div>
+        <div class="goals-bet">
+            <label class="negrito">Jogo abaixo de</label>
             <label class="team-value">@(Math.Round(Model.GetAverageGoals()) + .5) gols</label>
         </div>
         @if (cornersAverage > 0)
