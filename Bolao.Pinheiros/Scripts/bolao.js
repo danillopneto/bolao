@@ -30,13 +30,8 @@ $(document).ready(function () {
         $(this).siblings('.card').toggleClass('is-flipped');
     });
 
-    $(document).on('click', '.detalhar-apostas', function () {
-        //var estatisticas = $(this).parent().find('.apostas');
-        //if (estatisticas.is(':visible')) {
-        //    estatisticas.slideUp();
-        //} else {
-        //    estatisticas.slideDown();
-        //}
+    $(document).on('click', '.analisis-button', function () {
+        $(this).parents('.competition').find('.detalhar-estatisticas').click();
     });
 
     $(document).on('click', '.component-live', function () {

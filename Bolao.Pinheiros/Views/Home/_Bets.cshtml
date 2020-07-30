@@ -55,7 +55,7 @@
         @if (resultFinded)
         {
             var winner = Model.mainGame.GetWinner() == null
-                            ? Model.mainGame.IsDraw()
+                            ? winners[0]
                             : homeWinning && Model.mainGame.GetWinner().id == Model.mainGame.homeCompetitor.id
                                 || awayWinning && Model.mainGame.GetWinner().id == Model.mainGame.awayCompetitor.id;
             <div class="goals-bet" data-bet-winner="@(winner)">
