@@ -51,7 +51,7 @@ namespace Bolao.Pinheiros.Controllers
             CheckOrDoLogin();
 #endif
             var date = DateTime.Now;
-            var model = GetDataFromGames(date);
+            var model = GetDataFromGames(date, false);
             model.Date = date;
             model.standings = GetCompetitionsData(model.games);
 
@@ -66,7 +66,7 @@ namespace Bolao.Pinheiros.Controllers
         [HttpPost]
         public ActionResult GetGamesData(DateTime date)
         {
-            var model = GetDataFromGames(date);
+            var model = GetDataFromGames(date, false);
             model.Date = date;
             model.standings = GetCompetitionsData(model.games);
 
@@ -77,7 +77,7 @@ namespace Bolao.Pinheiros.Controllers
         [HttpPost]
         public ActionResult GetGamesDataUpdate()
         {
-            var model = GetDataFromGames(GamesData.Date);
+            var model = GetDataFromGames(GamesData.Date, true);
             model.Date = GamesData.Date;
 
             GamesData = model;
@@ -135,11 +135,15 @@ namespace Bolao.Pinheiros.Controllers
             return default(T);
         }
 
-        private Root GetDataFromGames(DateTime date)
+        private Root GetDataFromGames(DateTime date, bool onlyLiveGames)
         {
             var startDate = date.ToString(DATE_FORMAT);
             var endDate = date.ToString(DATE_FORMAT);
             var url = string.Format(URL_BASE, startDate, endDate);
+            if (onlyLiveGames)
+            {
+                url = string.Concat(url, "&onlyLiveGames=true");
+            }
 
             var model = GetDataFromApi<Root>(url);
             model.games = model.games.Where(x => !EXCLUDE_COMPETITIONS.Contains(x.competitionId)).ToList();

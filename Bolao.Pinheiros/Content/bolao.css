@@ -12,27 +12,6 @@ body {
     padding: 0 !important;
 }
 
-.dados-jogos div.scoreboard-wrapper {
-    display: flex;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    -moz-justify-content: center;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-}
-
 .dados-jogos div label {
     padding: 0 5px;
     font-size: 12px;
@@ -42,65 +21,6 @@ body {
     .container-estatisticas .bets-info .goals-bets:last-child {
         border-right: none;
     }
-
-    .dados-jogos div label.posicao:last-child {
-        border-left: none;
-    }
-
-.dados-jogos .team-logo {
-    vertical-align: top;
-    max-height: 42px;
-    margin: 5px;
-}
-
-.team-container {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-}
-
-.record {
-    display: block;
-    font-size: 10px;
-    padding-top: 1px;
-    text-transform: uppercase;
-    color: #6c6d6f;
-}
-
-.away .team-info {
-    text-align: right;
-}
-
-.team-name .long-name,
-.team__banner,
-.abbrev {
-    display: none;
-}
-
-.score-container {
-    padding-right: 10px;
-    position: relative;
-    text-align: center;
-}
-
-.score {
-    font-size: 32px;
-    font-weight: 800;
-    color: #1d1e1f;
-}
-
-.team__content {
-    display: flex;
-}
 
 .container-estatisticas,
 .apostas {
@@ -147,27 +67,6 @@ body {
 
 .negrito {
     font-weight: bold;
-}
-
-.jogos-em-casa,
-.jogos-visitante {
-    width: 45%;
-    display: inline-block;
-}
-
-.green,
-.green + label {
-    color: green;
-}
-
-.red,
-.red + label {
-    color: red;
-}
-
-.blue,
-.blue + label {
-    color: blue;
 }
 
 .competition {
@@ -280,11 +179,11 @@ body {
 .competition-filter,
 .games-filter {
     padding: 10px;
+    text-align: center;
 }
 
-    .competition-filter span.select2,
-    .games-filter span.select2 {
-        width: 100% !important;
+    .competition-filter input {
+        width: 300px;
     }
 
 .competition-title label {
@@ -292,7 +191,6 @@ body {
 }
 
 /* 365 scores */
-
 .scores365 .game-card {
     padding: 0 2px;
     text-align: center;
@@ -492,20 +390,7 @@ body {
     background-color: rgb(127, 151, 171);
 }
 
-.component._13ml5gv.component-ended {
-    width: 70px;
-}
-
-.component-ended div.component {
-    width: 56px;
-}
-
-.component-ended div.ended-button {
-    width: 40px;
-}
-
 .live-active,
-.ended-active,
 .alert-active {
     transform: translateX(16px) !important;
     background-color: rgb(255, 82, 0) !important;
@@ -595,11 +480,6 @@ body {
 /* Game-card Odds */
 .game-card-odds-container {
     height: 24px;
-    width: 100%;
-}
-
-.game-card-small-view .game-card-odds-container {
-    height: 20px;
     width: 100%;
 }
 

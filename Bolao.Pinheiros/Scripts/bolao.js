@@ -1,5 +1,6 @@
 var loading = $('.lds-container');
 var dataDesejada = $('#datepicker');
+var searchFilter = $('#search-field');
 var dadosDosJogos = $('.dados-jogos');
 var gettingUpdates = false;
 
@@ -10,12 +11,15 @@ $(document).ready(function () {
         console.log('Notify not supported.');
     }
 
-    dataDesejada.datepicker({
-        dateFormat: "dd/mm/yy"
-    });
+    dataDesejada.datepicker({ dateFormat: "dd/mm/yy" });
 
     dataDesejada.on('change', function () {
         getGamesOnDate(this.value);
+        searchFilter.val('');
+    });
+
+    searchFilter.on('keydown keyup keypress', function () {
+        filterGames();
     });
 
     $(document).on('click', '.detalhar-estatisticas', function () {
@@ -37,10 +41,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.component-live', function () {
         showLiveGames();
-    });
-
-    $(document).on('click', '.component-ended', function () {
-        showEndedGames();
+        searchFilter.val('');
     });
 
     $(document).on('click', '.component-alert', function () {
@@ -79,8 +80,6 @@ $(document).ready(function () {
     setInterval(function () {
         getGamesDataUpdate();
     }, 10000);
-
-    setEvents();
 });
 
 var getGamesOnDate = function () {
@@ -102,7 +101,6 @@ var getGamesOnDate = function () {
             }
         }).done(function (result) {
             dadosDosJogos.html($(result).html());
-            setEvents();
         }).fail(function (ex) {
             // TODO
         });
@@ -169,89 +167,46 @@ var getStatistics = function (element, show) {
     }
 };
 
-var setGamesVisible = function () {
-    $('.games-count').html('(' + $('.container-jogo').filter(':visible').length + ')');
-};
-
-var setEvents = function () {
-    $('.select2-component').select2();
-    $('.select2-component').show();
-    $('[name="competition-selector"]').on('change', function () {
-        showCompetitionsSelected();
-    });
-
-    $('[name="games-selector"]').on('change', function () {
-        showGamesSelected();
-    });
-};
-
-var showCompetitionsSelected = function () {
+var filterGames = function () {
+    var filter = searchFilter.val();
     var competitions = $('.competition');
-    competitions.hide();
-
-    var competitionsSelected = $('[name="competition-selector"]').val();
-    if (competitionsSelected === ''
-        || competitionsSelected.length === 0) {
-        competitions.show();
-    } else {
-        var selector = '';
-        for (var i = 0; i < competitionsSelected.length; i++) {
-            selector += '#' + competitionsSelected[i] + ',';
-        }
-
-        selector = selector.slice(0, -1);
-        $(selector).show();
-    }
-
-    setGamesVisible();
-};
-
-var showGamesSelected = function () {
-    var games = $('.container-jogo');
-
-    var competitions = $('.competition');
-    competitions.show();
-    games.hide();
-
-    var gamesSelected = gamesSelector.val();
-    if (gamesSelected === ''
-        || gamesSelected.length === 0) {
-        games.show();
-        competitions.show();
-    } else {
-        var selector = '';
-        for (var i = 0; i < gamesSelected.length; i++) {
-            selector += '#' + gamesSelected[i] + ',';
-        }
-
-        selector = selector.slice(0, -1);
-        $(selector).show();
-
-        showOrHideCompetitions();
-    }
-
-    setGamesVisible();
-};
-
-var showEndedGames = function () {
-    var endedClass = 'ended-active';
-    var endedButton = $('.ended-button').toggleClass(endedClass);
     var containerJogos = $('.container-jogo');
-    containerJogos.show();
-    if (!endedButton.hasClass(endedClass)) {
-        for (var i = 0; i < containerJogos.length; i++) {
-            var isEnded = $(containerJogos[i]).data('ended').toLowerCase() === 'true';
-            if (isEnded) {
-                $(containerJogos[i]).hide();
+    competitions.hide();
+    containerJogos.hide();
+    if (filter === null
+        || filter === '') {
+        competitions.show();
+        containerJogos.show();
+        return;
+    } else {
+        for (var i = 0; i < competitions.length; i++) {
+            var competition = $(competitions[i]);
+            var games = competition.find('.container-jogo');
+            var title = competition.find('.competition-title label').html().trim();
+            if (title.toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
+                competition.show();
+                games.show();
+            } else {
+                for (var g = 0; g < games.length; g++) {
+                    var game = $(games[g]);
+                    var teams = game.find('.team-name');
+                    if ($(teams[0]).html().trim().toLowerCase().indexOf(filter) !== -1) {
+                        competition.show();
+                        game.show();
+                    } else if ($(teams[1]).html().trim().toLowerCase().indexOf(filter) !== -1) {
+                        competition.show();
+                        game.show();
+                    }
+                }
             }
         }
-    } else {
-        containerJogos.show();
     }
 
     setGamesVisible();
-    showCompetitionsSelected();
-    showOrHideCompetitions();
+};
+
+var setGamesVisible = function () {
+    $('.games-count').html('(' + $('.container-jogo').filter(':visible').length + ')');
 };
 
 var showLiveGames = function () {
@@ -272,17 +227,13 @@ var showLiveGames = function () {
         containerJogos.show();
     }
 
-    setGamesVisible();
-    showCompetitionsSelected();
     showOrHideCompetitions();
-};
-
-var showNotification = function (title, content) {
-
+    setGamesVisible();
 };
 
 var showOrHideCompetitions = function () {
     var competitions = $('.competition');
+    competitions.show();
     for (var c = 0; c < competitions.length; c++) {
         if ($(competitions[c]).find('.container-jogo:visible').length === 0) {
             $(competitions[c]).hide();
@@ -313,6 +264,7 @@ var updateGamesPlaying = function (result) {
         var game = result.games[i];
         var gameId = game.id;
         var gameContainer = $('#' + gameId);
+        gameContainer.data('game', JSON.stringify(result.games[i]));
         if (gameContainer.length && gameContainer.is(':visible')) {
             var gameLive = game.gameTimeAndStatusDisplayType !== 1;
             var gamePlaying = game.gameTimeAndStatusDisplayType === 2;

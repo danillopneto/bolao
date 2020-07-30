@@ -26,7 +26,7 @@
                         {
                             <label class="team-position">@(homeStanding.position)º</label>
                         }
-                        @(Model.homeCompetitor.name)
+                        <label class="team-name">@(Model.homeCompetitor.name)</label>
                     </div>
                     @if (homeStanding != null && homeStanding.detailedRecentForm != null)
                     {
@@ -48,7 +48,7 @@
                         <img class="game-card-competitor-logo" src="@(string.Concat(BASE_URL_LOGO, Model.awayCompetitor.id))">
                     </div>
                     <div class="ellipsis game-card-competitor-qualified-name text-component" style="-webkit-line-clamp: 2;">
-                        @(Model.awayCompetitor.name)
+                        <label class="team-name">@(Model.awayCompetitor.name)</label>
                         @if (awayStanding != null)
                         {
                             <label class="team-position">@(awayStanding.position)º</label>
