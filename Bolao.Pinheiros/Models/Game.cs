@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Bolao.Pinheiros.Utils;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Bolao.Pinheiros.Models
@@ -58,7 +60,7 @@ namespace Bolao.Pinheiros.Models
         public string GetCurrentScoreText()
         {
             return startTime > DateTime.Now
-                        ? startTime.ToShortTimeString()
+                        ? startTime.ToBrasiliaDateTime().ToShortTimeString()
                         : homeCompetitor.score >= 0 ? string.Format("{0} - {1}", homeCompetitor.score, awayCompetitor.score) : string.Empty;
         }
 

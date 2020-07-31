@@ -1,4 +1,5 @@
 ﻿using Bolao.Pinheiros.Models;
+using Bolao.Pinheiros.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace Bolao.Pinheiros.Controllers
 #if !DEBUG
             CheckOrDoLogin();
 #endif
-            var date = DateTime.Now;
+            var date = DateTime.Now.ToBrasiliaDateTime();
             var model = GetDataFromGames(date, false);
             model.Date = date;
             model.standings = GetCompetitionsData(model.games);
@@ -148,7 +149,7 @@ namespace Bolao.Pinheiros.Controllers
                 model.games = model.games.Where(x => !EXCLUDE_COMPETITIONS.Contains(x.competitionId)).ToList();
                 model.games = model.games.OrderBy(x => x.startTime).ToList();
             }
-            
+
             return model;
         }
 
