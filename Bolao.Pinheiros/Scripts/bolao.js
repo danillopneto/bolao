@@ -185,7 +185,7 @@ var getStatistics = function (element, show) {
 };
 
 var filterGames = function () {
-    var filter = searchFilter.val();
+    var filter = latinize(searchFilter.val()).toLowerCase();
     var competitions = $('.competition');
     var containerJogos = $('.container-jogo');
     competitions.hide();
@@ -200,14 +200,14 @@ var filterGames = function () {
             var competition = $(competitions[i]);
             var games = competition.find('.container-jogo');
             var title = competition.find('.competition-title label').html().trim();
-            if (title.toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
+            if (latinize(title.toLowerCase()).indexOf(filter) !== -1) {
                 competition.show();
                 games.show();
             } else {
                 for (var g = 0; g < games.length; g++) {
                     var game = $(games[g]);
                     var teams = game.find('.team-name');
-                    if ($(teams[0]).html().trim().toLowerCase().indexOf(filter) !== -1) {
+                    if (latinize($(teams[0]).html()).trim().toLowerCase().indexOf(filter) !== -1) {
                         competition.show();
                         game.show();
                     } else if ($(teams[1]).html().trim().toLowerCase().indexOf(filter) !== -1) {

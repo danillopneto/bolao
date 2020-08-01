@@ -17,10 +17,10 @@ body {
     font-size: 12px;
 }
 
-.dados-jogos div label.posicao:first-child,
-.container-estatisticas .bets-info .goals-bets:last-child {
-    border-right: none;
-}
+    .dados-jogos div label.posicao:first-child,
+    .container-estatisticas .bets-info .goals-bets {
+        border-right: none;
+    }
 
 .container-estatisticas,
 .apostas {
@@ -55,6 +55,10 @@ body {
     padding: 0 5px;
     display: inline-block;
     vertical-align: top;
+}
+
+.bets-info > div:last-child {
+    border-left: 1px solid #c0c0c0;
 }
 
 .dados-visitante {
