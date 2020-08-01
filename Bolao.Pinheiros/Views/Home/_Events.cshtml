@@ -19,7 +19,7 @@
                     foreach (var homeEvent in homeEventsGrouped)
                     {
                         var homePlayer = Model.GetPlayer(homeEvent.Key);
-                        var homeEventTimes = homeEvent.Select(x => x.addedTime > 0 ? string.Concat(x.gameTimeDisplay, "+", x.addedTime) : x.gameTimeDisplay );
+                        var homeEventTimes = homeEvent.Select(x => x.GetGoalTime());
                         <div class="imso_gs__gs-r">
                             @(homePlayer != null ? homePlayer.name : Game.GOAL_NAME) - @(string.Join(" | ", homeEventTimes))
                         </div>
@@ -39,7 +39,7 @@
                     foreach (var awayEvent in awayEventsGrouped)
                     {
                         var awayPlayer = Model.GetPlayer(awayEvent.Key);
-                        var awayEventTimes = awayEvent.Select(x => x.addedTime > 0 ? string.Concat(x.gameTimeDisplay, "+", x.addedTime) : x.gameTimeDisplay);
+                        var awayEventTimes = awayEvent.Select(x => x.GetGoalTime());
                         <div class="imso_gs__gs-r">
                             @(awayPlayer != null ? awayPlayer.name : Game.GOAL_NAME) - @(string.Join(" | ", awayEventTimes))
                         </div>

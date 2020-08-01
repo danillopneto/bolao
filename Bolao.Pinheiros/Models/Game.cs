@@ -216,5 +216,19 @@ namespace Bolao.Pinheiros.Models
                                  awayCompetitor.name,
                                  startTime.ToShortDateString());
         }
+
+        public string ToStringScore()
+        {
+            if (events != null
+                    && events.Any(x => x.IsGoal()))
+            {
+                var times = events.Where(x => x.IsGoal()).Select(x => x.GetGoalTime(true));
+                return string.Join(" | ", times)
+                            .Replace(string.Concat("ID", homeCompetitor.id), homeCompetitor.name)
+                            .Replace(string.Concat("ID", awayCompetitor.id), awayCompetitor.name);
+            }
+
+            return string.Empty;
+        }
     }
 }

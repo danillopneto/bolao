@@ -23,6 +23,17 @@ namespace Bolao.Pinheiros.Models
             return eventType.name == Game.GOAL_NAME;
         }
         
+        public string GetGoalTime(bool teamId = false)
+        {
+            if (teamId)
+            {
+                var result = addedTime > 0 ? string.Concat(gameTimeDisplay, "+", addedTime) : gameTimeDisplay;
+                return string.Concat("ID", competitorId, " - ", result);
+            }
+
+            return addedTime > 0 ? string.Concat(gameTimeDisplay, "+", addedTime) : gameTimeDisplay;
+        }
+
         public bool IsTeamGoal(int competitorId)
         {
             return IsGoal() && this.competitorId == competitorId;

@@ -1,7 +1,8 @@
 ﻿@model Bolao.Pinheiros.Models.Game
 @if (Model != null)
 {
-    <div class="previous-meetings-widget-row-component game-container">
+    var title = Model.ToStringScore();
+    <div class="previous-meetings-widget-row-component game-container" title="@(title)">
         <div class="previous-meetings-widget-row-component subtitle">@(Model.competitionDisplayName)</div>
         <div class="previous-meetings-widget-row-component game-data">
             <div class="previous-meetings-widget-row-component">
