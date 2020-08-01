@@ -15,7 +15,7 @@ namespace Bolao.Pinheiros.Controllers
         #region " CONSTANTS "
 
         private static readonly string DATE_FORMAT = "dd/MM/yyyy";
-        private static readonly List<int> EXCLUDE_COMPETITIONS = new List<int> { 146, 165, 173, 397, 564, 5431, 5456, 5462, 5547, 5565, 5556, 5605, 5606, 5639, 5807, 5818, 5820, 5825, 6108, 6148, 6219, 6221, 6252, 6345, 6347, 6362, 6896, 7110, 7298, 7299, 7345, 7466, 7499, 7522, 7523, 7528, 7529, 7530, 7538, 7540, 7556, 7568, 7569, 7570, 7572 };
+        private static readonly List<int> EXCLUDE_COMPETITIONS = new List<int> { 146, 165, 173, 397, 564, 5431, 5456, 5462, 5547, 5565, 5556, 5605, 5606, 5639, 5807, 5818, 5820, 5825, 6108, 6148, 6219, 6221, 6252, 6345, 6347, 6362, 6896, 7110, 7298, 7299, 7345, 7466, 7499, 7522, 7523, 7528, 7529, 7530, 7538, 7540, 7556, 7568, 7569, 7570, 7571, 7572, 7573, 7574 };
         private static readonly string GAMES_DATA = "GamesData";
         private static readonly int MAXIMUM_GAMES = 5;
         private static readonly string URL_BASE = "https://webws.365scores.com/web/games/?langId=31&timezoneName=America/Sao_Paulo&userCountryId=21&appTypeId=5&sports=1&startDate={0}&endDate={1}&showOdds=true";
@@ -48,9 +48,9 @@ namespace Bolao.Pinheiros.Controllers
 
         public ActionResult Index()
         {
-#if !DEBUG
-            CheckOrDoLogin();
-#endif
+//#if !DEBUG
+//            CheckOrDoLogin();
+//#endif
             var date = DateTime.Now.ToBrasiliaDateTime();
             var model = GetDataFromGames(date, false);
             model.Date = date;
