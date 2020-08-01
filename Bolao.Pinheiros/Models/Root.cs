@@ -9,7 +9,9 @@ namespace Bolao.Pinheiros.Models
     {
         private int CORNER_ID = 8;
 
+        private List<Game> _awayGames;
         private List<Game> _gamesBetweenTeams;
+        private List<Game> _homeGames;
 
         public List<Bookmaker> bookmakers { get; set; }
         public List<Competition> competitions { get; set; }
@@ -49,10 +51,15 @@ namespace Bolao.Pinheiros.Models
 
         public List<Game> GetAwayGames()
         {
-            var gamesBetweenTeams = GetGamesBetweenTeams();
-            var awayGames = games.Where(x => gamesBetweenTeams.All(g => g.id != x.id)
-                                            && x.IsTeamInGame(mainGame.awayCompetitor.id)).ToList();
-            return FixGamesWithoutScore(awayGames);
+            if (_awayGames == null)
+            {
+                var gamesBetweenTeams = GetGamesBetweenTeams();
+                _awayGames = games.Where(x => gamesBetweenTeams.All(g => g.id != x.id)
+                                                && x.IsTeamInGame(mainGame.awayCompetitor.id)).ToList();
+                _awayGames = FixGamesWithoutScore(_awayGames);
+            }
+
+            return _awayGames;
         }
 
         public IEnumerable<Game> GetAwayWinnings()
@@ -96,10 +103,15 @@ namespace Bolao.Pinheiros.Models
 
         public List<Game> GetHomeGames()
         {
-            var gamesBetweenTeams = GetGamesBetweenTeams();
-            var homeGames = games.Where(x => gamesBetweenTeams.All(g => g.id != x.id)
-                                            && x.IsTeamInGame(mainGame.homeCompetitor.id)).ToList();
-            return FixGamesWithoutScore(homeGames);
+            if (_homeGames == null)
+            {
+                var gamesBetweenTeams = GetGamesBetweenTeams();
+                _homeGames = games.Where(x => gamesBetweenTeams.All(g => g.id != x.id)
+                                                && x.IsTeamInGame(mainGame.homeCompetitor.id)).ToList();
+                _homeGames = FixGamesWithoutScore(_homeGames);
+            }
+
+            return _homeGames;
         }
 
         public IEnumerable<Game> GetHomeWinnings()
@@ -243,13 +255,13 @@ namespace Bolao.Pinheiros.Models
 
         public Game GetGreaterBetweenScore()
         {
-            var game = GetGamesBetweenTeams().FirstOrDefault(x => x.GetSumScore() == GetMaximumGoalsBetween());
+            var games = GetGamesBetweenTeams();
             if (games == null || !games.Any())
             {
-                return game;
+                return new Game();
             }
 
-            return new Game();
+            return GetGamesBetweenTeams().FirstOrDefault(x => x.GetSumScore() == GetMaximumGoalsBetween());
         }
 
         public Game GetGreaterHomeScore()
@@ -517,7 +529,7 @@ namespace Bolao.Pinheiros.Models
                 return new List<Game>();
             }
 
-            return games.Where(x => x.GetSumScore() != -2).ToList();
+            return games.Where(x => x.GetSumScore() != -2).OrderByDescending(x => x.startTime).ToList();
         }
     }
 }
