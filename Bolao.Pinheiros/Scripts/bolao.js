@@ -77,6 +77,28 @@ $(document).ready(function () {
     }, 10000);
 });
 
+var getBetsStatistic = function (filter) {
+    var gamesEnded = filter !== null ? filter : $('[data-ended="True"]');
+    var winner = gamesEnded.find('[data-bet-winner="True"]');
+    var over = 0;
+    var both = 0;
+    var less = 0;
+    var winnerTeam = 0;
+    for (var i = 0; i < winner.length; i++) {
+        if ($(winner[i]).html().indexOf('Jogo acima de') !== -1) {
+            over++;
+        } else if ($(winner[i]).html().indexOf('Ambos marcam') !== -1) {
+            both++;
+        } else if ($(winner[i]).html().indexOf('Jogo abaixo de') !== -1) {
+            less++;
+        } else if ($(winner[i]).html().indexOf('Possível vencedor') !== -1) {
+            winnerTeam++;
+        }
+    }
+
+    alert('Total: ' + gamesEnded.length + ' - Acima: ' + over + ' - Ambos marcam: ' + both + ' - Abaixo de: ' + less + ' - Vencedor: ' + winnerTeam);
+};
+
 var getGamesOnDate = function () {
     if (dataDesejada.val() === '') {
         return;

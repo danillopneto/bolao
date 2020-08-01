@@ -5,22 +5,29 @@
     @(Html.Partial("_Events", Model.mainGame))
     <div class="estatisticas">
         <div class="dados-confronto">
-            <div class="scene">
-                <div class="flip-card-icon"></div>
-                <div class="card">
-                    <div class="card__face card__face--front">
-                        <div class="negrito">Confronto</div>
-                        <br>
-                        @foreach (var game in Model.GetGamesBetweenTeams().OrderByDescending(x => x.startTime))
-                        {
-                            @(Html.Partial("_GameResume", game))
-                        }
-                    </div>
-                    <div class="card__face card__face--back">
-                        @(Html.Partial("_GamesStats", Model))
+            @if (Model.GetGamesBetweenTeams().Count > 0)
+            {
+                <div class="scene">
+                    <div class="flip-card-icon"></div>
+                    <div class="card">
+                        <div class="card__face card__face--front">
+                            <div class="negrito">Confronto</div>
+                            <br>
+                            @foreach (var game in Model.GetGamesBetweenTeams().OrderByDescending(x => x.startTime))
+                            {
+                                @(Html.Partial("_GameResume", game))
+                            }
+                        </div>
+                        <div class="card__face card__face--back">
+                            @(Html.Partial("_GamesStats", Model))
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="previous-meetings-widget-header-component _n12lus">Não temos informações de jogos prévios entre estes times</div>
+            }
         </div>
         <div class="dados-casa">
             <div class="scene">

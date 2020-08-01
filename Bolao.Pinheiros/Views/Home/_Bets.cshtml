@@ -83,6 +83,9 @@
                 </label>
             </div>
         }
+        @{ 
+            overGoals = Math.Round(Model.GetAverageGoals()) - .5;
+        }
         <div class="goals-bet">
             <label class="negrito">Jogo acima de</label>
             <label class="team-value">@(overGoals) gols</label>

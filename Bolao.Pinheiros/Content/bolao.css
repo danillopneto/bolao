@@ -513,6 +513,15 @@ button.analisis-button {
     margin-top: -12px;
 }
 
+._n12lus {
+    flex: 1 1 0%;
+    font-size: 13px;
+    text-align: center;
+    color: rgb(127, 151, 171);
+    height: 300px;
+    line-height: 300px;
+}
+
 @media only screen and (max-width: 600px) {
     .scores365 .standings-widget-table-form-cell {
         display: inline-block;
